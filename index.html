@@ -1052,6 +1052,10 @@
             <div class="nav-dot" style="background: var(--accent-cyan)"></div>
             Audio Strategy
         </a>
+        <a href="#swipefile" class="nav-item" data-section="swipefile">
+            <div class="nav-dot" style="background: var(--accent-amber)"></div>
+            Swipe File (38 Reels)
+        </a>
         <a href="#bottomline" class="nav-item" data-section="bottomline">
             <div class="nav-dot" style="background: var(--accent-green)"></div>
             The Bottom Line
@@ -2047,6 +2051,875 @@
         </div>
     </section>
 
+    <!-- SWIPE FILE -->
+    <section class="section" id="swipefile">
+        <div class="section-header fade-in">
+            <div class="section-icon" style="background: #f59e0b20;">
+                <span style="color: var(--accent-amber);">&#128293;</span>
+            </div>
+            <div>
+                <div class="section-number">12</div>
+                <div class="section-title">Swipe File — 38 Viral Reels</div>
+                <div class="section-desc">Proven reels to reference when you're stuck. Study the hooks, steal the formats.</div>
+            </div>
+        </div>
+
+        <!-- Tier filter + sort controls -->
+        <div class="fade-in" style="display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 20px; align-items: center;">
+            <button class="hook-filter active" onclick="filterSwipe('all', this)">All (38)</button>
+            <button class="hook-filter" onclick="filterSwipe('top', this)">500K+ (16)</button>
+            <button class="hook-filter" onclick="filterSwipe('strong', this)">200K-500K (10)</button>
+            <button class="hook-filter" onclick="filterSwipe('solid', this)">50K-200K (12)</button>
+            <div style="margin-left: auto; display: flex; gap: 8px; align-items: center;">
+                <span style="font-size: 11px; color: var(--text-muted); text-transform: uppercase; letter-spacing: 1px; font-weight: 600;">Sort:</span>
+                <button class="hook-filter active" id="sortPlays" onclick="sortSwipe('plays', this)">Plays</button>
+                <button class="hook-filter" id="sortER" onclick="sortSwipe('er', this)">ER%</button>
+            </div>
+        </div>
+
+        <style>
+            .swipe-card {
+                background: var(--bg-card);
+                border: 1px solid var(--border);
+                border-radius: 14px;
+                padding: 20px 24px;
+                transition: all 0.3s;
+                display: flex;
+                gap: 20px;
+                align-items: flex-start;
+            }
+            .swipe-card:hover {
+                border-color: var(--border-light);
+                background: var(--bg-card-hover);
+            }
+            .swipe-rank {
+                font-family: 'JetBrains Mono', monospace;
+                font-size: 13px;
+                font-weight: 600;
+                color: var(--text-muted);
+                min-width: 24px;
+                padding-top: 2px;
+            }
+            .swipe-body { flex: 1; min-width: 0; }
+            .swipe-top-row {
+                display: flex;
+                align-items: center;
+                gap: 10px;
+                flex-wrap: wrap;
+                margin-bottom: 8px;
+            }
+            .swipe-handle {
+                font-size: 14px;
+                font-weight: 700;
+                color: var(--text-primary);
+            }
+            .swipe-stats {
+                display: flex;
+                gap: 8px;
+                margin-left: auto;
+            }
+            .swipe-pill {
+                font-family: 'JetBrains Mono', monospace;
+                font-size: 11px;
+                font-weight: 600;
+                padding: 3px 10px;
+                border-radius: 6px;
+            }
+            .swipe-pill.plays {
+                background: var(--accent-pink-dim);
+                color: var(--accent-pink);
+            }
+            .swipe-pill.er {
+                background: #10b98118;
+                color: var(--accent-green);
+            }
+            .swipe-pill.audio-og {
+                background: #a855f718;
+                color: var(--accent-purple);
+            }
+            .swipe-pill.audio-lic {
+                background: #ffffff08;
+                color: var(--text-muted);
+            }
+            .swipe-caption {
+                font-size: 15px;
+                font-weight: 600;
+                color: var(--text-primary);
+                line-height: 1.5;
+                margin-bottom: 8px;
+            }
+            .swipe-why {
+                font-size: 13px;
+                color: var(--text-secondary);
+                line-height: 1.5;
+            }
+            .swipe-why strong {
+                color: var(--text-muted);
+                font-weight: 600;
+            }
+            .swipe-link {
+                display: inline-flex;
+                align-items: center;
+                gap: 4px;
+                font-size: 12px;
+                color: var(--accent-pink);
+                text-decoration: none;
+                font-weight: 600;
+                margin-top: 10px;
+                transition: opacity 0.2s;
+            }
+            .swipe-link:hover { opacity: 0.7; }
+
+            .swipe-grid {
+                display: flex;
+                flex-direction: column;
+                gap: 10px;
+            }
+
+            .swipe-tier-label {
+                font-size: 11px;
+                font-weight: 700;
+                text-transform: uppercase;
+                letter-spacing: 1.5px;
+                color: var(--text-muted);
+                padding: 20px 0 8px;
+                border-bottom: 1px solid var(--border);
+                margin-bottom: 4px;
+            }
+
+            .swipe-tier-label:first-child { padding-top: 0; }
+
+            .swipe-patterns {
+                display: grid;
+                grid-template-columns: 1fr 1fr;
+                gap: 16px;
+                margin-top: 32px;
+            }
+
+            @media (max-width: 768px) {
+                .swipe-card { flex-direction: column; gap: 12px; }
+                .swipe-stats { margin-left: 0; }
+                .swipe-patterns { grid-template-columns: 1fr; }
+            }
+
+            .pattern-card {
+                background: var(--bg-card);
+                border: 1px solid var(--border);
+                border-radius: 14px;
+                padding: 24px;
+            }
+
+            .pattern-card h4 {
+                font-size: 15px;
+                font-weight: 700;
+                margin-bottom: 14px;
+                display: flex;
+                align-items: center;
+                gap: 8px;
+            }
+
+            .pattern-item {
+                font-size: 13px;
+                color: var(--text-secondary);
+                padding: 8px 0;
+                border-bottom: 1px solid #ffffff06;
+                line-height: 1.5;
+            }
+
+            .pattern-item:last-child { border-bottom: none; }
+
+            .pattern-item code {
+                background: #ffffff08;
+                padding: 2px 8px;
+                border-radius: 4px;
+                font-family: 'JetBrains Mono', monospace;
+                font-size: 12px;
+                color: var(--accent-pink);
+            }
+        </style>
+
+        <div class="swipe-grid fade-in" id="swipeGrid">
+            <div class="swipe-tier-label" data-tier="top">&#9733; Top Performers — 500K+ plays</div>
+
+            <div class="swipe-card" data-tier="top" data-plays="19600000" data-er="10.1">
+                <div class="swipe-rank">#1</div>
+                <div class="swipe-body">
+                    <div class="swipe-top-row">
+                        <span class="swipe-handle">@alusenz</span>
+                        <div class="swipe-stats">
+                            <span class="swipe-pill plays">19.6M</span>
+                            <span class="swipe-pill er">10.1% ER</span>
+                            <span class="swipe-pill audio-lic">Licensed</span>
+                        </div>
+                    </div>
+                    <div class="swipe-caption">"HAPPY ONE MONTH TO THIS ICONIC MOMENT"</div>
+                    <div class="swipe-why"><strong>Why it works:</strong> Group energy, celebration moment, nostalgia callback</div>
+                    <a href="https://www.instagram.com/reel/DKHwDJGIS3Y/" target="_blank" class="swipe-link">Watch reel &#8599;</a>
+                </div>
+            </div>
+
+            <div class="swipe-card" data-tier="top" data-plays="4200000" data-er="7.1">
+                <div class="swipe-rank">#2</div>
+                <div class="swipe-body">
+                    <div class="swipe-top-row">
+                        <span class="swipe-handle">@teadee_cosplay</span>
+                        <div class="swipe-stats">
+                            <span class="swipe-pill plays">4.2M</span>
+                            <span class="swipe-pill er">7.1% ER</span>
+                            <span class="swipe-pill audio-og">Original</span>
+                        </div>
+                    </div>
+                    <div class="swipe-caption">"Please I'm MAXINE 😭😭😭"</div>
+                    <div class="swipe-why"><strong>Why it works:</strong> Self-deprecating, character-specific, 😭 emoji energy</div>
+                    <a href="https://www.instagram.com/reel/C2cdByBLl9Y/" target="_blank" class="swipe-link">Watch reel &#8599;</a>
+                </div>
+            </div>
+
+            <div class="swipe-card" data-tier="top" data-plays="4000000" data-er="1.7">
+                <div class="swipe-rank">#3</div>
+                <div class="swipe-body">
+                    <div class="swipe-top-row">
+                        <span class="swipe-handle">@amacosplayer</span>
+                        <div class="swipe-stats">
+                            <span class="swipe-pill plays">4.0M</span>
+                            <span class="swipe-pill er">1.7% ER</span>
+                            <span class="swipe-pill audio-lic">Licensed</span>
+                        </div>
+                    </div>
+                    <div class="swipe-caption">"Sango walked so Tanjiro could run"</div>
+                    <div class="swipe-why"><strong>Why it works:</strong> Hot take format, connects two fandoms, debate bait</div>
+                    <a href="https://www.instagram.com/reel/DObZe1nkQq1/" target="_blank" class="swipe-link">Watch reel &#8599;</a>
+                </div>
+            </div>
+
+            <div class="swipe-card" data-tier="top" data-plays="3900000" data-er="9.3">
+                <div class="swipe-rank">#4</div>
+                <div class="swipe-body">
+                    <div class="swipe-top-row">
+                        <span class="swipe-handle">@projectmoshii</span>
+                        <div class="swipe-stats">
+                            <span class="swipe-pill plays">3.9M</span>
+                            <span class="swipe-pill er">9.3% ER</span>
+                            <span class="swipe-pill audio-og">Original</span>
+                        </div>
+                    </div>
+                    <div class="swipe-caption">"Polar opposite best friends LMAOOO"</div>
+                    <div class="swipe-why"><strong>Why it works:</strong> Relatable friendship dynamic, contrast format</div>
+                    <a href="https://www.instagram.com/reel/DHBZlZBM62P/" target="_blank" class="swipe-link">Watch reel &#8599;</a>
+                </div>
+            </div>
+
+            <div class="swipe-card" data-tier="top" data-plays="2900000" data-er="7.4">
+                <div class="swipe-rank">#5</div>
+                <div class="swipe-body">
+                    <div class="swipe-top-row">
+                        <span class="swipe-handle">@goom.yi</span>
+                        <div class="swipe-stats">
+                            <span class="swipe-pill plays">2.9M</span>
+                            <span class="swipe-pill er">7.4% ER</span>
+                            <span class="swipe-pill audio-og">Original</span>
+                        </div>
+                    </div>
+                    <div class="swipe-caption">"best words u can hear"</div>
+                    <div class="swipe-why"><strong>Why it works:</strong> Universal relatable moment, emotional payoff</div>
+                    <a href="https://www.instagram.com/reel/DJ1D5q8IMff/" target="_blank" class="swipe-link">Watch reel &#8599;</a>
+                </div>
+            </div>
+
+            <div class="swipe-card" data-tier="top" data-plays="2000000" data-er="2.4">
+                <div class="swipe-rank">#6</div>
+                <div class="swipe-body">
+                    <div class="swipe-top-row">
+                        <span class="swipe-handle">@yugoroforge</span>
+                        <div class="swipe-stats">
+                            <span class="swipe-pill plays">2.0M</span>
+                            <span class="swipe-pill er">2.4% ER</span>
+                            <span class="swipe-pill audio-lic">Licensed</span>
+                        </div>
+                    </div>
+                    <div class="swipe-caption">"how to survive the convention? Fulfill your basic human needs"</div>
+                    <div class="swipe-why"><strong>Why it works:</strong> Question hook, practical value, convention context</div>
+                    <a href="https://www.instagram.com/reel/C13feFHBNaG/" target="_blank" class="swipe-link">Watch reel &#8599;</a>
+                </div>
+            </div>
+
+            <div class="swipe-card" data-tier="top" data-plays="1500000" data-er="6.9">
+                <div class="swipe-rank">#7</div>
+                <div class="swipe-body">
+                    <div class="swipe-top-row">
+                        <span class="swipe-handle">@jinberry_</span>
+                        <div class="swipe-stats">
+                            <span class="swipe-pill plays">1.5M</span>
+                            <span class="swipe-pill er">6.9% ER</span>
+                            <span class="swipe-pill audio-og">Original</span>
+                        </div>
+                    </div>
+                    <div class="swipe-caption">"The sandals ripped the moment they got through security"</div>
+                    <div class="swipe-why"><strong>Why it works:</strong> Specific disaster moment, self-deprecating, relatable fail</div>
+                    <a href="https://www.instagram.com/reel/DPYYfb4D8BU/" target="_blank" class="swipe-link">Watch reel &#8599;</a>
+                </div>
+            </div>
+
+            <div class="swipe-card" data-tier="top" data-plays="1400000" data-er="9.1">
+                <div class="swipe-rank">#8</div>
+                <div class="swipe-body">
+                    <div class="swipe-top-row">
+                        <span class="swipe-handle">@kevkinaeo</span>
+                        <div class="swipe-stats">
+                            <span class="swipe-pill plays">1.4M</span>
+                            <span class="swipe-pill er">9.1% ER</span>
+                            <span class="swipe-pill audio-lic">Licensed</span>
+                        </div>
+                    </div>
+                    <div class="swipe-caption">"I am scared? Yes, but I'll do it scared."</div>
+                    <div class="swipe-why"><strong>Why it works:</strong> Vulnerability + action, cosplay-meets-fitness crossover</div>
+                    <a href="https://www.instagram.com/reel/DHrIV32SQJc/" target="_blank" class="swipe-link">Watch reel &#8599;</a>
+                </div>
+            </div>
+
+            <div class="swipe-card" data-tier="top" data-plays="982000" data-er="9.3">
+                <div class="swipe-rank">#9</div>
+                <div class="swipe-body">
+                    <div class="swipe-top-row">
+                        <span class="swipe-handle">@madsdoescosplay</span>
+                        <div class="swipe-stats">
+                            <span class="swipe-pill plays">982K</span>
+                            <span class="swipe-pill er">9.3% ER</span>
+                            <span class="swipe-pill audio-og">Original</span>
+                        </div>
+                    </div>
+                    <div class="swipe-caption">"ladiesss cmon"</div>
+                    <div class="swipe-why"><strong>Why it works:</strong> Group callout, community energy, character showcase</div>
+                    <a href="https://www.instagram.com/reel/DM-hs8-o49J/" target="_blank" class="swipe-link">Watch reel &#8599;</a>
+                </div>
+            </div>
+
+            <div class="swipe-card" data-tier="top" data-plays="851000" data-er="16.1">
+                <div class="swipe-rank">#10</div>
+                <div class="swipe-body">
+                    <div class="swipe-top-row">
+                        <span class="swipe-handle">@erianacosplay</span>
+                        <div class="swipe-stats">
+                            <span class="swipe-pill plays">851K</span>
+                            <span class="swipe-pill er">16.1% ER</span>
+                            <span class="swipe-pill audio-og">Original</span>
+                        </div>
+                    </div>
+                    <div class="swipe-caption">"Cosplayers on public transport be like"</div>
+                    <div class="swipe-why"><strong>Why it works:</strong> "In public" format, universal experience, high shareability</div>
+                    <a href="https://www.instagram.com/reel/DMDoT_7t7kC/" target="_blank" class="swipe-link">Watch reel &#8599;</a>
+                </div>
+            </div>
+
+            <div class="swipe-card" data-tier="top" data-plays="851000" data-er="4.3">
+                <div class="swipe-rank">#11</div>
+                <div class="swipe-body">
+                    <div class="swipe-top-row">
+                        <span class="swipe-handle">@soomtm</span>
+                        <div class="swipe-stats">
+                            <span class="swipe-pill plays">851K</span>
+                            <span class="swipe-pill er">4.3% ER</span>
+                            <span class="swipe-pill audio-og">Original</span>
+                        </div>
+                    </div>
+                    <div class="swipe-caption">"tough life for a sunday stan who coses robin"</div>
+                    <div class="swipe-why"><strong>Why it works:</strong> Niche fandom reference, insider humor</div>
+                    <a href="https://www.instagram.com/reel/DLvQjjFyyof/" target="_blank" class="swipe-link">Watch reel &#8599;</a>
+                </div>
+            </div>
+
+            <div class="swipe-card" data-tier="top" data-plays="689000" data-er="8.4">
+                <div class="swipe-rank">#12</div>
+                <div class="swipe-body">
+                    <div class="swipe-top-row">
+                        <span class="swipe-handle">@halcynda</span>
+                        <div class="swipe-stats">
+                            <span class="swipe-pill plays">689K</span>
+                            <span class="swipe-pill er">8.4% ER</span>
+                            <span class="swipe-pill audio-og">Original</span>
+                        </div>
+                    </div>
+                    <div class="swipe-caption">"This was the first thing I thought of when I heard this audio"</div>
+                    <div class="swipe-why"><strong>Why it works:</strong> Audio trend with cosplay twist</div>
+                    <a href="https://www.instagram.com/reel/DNWkCbAPJzA/" target="_blank" class="swipe-link">Watch reel &#8599;</a>
+                </div>
+            </div>
+
+            <div class="swipe-card" data-tier="top" data-plays="680000" data-er="12.4">
+                <div class="swipe-rank">#13</div>
+                <div class="swipe-body">
+                    <div class="swipe-top-row">
+                        <span class="swipe-handle">@yuzu.pyon</span>
+                        <div class="swipe-stats">
+                            <span class="swipe-pill plays">680K</span>
+                            <span class="swipe-pill er">12.4% ER</span>
+                            <span class="swipe-pill audio-lic">Licensed</span>
+                        </div>
+                    </div>
+                    <div class="swipe-caption">"never cosplay Miku in public...if you don't want to have the best day ever"</div>
+                    <div class="swipe-why"><strong>Why it works:</strong> Subverted expectation, positive twist, public reaction content</div>
+                    <a href="https://www.instagram.com/reel/DUHbBxVD7Oz/" target="_blank" class="swipe-link">Watch reel &#8599;</a>
+                </div>
+            </div>
+
+            <div class="swipe-card" data-tier="top" data-plays="661000" data-er="6.9">
+                <div class="swipe-rank">#14</div>
+                <div class="swipe-body">
+                    <div class="swipe-top-row">
+                        <span class="swipe-handle">@nopantsu</span>
+                        <div class="swipe-stats">
+                            <span class="swipe-pill plays">661K</span>
+                            <span class="swipe-pill er">6.9% ER</span>
+                            <span class="swipe-pill audio-og">Original</span>
+                        </div>
+                    </div>
+                    <div class="swipe-caption">"And then cosplayers end up buying more makeup anyways"</div>
+                    <div class="swipe-why"><strong>Why it works:</strong> Relatable spiral, self-aware humor</div>
+                    <a href="https://www.instagram.com/reel/DSR8xMlgZP5/" target="_blank" class="swipe-link">Watch reel &#8599;</a>
+                </div>
+            </div>
+
+            <div class="swipe-card" data-tier="top" data-plays="656000" data-er="5.4">
+                <div class="swipe-rank">#15</div>
+                <div class="swipe-body">
+                    <div class="swipe-top-row">
+                        <span class="swipe-handle">@kamuicosplay</span>
+                        <div class="swipe-stats">
+                            <span class="swipe-pill plays">656K</span>
+                            <span class="swipe-pill er">5.4% ER</span>
+                            <span class="swipe-pill audio-og">Original</span>
+                        </div>
+                    </div>
+                    <div class="swipe-caption">"Cosplay is SO expensive!"</div>
+                    <div class="swipe-why"><strong>Why it works:</strong> Universal pain point, budget content, shareable</div>
+                    <a href="https://www.instagram.com/reel/DQIWXPSEceT/" target="_blank" class="swipe-link">Watch reel &#8599;</a>
+                </div>
+            </div>
+
+            <div class="swipe-card" data-tier="top" data-plays="642000" data-er="10.5">
+                <div class="swipe-rank">#16</div>
+                <div class="swipe-body">
+                    <div class="swipe-top-row">
+                        <span class="swipe-handle">@viscoffin</span>
+                        <div class="swipe-stats">
+                            <span class="swipe-pill plays">642K</span>
+                            <span class="swipe-pill er">10.5% ER</span>
+                            <span class="swipe-pill audio-og">Original</span>
+                        </div>
+                    </div>
+                    <div class="swipe-caption">"This happened sm to me"</div>
+                    <div class="swipe-why"><strong>Why it works:</strong> Relatable con experience, "me too" energy</div>
+                    <a href="https://www.instagram.com/reel/DFay1MKMYzR/" target="_blank" class="swipe-link">Watch reel &#8599;</a>
+                </div>
+            </div>
+
+            <div class="swipe-tier-label" data-tier="strong">&#9650; Strong Performers — 200K-500K plays</div>
+
+            <div class="swipe-card" data-tier="strong" data-plays="531000" data-er="4.1">
+                <div class="swipe-rank">#17</div>
+                <div class="swipe-body">
+                    <div class="swipe-top-row">
+                        <span class="swipe-handle">@evangelines_cosplay</span>
+                        <div class="swipe-stats">
+                            <span class="swipe-pill plays">531K</span>
+                            <span class="swipe-pill er">4.1% ER</span>
+                            <span class="swipe-pill audio-og">Original</span>
+                        </div>
+                    </div>
+                    <div class="swipe-caption">"I am determined to find all my cosplay besties"</div>
+                    <div class="swipe-why"><strong>Why it works:</strong> Community mission, positive energy, connection-focused</div>
+                    <a href="https://www.instagram.com/reel/DPQ6nkckdbE/" target="_blank" class="swipe-link">Watch reel &#8599;</a>
+                </div>
+            </div>
+
+            <div class="swipe-card" data-tier="strong" data-plays="521000" data-er="8.1">
+                <div class="swipe-rank">#18</div>
+                <div class="swipe-body">
+                    <div class="swipe-top-row">
+                        <span class="swipe-handle">@futaricosplay</span>
+                        <div class="swipe-stats">
+                            <span class="swipe-pill plays">521K</span>
+                            <span class="swipe-pill er">8.1% ER</span>
+                            <span class="swipe-pill audio-og">Original</span>
+                        </div>
+                    </div>
+                    <div class="swipe-caption">"I cant be the only one who just explodes everywhere instantaneously"</div>
+                    <div class="swipe-why"><strong>Why it works:</strong> "Can't be the only one" format, relatable chaos</div>
+                    <a href="https://www.instagram.com/reel/DQZ7S-hgrQN/" target="_blank" class="swipe-link">Watch reel &#8599;</a>
+                </div>
+            </div>
+
+            <div class="swipe-card" data-tier="strong" data-plays="506000" data-er="5.5">
+                <div class="swipe-rank">#19</div>
+                <div class="swipe-body">
+                    <div class="swipe-top-row">
+                        <span class="swipe-handle">@captain.aeri</span>
+                        <div class="swipe-stats">
+                            <span class="swipe-pill plays">506K</span>
+                            <span class="swipe-pill er">5.5% ER</span>
+                            <span class="swipe-pill audio-lic">Licensed</span>
+                        </div>
+                    </div>
+                    <div class="swipe-caption">"Part2?"</div>
+                    <div class="swipe-why"><strong>Why it works:</strong> Series format, engagement bait (comment for part 2)</div>
+                    <a href="https://www.instagram.com/reel/DRuDziXjGxL/" target="_blank" class="swipe-link">Watch reel &#8599;</a>
+                </div>
+            </div>
+
+            <div class="swipe-card" data-tier="strong" data-plays="486000" data-er="9.3">
+                <div class="swipe-rank">#20</div>
+                <div class="swipe-body">
+                    <div class="swipe-top-row">
+                        <span class="swipe-handle">@calicocoser</span>
+                        <div class="swipe-stats">
+                            <span class="swipe-pill plays">486K</span>
+                            <span class="swipe-pill er">9.3% ER</span>
+                            <span class="swipe-pill audio-og">Original</span>
+                        </div>
+                    </div>
+                    <div class="swipe-caption">"Cosplayers know this feeling like DO NOT PERCEIVE ME"</div>
+                    <div class="swipe-why"><strong>Why it works:</strong> Inside joke, relatable anxiety, all-caps emphasis</div>
+                    <a href="https://www.instagram.com/reel/DD2LfaPxtbY/" target="_blank" class="swipe-link">Watch reel &#8599;</a>
+                </div>
+            </div>
+
+            <div class="swipe-card" data-tier="strong" data-plays="431000" data-er="10.4">
+                <div class="swipe-rank">#21</div>
+                <div class="swipe-body">
+                    <div class="swipe-top-row">
+                        <span class="swipe-handle">@darkjager00</span>
+                        <div class="swipe-stats">
+                            <span class="swipe-pill plays">431K</span>
+                            <span class="swipe-pill er">10.4% ER</span>
+                            <span class="swipe-pill audio-og">Original</span>
+                        </div>
+                    </div>
+                    <div class="swipe-caption">"You can't deny it, at least once you felt that"</div>
+                    <div class="swipe-why"><strong>Why it works:</strong> Universal statement, validation format</div>
+                    <a href="https://www.instagram.com/reel/DOES4IZjQbB/" target="_blank" class="swipe-link">Watch reel &#8599;</a>
+                </div>
+            </div>
+
+            <div class="swipe-card" data-tier="strong" data-plays="394000" data-er="11.8">
+                <div class="swipe-rank">#22</div>
+                <div class="swipe-body">
+                    <div class="swipe-top-row">
+                        <span class="swipe-handle">@unikittii</span>
+                        <div class="swipe-stats">
+                            <span class="swipe-pill plays">394K</span>
+                            <span class="swipe-pill er">11.8% ER</span>
+                            <span class="swipe-pill audio-og">Original</span>
+                        </div>
+                    </div>
+                    <div class="swipe-caption">"old old sua tt bc im trying to be more active here"</div>
+                    <div class="swipe-why"><strong>Why it works:</strong> Casual authenticity, low-pressure post</div>
+                    <a href="https://www.instagram.com/reel/DDIBG8bowOF/" target="_blank" class="swipe-link">Watch reel &#8599;</a>
+                </div>
+            </div>
+
+            <div class="swipe-card" data-tier="strong" data-plays="313000" data-er="12.9">
+                <div class="swipe-rank">#23</div>
+                <div class="swipe-body">
+                    <div class="swipe-top-row">
+                        <span class="swipe-handle">@maoh.cosplay</span>
+                        <div class="swipe-stats">
+                            <span class="swipe-pill plays">313K</span>
+                            <span class="swipe-pill er">12.9% ER</span>
+                            <span class="swipe-pill audio-og">Original</span>
+                        </div>
+                    </div>
+                    <div class="swipe-caption">"my cosplay's tastes are........ interesting...."</div>
+                    <div class="swipe-why"><strong>Why it works:</strong> Self-aware, character preference reveal</div>
+                    <a href="https://www.instagram.com/reel/C6_doaiI4FZ/" target="_blank" class="swipe-link">Watch reel &#8599;</a>
+                </div>
+            </div>
+
+            <div class="swipe-card" data-tier="strong" data-plays="303000" data-er="9.5">
+                <div class="swipe-rank">#24</div>
+                <div class="swipe-body">
+                    <div class="swipe-top-row">
+                        <span class="swipe-handle">@tartaglianui</span>
+                        <div class="swipe-stats">
+                            <span class="swipe-pill plays">303K</span>
+                            <span class="swipe-pill er">9.5% ER</span>
+                            <span class="swipe-pill audio-og">Original</span>
+                        </div>
+                    </div>
+                    <div class="swipe-caption">"Anybody else do this? I'm always too shy to go up to cool cosplayers"</div>
+                    <div class="swipe-why"><strong>Why it works:</strong> Question hook, vulnerability, "anybody else" format</div>
+                    <a href="https://www.instagram.com/reel/DDF2MgBP55W/" target="_blank" class="swipe-link">Watch reel &#8599;</a>
+                </div>
+            </div>
+
+            <div class="swipe-card" data-tier="strong" data-plays="241000" data-er="7.0">
+                <div class="swipe-rank">#25</div>
+                <div class="swipe-body">
+                    <div class="swipe-top-row">
+                        <span class="swipe-handle">@projectmoshii</span>
+                        <div class="swipe-stats">
+                            <span class="swipe-pill plays">241K</span>
+                            <span class="swipe-pill er">7.0% ER</span>
+                            <span class="swipe-pill audio-og">Original</span>
+                        </div>
+                    </div>
+                    <div class="swipe-caption">"My parents always add 'she cosplays' when they introduce me"</div>
+                    <div class="swipe-why"><strong>Why it works:</strong> Family dynamic, embarrassment humor, specific detail</div>
+                    <a href="https://www.instagram.com/reel/DJ7OC24PPxD/" target="_blank" class="swipe-link">Watch reel &#8599;</a>
+                </div>
+            </div>
+
+            <div class="swipe-card" data-tier="strong" data-plays="226000" data-er="16.4">
+                <div class="swipe-rank">#26</div>
+                <div class="swipe-body">
+                    <div class="swipe-top-row">
+                        <span class="swipe-handle">@rainsy_days</span>
+                        <div class="swipe-stats">
+                            <span class="swipe-pill plays">226K</span>
+                            <span class="swipe-pill er">16.4% ER</span>
+                            <span class="swipe-pill audio-og">Original</span>
+                        </div>
+                    </div>
+                    <div class="swipe-caption">"One day we'll be financially responsible"</div>
+                    <div class="swipe-why"><strong>Why it works:</strong> Budget humor, future-tense self-deprecation</div>
+                    <a href="https://www.instagram.com/reel/DR8256PAFmm/" target="_blank" class="swipe-link">Watch reel &#8599;</a>
+                </div>
+            </div>
+
+            <div class="swipe-tier-label" data-tier="solid">&#9679; Solid Performers — 50K-200K plays</div>
+
+            <div class="swipe-card" data-tier="solid" data-plays="196000" data-er="3.8">
+                <div class="swipe-rank">#27</div>
+                <div class="swipe-body">
+                    <div class="swipe-top-row">
+                        <span class="swipe-handle">@tenten.dere</span>
+                        <div class="swipe-stats">
+                            <span class="swipe-pill plays">196K</span>
+                            <span class="swipe-pill er">3.8% ER</span>
+                            <span class="swipe-pill audio-lic">Licensed</span>
+                        </div>
+                    </div>
+                    <div class="swipe-caption">"It's more fun to attend cons with friends"</div>
+                    <div class="swipe-why"><strong>Why it works:</strong> Friend appreciation, convention context</div>
+                    <a href="https://www.instagram.com/reel/DKF-BxjoiEs/" target="_blank" class="swipe-link">Watch reel &#8599;</a>
+                </div>
+            </div>
+
+            <div class="swipe-card" data-tier="solid" data-plays="195000" data-er="4.7">
+                <div class="swipe-rank">#28</div>
+                <div class="swipe-body">
+                    <div class="swipe-top-row">
+                        <span class="swipe-handle">@kyahri</span>
+                        <div class="swipe-stats">
+                            <span class="swipe-pill plays">195K</span>
+                            <span class="swipe-pill er">4.7% ER</span>
+                            <span class="swipe-pill audio-og">Original</span>
+                        </div>
+                    </div>
+                    <div class="swipe-caption">"How do you do fellow kids 🫶 30+ cosplayers where you at!?"</div>
+                    <div class="swipe-why"><strong>Why it works:</strong> Age-specific callout, community building</div>
+                    <a href="https://www.instagram.com/reel/DSXxGGiERW3/" target="_blank" class="swipe-link">Watch reel &#8599;</a>
+                </div>
+            </div>
+
+            <div class="swipe-card" data-tier="solid" data-plays="183000" data-er="0.1">
+                <div class="swipe-rank">#29</div>
+                <div class="swipe-body">
+                    <div class="swipe-top-row">
+                        <span class="swipe-handle">@scoutscos</span>
+                        <div class="swipe-stats">
+                            <span class="swipe-pill plays">183K</span>
+                            <span class="swipe-pill er">0.1% ER</span>
+                            <span class="swipe-pill audio-og">Original</span>
+                        </div>
+                    </div>
+                    <div class="swipe-caption">"guys wait up i cant find that one booth with that one thing"</div>
+                    <div class="swipe-why"><strong>Why it works:</strong> Convention chaos, relatable disorganization</div>
+                    <a href="https://www.instagram.com/reel/C_f6XaWPCt_/" target="_blank" class="swipe-link">Watch reel &#8599;</a>
+                </div>
+            </div>
+
+            <div class="swipe-card" data-tier="solid" data-plays="177000" data-er="12.8">
+                <div class="swipe-rank">#30</div>
+                <div class="swipe-body">
+                    <div class="swipe-top-row">
+                        <span class="swipe-handle">@ribbon.kyraa</span>
+                        <div class="swipe-stats">
+                            <span class="swipe-pill plays">177K</span>
+                            <span class="swipe-pill er">12.8% ER</span>
+                            <span class="swipe-pill audio-og">Original</span>
+                        </div>
+                    </div>
+                    <div class="swipe-caption">"The cosplay was literally disintegrating as I recorded this"</div>
+                    <div class="swipe-why"><strong>Why it works:</strong> Disaster content, behind-the-scenes real</div>
+                    <a href="https://www.instagram.com/reel/DL1ULmht1xX/" target="_blank" class="swipe-link">Watch reel &#8599;</a>
+                </div>
+            </div>
+
+            <div class="swipe-card" data-tier="solid" data-plays="115000" data-er="8.2">
+                <div class="swipe-rank">#31</div>
+                <div class="swipe-body">
+                    <div class="swipe-top-row">
+                        <span class="swipe-handle">@halcynda</span>
+                        <div class="swipe-stats">
+                            <span class="swipe-pill plays">115K</span>
+                            <span class="swipe-pill er">8.2% ER</span>
+                            <span class="swipe-pill audio-og">Original</span>
+                        </div>
+                    </div>
+                    <div class="swipe-caption">"Wigstyling is my Achilles heel, I'm afraid"</div>
+                    <div class="swipe-why"><strong>Why it works:</strong> Skill vulnerability, relatable struggle</div>
+                    <a href="https://www.instagram.com/reel/DFQGzajMz9C/" target="_blank" class="swipe-link">Watch reel &#8599;</a>
+                </div>
+            </div>
+
+            <div class="swipe-card" data-tier="solid" data-plays="101000" data-er="14.0">
+                <div class="swipe-rank">#32</div>
+                <div class="swipe-body">
+                    <div class="swipe-top-row">
+                        <span class="swipe-handle">@villaii81</span>
+                        <div class="swipe-stats">
+                            <span class="swipe-pill plays">101K</span>
+                            <span class="swipe-pill er">14.0% ER</span>
+                            <span class="swipe-pill audio-lic">Licensed</span>
+                        </div>
+                    </div>
+                    <div class="swipe-caption">"etmin pamitan dulu well"</div>
+                    <div class="swipe-why"><strong>Why it works:</strong> Casual goodbye format, authenticity</div>
+                    <a href="https://www.instagram.com/reel/DKxD2GrpDDT/" target="_blank" class="swipe-link">Watch reel &#8599;</a>
+                </div>
+            </div>
+
+            <div class="swipe-card" data-tier="solid" data-plays="76000" data-er="8.5">
+                <div class="swipe-rank">#33</div>
+                <div class="swipe-body">
+                    <div class="swipe-top-row">
+                        <span class="swipe-handle">@projectmoshii</span>
+                        <div class="swipe-stats">
+                            <span class="swipe-pill plays">76K</span>
+                            <span class="swipe-pill er">8.5% ER</span>
+                            <span class="swipe-pill audio-og">Original</span>
+                        </div>
+                    </div>
+                    <div class="swipe-caption">"Full proof way to save money as a cosplayer 🤑 (I am in fact me and my bank accounts worst enemy)"</div>
+                    <div class="swipe-why"><strong>Why it works:</strong> Self-contradicting humor, budget content</div>
+                    <a href="https://www.instagram.com/reel/DNTwTLHv_KH/" target="_blank" class="swipe-link">Watch reel &#8599;</a>
+                </div>
+            </div>
+
+            <div class="swipe-card" data-tier="solid" data-plays="63000" data-er="8.7">
+                <div class="swipe-rank">#34</div>
+                <div class="swipe-body">
+                    <div class="swipe-top-row">
+                        <span class="swipe-handle">@crunchyreid</span>
+                        <div class="swipe-stats">
+                            <span class="swipe-pill plays">63K</span>
+                            <span class="swipe-pill er">8.7% ER</span>
+                            <span class="swipe-pill audio-lic">Licensed</span>
+                        </div>
+                    </div>
+                    <div class="swipe-caption">"So many people asked for pictures 😭🩵"</div>
+                    <div class="swipe-why"><strong>Why it works:</strong> Humble brag, public attention, 😭 energy</div>
+                    <a href="https://www.instagram.com/reel/C4iVRocr1xx/" target="_blank" class="swipe-link">Watch reel &#8599;</a>
+                </div>
+            </div>
+
+            <div class="swipe-card" data-tier="solid" data-plays="63000" data-er="7.1">
+                <div class="swipe-rank">#35</div>
+                <div class="swipe-body">
+                    <div class="swipe-top-row">
+                        <span class="swipe-handle">@ariadve_</span>
+                        <div class="swipe-stats">
+                            <span class="swipe-pill plays">63K</span>
+                            <span class="swipe-pill er">7.1% ER</span>
+                            <span class="swipe-pill audio-lic">Licensed</span>
+                        </div>
+                    </div>
+                    <div class="swipe-caption">"Can't help the stares 🥲 It's always a test going out in cosplay"</div>
+                    <div class="swipe-why"><strong>Why it works:</strong> Public cosplay anxiety, relatable</div>
+                    <a href="https://www.instagram.com/reel/DFRDGmIzhOh/" target="_blank" class="swipe-link">Watch reel &#8599;</a>
+                </div>
+            </div>
+
+            <div class="swipe-card" data-tier="solid" data-plays="61000" data-er="14.0">
+                <div class="swipe-rank">#36</div>
+                <div class="swipe-body">
+                    <div class="swipe-top-row">
+                        <span class="swipe-handle">@unikittii</span>
+                        <div class="swipe-stats">
+                            <span class="swipe-pill plays">61K</span>
+                            <span class="swipe-pill er">14.0% ER</span>
+                            <span class="swipe-pill audio-og">Original</span>
+                        </div>
+                    </div>
+                    <div class="swipe-caption">"@l0vef3st is always there 👅👅"</div>
+                    <div class="swipe-why"><strong>Why it works:</strong> Friend tag, inside joke</div>
+                    <a href="https://www.instagram.com/reel/DNLWKoqslTF/" target="_blank" class="swipe-link">Watch reel &#8599;</a>
+                </div>
+            </div>
+
+            <div class="swipe-card" data-tier="solid" data-plays="50000" data-er="10.6">
+                <div class="swipe-rank">#37</div>
+                <div class="swipe-body">
+                    <div class="swipe-top-row">
+                        <span class="swipe-handle">@himeri0x0</span>
+                        <div class="swipe-stats">
+                            <span class="swipe-pill plays">50K</span>
+                            <span class="swipe-pill er">10.6% ER</span>
+                            <span class="swipe-pill audio-og">Original</span>
+                        </div>
+                    </div>
+                    <div class="swipe-caption">"cosplaying in public is fun but the anxiety…."</div>
+                    <div class="swipe-why"><strong>Why it works:</strong> Honest anxiety admission, relatable contrast</div>
+                    <a href="https://www.instagram.com/reel/DJHsnToyOZP/" target="_blank" class="swipe-link">Watch reel &#8599;</a>
+                </div>
+            </div>
+
+            <div class="swipe-card" data-tier="solid" data-plays="38000" data-er="9.2">
+                <div class="swipe-rank">#38</div>
+                <div class="swipe-body">
+                    <div class="swipe-top-row">
+                        <span class="swipe-handle">@foxcosplayz</span>
+                        <div class="swipe-stats">
+                            <span class="swipe-pill plays">38K</span>
+                            <span class="swipe-pill er">9.2% ER</span>
+                            <span class="swipe-pill audio-og">Original</span>
+                        </div>
+                    </div>
+                    <div class="swipe-caption">"literally next day after con, i'm back at work :("</div>
+                    <div class="swipe-why"><strong>Why it works:</strong> Post-con depression, work contrast</div>
+                    <a href="https://www.instagram.com/reel/DHJbx-1uESS/" target="_blank" class="swipe-link">Watch reel &#8599;</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Patterns to Steal -->
+        <div class="swipe-patterns fade-in">
+            <div class="pattern-card" style="border-top: 3px solid var(--accent-green);">
+                <h4><span style="color: var(--accent-green);">&#9650;</span> Highest ER Formats (10%+)</h4>
+                <div class="pattern-item"><code>16.4%</code> "One day we'll be financially responsible"</div>
+                <div class="pattern-item"><code>16.1%</code> "Cosplayers on public transport be like"</div>
+                <div class="pattern-item"><code>14.0%</code> Friend tag / inside joke content</div>
+                <div class="pattern-item"><code>12.9%</code> "my cosplay's tastes are interesting"</div>
+                <div class="pattern-item"><code>12.8%</code> "The cosplay was literally disintegrating"</div>
+                <div class="pattern-item"><code>12.4%</code> "never cosplay Miku in public..."</div>
+            </div>
+            <div class="pattern-card" style="border-top: 3px solid var(--accent-pink);">
+                <h4><span style="color: var(--accent-pink);">&#9889;</span> Caption Formulas That Repeat</h4>
+                <div class="pattern-item"><code>validation</code> "I can't be the only one who..."</div>
+                <div class="pattern-item"><code>question</code> "Anybody else do this?"</div>
+                <div class="pattern-item"><code>dramatic</code> "[Thing] is my villain origin story"</div>
+                <div class="pattern-item"><code>aspirational</code> "One day we'll..."</div>
+                <div class="pattern-item"><code>chaos</code> "The [thing] was literally [disaster]"</div>
+            </div>
+        </div>
+
+        <!-- Audio stat -->
+        <div class="fade-in" style="margin-top: 20px; background: var(--bg-card); border: 1px solid var(--border); border-radius: 12px; padding: 24px; border-left: 3px solid var(--accent-purple);">
+            <h4 style="font-size: 15px; font-weight: 700; color: var(--accent-purple); margin-bottom: 6px;">Audio Breakdown Across 38 Reels</h4>
+            <p style="font-size: 14px; color: var(--text-secondary); line-height: 1.7;">28 of 38 use original audio. Original audio avg: <span style="color: var(--accent-purple); font-weight: 700; font-family: 'JetBrains Mono';">793K plays</span>. Licensed outliers are trending sounds or franchise-matched. Your advantage: lean into your voice.</p>
+        </div>
+    </section>
+
     <!-- BOTTOM LINE -->
     <section class="section" id="bottomline">
         <div class="bottom-line fade-in">
@@ -2231,7 +3104,7 @@
 
     // ─── Hook filter ───
     function filterHooks(location, btn) {
-        document.querySelectorAll('.hook-filter').forEach(b => b.classList.remove('active'));
+        document.querySelectorAll('#hooks .hook-filter').forEach(b => b.classList.remove('active'));
         btn.classList.add('active');
 
         document.querySelectorAll('.hook-card').forEach(card => {
@@ -2241,6 +3114,90 @@
                 card.style.display = 'none';
             }
         });
+    }
+
+    // ─── Swipe file filter ───
+    function filterSwipe(tier, btn) {
+        // Only toggle the tier filter buttons (first group)
+        const section = document.getElementById('swipefile');
+        const filterBtns = section.querySelectorAll('.hook-filter[onclick^="filterSwipe"]');
+        filterBtns.forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+
+        document.querySelectorAll('#swipeGrid .swipe-card').forEach(card => {
+            if (tier === 'all' || card.getAttribute('data-tier') === tier) {
+                card.style.display = '';
+            } else {
+                card.style.display = 'none';
+            }
+        });
+
+        // Show/hide tier labels
+        document.querySelectorAll('#swipeGrid .swipe-tier-label').forEach(label => {
+            if (tier === 'all' || label.getAttribute('data-tier') === tier) {
+                label.style.display = '';
+            } else {
+                label.style.display = 'none';
+            }
+        });
+    }
+
+    // ─── Swipe file sort ───
+    function sortSwipe(mode, btn) {
+        document.getElementById('sortPlays').classList.remove('active');
+        document.getElementById('sortER').classList.remove('active');
+        btn.classList.add('active');
+
+        const grid = document.getElementById('swipeGrid');
+        const cards = Array.from(grid.querySelectorAll('.swipe-card'));
+        const labels = Array.from(grid.querySelectorAll('.swipe-tier-label'));
+
+        // Remove all cards and labels
+        cards.forEach(c => c.remove());
+        labels.forEach(l => l.remove());
+
+        // Sort cards
+        cards.sort((a, b) => {
+            const aVal = parseFloat(a.getAttribute(mode === 'plays' ? 'data-plays' : 'data-er'));
+            const bVal = parseFloat(b.getAttribute(mode === 'plays' ? 'data-plays' : 'data-er'));
+            return bVal - aVal;
+        });
+
+        // Re-number and append
+        if (mode === 'plays') {
+            // Group by tier with labels
+            const tiers = [
+                { key: 'top', label: '&#9733; Top Performers — 500K+ plays' },
+                { key: 'strong', label: '&#9650; Strong Performers — 200K-500K plays' },
+                { key: 'solid', label: '&#9679; Solid Performers — 50K-200K plays' }
+            ];
+            let rank = 1;
+            tiers.forEach(tier => {
+                const label = document.createElement('div');
+                label.className = 'swipe-tier-label';
+                label.setAttribute('data-tier', tier.key);
+                label.innerHTML = tier.label;
+                grid.appendChild(label);
+
+                cards.filter(c => c.getAttribute('data-tier') === tier.key).forEach(card => {
+                    card.querySelector('.swipe-rank').textContent = '#' + rank;
+                    grid.appendChild(card);
+                    rank++;
+                });
+            });
+        } else {
+            // Flat list sorted by ER
+            const label = document.createElement('div');
+            label.className = 'swipe-tier-label';
+            label.setAttribute('data-tier', 'all');
+            label.innerHTML = '&#9650; Sorted by Engagement Rate';
+            grid.appendChild(label);
+
+            cards.forEach((card, i) => {
+                card.querySelector('.swipe-rank').textContent = '#' + (i + 1);
+                grid.appendChild(card);
+            });
+        }
     }
 </script>
 
