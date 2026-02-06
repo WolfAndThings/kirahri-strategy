@@ -1,0 +1,2232 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@kirahri.cos — Strategy Preview</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-primary: #0a0a0f;
+            --bg-secondary: #111118;
+            --bg-card: #16161f;
+            --bg-card-hover: #1c1c28;
+            --border: #2a2a3a;
+            --border-light: #3a3a4a;
+            --text-primary: #f0f0f5;
+            --text-secondary: #9090a8;
+            --text-muted: #606078;
+            --accent-pink: #ff3c8e;
+            --accent-pink-dim: #ff3c8e33;
+            --accent-purple: #a855f7;
+            --accent-purple-dim: #a855f720;
+            --accent-blue: #3b82f6;
+            --accent-cyan: #06b6d4;
+            --accent-green: #10b981;
+            --accent-amber: #f59e0b;
+            --accent-red: #ef4444;
+            --gradient-1: linear-gradient(135deg, #ff3c8e, #a855f7);
+            --gradient-2: linear-gradient(135deg, #a855f7, #3b82f6);
+            --gradient-3: linear-gradient(135deg, #06b6d4, #10b981);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            overflow-x: hidden;
+            line-height: 1.6;
+        }
+
+        /* ─── Sidebar ─── */
+        .sidebar {
+            position: fixed;
+            left: 0;
+            top: 0;
+            width: 280px;
+            height: 100vh;
+            background: var(--bg-secondary);
+            border-right: 1px solid var(--border);
+            padding: 24px 0;
+            z-index: 100;
+            overflow-y: auto;
+            transition: transform 0.3s ease;
+        }
+
+        .sidebar-header {
+            padding: 0 24px 24px;
+            border-bottom: 1px solid var(--border);
+            margin-bottom: 16px;
+        }
+
+        .sidebar-brand {
+            font-size: 12px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: var(--text-muted);
+            margin-bottom: 8px;
+        }
+
+        .sidebar-title {
+            font-size: 18px;
+            font-weight: 800;
+            background: var(--gradient-1);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .nav-section {
+            padding: 0 12px;
+        }
+
+        .nav-section-title {
+            font-size: 10px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            color: var(--text-muted);
+            padding: 16px 12px 8px;
+        }
+
+        .nav-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 10px 12px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.2s;
+            text-decoration: none;
+            color: var(--text-secondary);
+            font-size: 13px;
+            font-weight: 500;
+        }
+
+        .nav-item:hover {
+            background: var(--bg-card);
+            color: var(--text-primary);
+        }
+
+        .nav-item.active {
+            background: var(--accent-pink-dim);
+            color: var(--accent-pink);
+        }
+
+        .nav-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            flex-shrink: 0;
+        }
+
+        .nav-number {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 11px;
+            color: var(--text-muted);
+            min-width: 20px;
+        }
+
+        /* ─── Mobile nav toggle ─── */
+        .mobile-toggle {
+            display: none;
+            position: fixed;
+            top: 16px;
+            left: 16px;
+            z-index: 200;
+            width: 44px;
+            height: 44px;
+            border-radius: 12px;
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            color: var(--text-primary);
+            font-size: 20px;
+            cursor: pointer;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* ─── Main Content ─── */
+        .main {
+            margin-left: 280px;
+            min-height: 100vh;
+        }
+
+        /* ─── Hero ─── */
+        .hero {
+            position: relative;
+            padding: 80px 60px 60px;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -20%;
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle, var(--accent-pink-dim) 0%, transparent 70%);
+            pointer-events: none;
+        }
+
+        .hero::after {
+            content: '';
+            position: absolute;
+            bottom: -30%;
+            left: 10%;
+            width: 400px;
+            height: 400px;
+            background: radial-gradient(circle, var(--accent-purple-dim) 0%, transparent 70%);
+            pointer-events: none;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero-tag {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: var(--accent-pink-dim);
+            border: 1px solid #ff3c8e44;
+            padding: 6px 16px;
+            border-radius: 100px;
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--accent-pink);
+            margin-bottom: 24px;
+            letter-spacing: 0.5px;
+        }
+
+        .hero-tag-dot {
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: var(--accent-pink);
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.4; }
+        }
+
+        .hero h1 {
+            font-size: 48px;
+            font-weight: 900;
+            line-height: 1.1;
+            margin-bottom: 16px;
+            letter-spacing: -1px;
+        }
+
+        .hero h1 span {
+            background: var(--gradient-1);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero-sub {
+            font-size: 18px;
+            color: var(--text-secondary);
+            max-width: 600px;
+            line-height: 1.7;
+        }
+
+        /* ─── Stats Bar ─── */
+        .stats-bar {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 16px;
+            padding: 0 60px 40px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .stat-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 24px;
+            transition: all 0.3s;
+        }
+
+        .stat-card:hover {
+            border-color: var(--border-light);
+            transform: translateY(-2px);
+        }
+
+        .stat-label {
+            font-size: 12px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--text-muted);
+            margin-bottom: 8px;
+        }
+
+        .stat-value {
+            font-size: 32px;
+            font-weight: 800;
+            letter-spacing: -1px;
+        }
+
+        .stat-sub {
+            font-size: 12px;
+            color: var(--text-secondary);
+            margin-top: 4px;
+        }
+
+        .stat-value.pink { color: var(--accent-pink); }
+        .stat-value.purple { color: var(--accent-purple); }
+        .stat-value.cyan { color: var(--accent-cyan); }
+        .stat-value.green { color: var(--accent-green); }
+
+        /* ─── Section ─── */
+        .section {
+            padding: 40px 60px;
+            border-top: 1px solid var(--border);
+        }
+
+        .section-header {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            margin-bottom: 32px;
+        }
+
+        .section-icon {
+            width: 44px;
+            height: 44px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            flex-shrink: 0;
+        }
+
+        .section-number {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--text-muted);
+        }
+
+        .section-title {
+            font-size: 28px;
+            font-weight: 800;
+            letter-spacing: -0.5px;
+        }
+
+        .section-desc {
+            font-size: 15px;
+            color: var(--text-secondary);
+            margin-top: 2px;
+        }
+
+        /* ─── Cards Grid ─── */
+        .cards-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 16px;
+        }
+
+        .card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 24px;
+            transition: all 0.3s;
+        }
+
+        .card:hover {
+            border-color: var(--border-light);
+            background: var(--bg-card-hover);
+        }
+
+        .card-title {
+            font-size: 16px;
+            font-weight: 700;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .card-text {
+            font-size: 14px;
+            color: var(--text-secondary);
+            line-height: 1.7;
+        }
+
+        .card-stat {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 13px;
+            font-weight: 600;
+            padding: 4px 10px;
+            border-radius: 6px;
+            background: var(--accent-pink-dim);
+            color: var(--accent-pink);
+        }
+
+        /* ─── Do / Don't Lists ─── */
+        .do-dont-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        .do-list, .dont-list {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 28px;
+        }
+
+        .do-list { border-top: 3px solid var(--accent-green); }
+        .dont-list { border-top: 3px solid var(--accent-red); }
+
+        .list-header {
+            font-size: 14px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 16px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .list-header.green { color: var(--accent-green); }
+        .list-header.red { color: var(--accent-red); }
+
+        .list-item {
+            display: flex;
+            gap: 10px;
+            padding: 10px 0;
+            border-bottom: 1px solid #ffffff08;
+            font-size: 14px;
+            color: var(--text-secondary);
+            line-height: 1.6;
+        }
+
+        .list-item:last-child { border-bottom: none; }
+
+        .list-bullet {
+            flex-shrink: 0;
+            margin-top: 2px;
+        }
+
+        /* ─── Competitor Cards ─── */
+        .competitor-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 24px;
+            display: flex;
+            align-items: flex-start;
+            gap: 16px;
+            transition: all 0.3s;
+        }
+
+        .competitor-card:hover {
+            border-color: var(--border-light);
+        }
+
+        .competitor-avatar {
+            width: 48px;
+            height: 48px;
+            border-radius: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 800;
+            font-size: 18px;
+            flex-shrink: 0;
+        }
+
+        .competitor-info h4 {
+            font-size: 15px;
+            font-weight: 700;
+        }
+
+        .competitor-followers {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 12px;
+            color: var(--accent-purple);
+            margin-top: 2px;
+        }
+
+        .competitor-desc {
+            font-size: 13px;
+            color: var(--text-secondary);
+            margin-top: 8px;
+            line-height: 1.6;
+        }
+
+        /* ─── Calendar ─── */
+        .calendar-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 12px;
+        }
+
+        .calendar-day {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 16px;
+            transition: all 0.3s;
+        }
+
+        .calendar-day:hover {
+            border-color: var(--border-light);
+        }
+
+        .calendar-day-name {
+            font-size: 12px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 8px;
+        }
+
+        .calendar-pillar {
+            font-size: 13px;
+            color: var(--text-secondary);
+        }
+
+        .pillar-tag {
+            display: inline-block;
+            padding: 3px 10px;
+            border-radius: 6px;
+            font-size: 11px;
+            font-weight: 600;
+            margin-top: 8px;
+        }
+
+        .pillar-con { background: #ff3c8e20; color: var(--accent-pink); }
+        .pillar-bts { background: #a855f720; color: var(--accent-purple); }
+        .pillar-hum { background: #f59e0b20; color: var(--accent-amber); }
+        .pillar-per { background: #06b6d420; color: var(--accent-cyan); }
+        .pillar-soc { background: #10b98120; color: var(--accent-green); }
+        .pillar-trn { background: #3b82f620; color: var(--accent-blue); }
+        .pillar-shw { background: #ef444420; color: var(--accent-red); }
+
+        /* ─── Pillar Distribution ─── */
+        .pillar-bars {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .pillar-bar-row {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .pillar-bar-label {
+            font-size: 13px;
+            font-weight: 600;
+            min-width: 160px;
+            color: var(--text-secondary);
+        }
+
+        .pillar-bar-track {
+            flex: 1;
+            height: 28px;
+            background: #ffffff08;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        .pillar-bar-fill {
+            height: 100%;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            padding-left: 12px;
+            font-size: 12px;
+            font-weight: 700;
+            transition: width 1s ease;
+        }
+
+        /* ─── Case Study ─── */
+        .case-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        .case-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            overflow: hidden;
+        }
+
+        .case-card-header {
+            padding: 20px 24px;
+            font-size: 13px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .case-card-body {
+            padding: 0 24px 24px;
+        }
+
+        .case-title {
+            font-size: 20px;
+            font-weight: 800;
+            margin-bottom: 16px;
+        }
+
+        .case-stat-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px 0;
+            border-bottom: 1px solid #ffffff06;
+            font-size: 14px;
+        }
+
+        .case-stat-row:last-child { border-bottom: none; }
+
+        .case-stat-label {
+            color: var(--text-muted);
+        }
+
+        .case-stat-value {
+            font-weight: 600;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 13px;
+        }
+
+        /* ─── Audio Table ─── */
+        .audio-table {
+            width: 100%;
+            border-collapse: separate;
+            border-spacing: 0;
+        }
+
+        .audio-table th {
+            text-align: left;
+            font-size: 11px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--text-muted);
+            padding: 12px 16px;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .audio-table td {
+            padding: 14px 16px;
+            font-size: 14px;
+            border-bottom: 1px solid #ffffff06;
+        }
+
+        .audio-table tr:hover td {
+            background: #ffffff04;
+        }
+
+        .audio-result {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        .audio-result.good { color: var(--accent-green); }
+        .audio-result.bad { color: var(--accent-red); }
+
+        /* ─── Bottom Line ─── */
+        .bottom-line {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 40px;
+            margin: 0 60px 60px;
+        }
+
+        .formula-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 16px;
+            margin-top: 24px;
+        }
+
+        .formula-item {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            padding: 16px;
+            background: #ffffff04;
+            border-radius: 12px;
+            border: 1px solid #ffffff08;
+        }
+
+        .formula-num {
+            width: 36px;
+            height: 36px;
+            border-radius: 10px;
+            background: var(--gradient-1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 800;
+            font-size: 15px;
+            flex-shrink: 0;
+        }
+
+        .formula-text {
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        /* ─── Quick Start ─── */
+        .quickstart-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+            gap: 14px;
+            margin-top: 24px;
+        }
+
+        .qs-card {
+            background: #ffffff04;
+            border: 1px solid #ffffff08;
+            border-radius: 12px;
+            padding: 20px;
+            transition: all 0.3s;
+        }
+
+        .qs-card:hover {
+            border-color: var(--accent-pink);
+        }
+
+        .qs-time {
+            font-size: 12px;
+            font-weight: 700;
+            color: var(--accent-pink);
+            margin-bottom: 6px;
+        }
+
+        .qs-action {
+            font-size: 14px;
+            font-weight: 600;
+            margin-bottom: 4px;
+        }
+
+        .qs-doc {
+            font-size: 12px;
+            color: var(--text-muted);
+            font-family: 'JetBrains Mono', monospace;
+        }
+
+        /* ─── Moat Section ─── */
+        .moat-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 16px;
+        }
+
+        .moat-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 24px;
+            border-left: 3px solid;
+        }
+
+        .moat-card:nth-child(1) { border-left-color: var(--accent-pink); }
+        .moat-card:nth-child(2) { border-left-color: var(--accent-purple); }
+        .moat-card:nth-child(3) { border-left-color: var(--accent-cyan); }
+        .moat-card:nth-child(4) { border-left-color: var(--accent-green); }
+
+        .moat-card h4 {
+            font-size: 15px;
+            font-weight: 700;
+            margin-bottom: 6px;
+        }
+
+        .moat-card p {
+            font-size: 13px;
+            color: var(--text-secondary);
+        }
+
+        .moat-stat {
+            font-family: 'JetBrains Mono', monospace;
+            font-weight: 700;
+        }
+
+        /* ─── Scroll Animations ─── */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.6s ease, transform 0.6s ease;
+        }
+
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* ─── Checklist ─── */
+        .checklist {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            margin-top: 20px;
+        }
+
+        .checklist-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            padding: 14px 18px;
+            background: #ffffff04;
+            border: 1px solid #ffffff08;
+            border-radius: 10px;
+            font-size: 14px;
+        }
+
+        .check-icon {
+            flex-shrink: 0;
+            margin-top: 1px;
+        }
+
+        /* ─── Responsive ─── */
+        @media (max-width: 1024px) {
+            .sidebar { transform: translateX(-100%); }
+            .sidebar.open { transform: translateX(0); }
+            .mobile-toggle { display: flex; }
+            .main { margin-left: 0; }
+            .hero { padding: 80px 30px 40px; }
+            .stats-bar { padding: 0 30px 30px; grid-template-columns: repeat(2, 1fr); }
+            .section { padding: 30px; }
+            .do-dont-grid { grid-template-columns: 1fr; }
+            .case-grid { grid-template-columns: 1fr; }
+            .formula-grid { grid-template-columns: 1fr; }
+            .calendar-grid { grid-template-columns: repeat(2, 1fr); }
+            .bottom-line { margin: 0 30px 30px; }
+            .moat-grid { grid-template-columns: 1fr; }
+        }
+
+        @media (max-width: 600px) {
+            .stats-bar { grid-template-columns: 1fr; }
+            .hero h1 { font-size: 32px; }
+            .cards-grid { grid-template-columns: 1fr; }
+            .calendar-grid { grid-template-columns: 1fr; }
+        }
+
+        /* ─── Overlay for mobile ─── */
+        .sidebar-overlay {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.6);
+            z-index: 99;
+        }
+
+        .sidebar-overlay.active {
+            display: block;
+        }
+
+        /* ─── Shot list ─── */
+        .shot-columns {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        .shot-col h4 {
+            font-size: 14px;
+            font-weight: 700;
+            margin-bottom: 14px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .shot-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 10px 0;
+            border-bottom: 1px solid #ffffff06;
+            font-size: 14px;
+            color: var(--text-secondary);
+        }
+
+        .shot-item:last-child { border-bottom: none; }
+
+        .divider-rule {
+            margin: 20px 0;
+            border: none;
+            border-top: 1px solid var(--border);
+        }
+
+        /* ─── Locked Preview Cards ─── */
+        .locked-preview {
+            position: relative;
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            overflow: hidden;
+        }
+
+        .locked-tease {
+            padding: 28px;
+            filter: blur(2px);
+            opacity: 0.4;
+            user-select: none;
+            pointer-events: none;
+        }
+
+        .locked-tease-items {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin-bottom: 16px;
+        }
+
+        .locked-tease-chip {
+            font-size: 14px;
+            color: var(--text-secondary);
+            padding: 10px 16px;
+            background: #ffffff04;
+            border: 1px solid #ffffff08;
+            border-radius: 10px;
+        }
+
+        .locked-tease-detail {
+            font-size: 13px;
+            color: var(--text-muted);
+            line-height: 1.6;
+        }
+
+        .locked-overlay {
+            position: absolute;
+            inset: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            background: rgba(10, 10, 15, 0.65);
+            backdrop-filter: blur(4px);
+            -webkit-backdrop-filter: blur(4px);
+            z-index: 2;
+        }
+
+        .locked-icon {
+            font-size: 32px;
+            margin-bottom: 12px;
+        }
+
+        .locked-title {
+            font-size: 20px;
+            font-weight: 800;
+            letter-spacing: -0.3px;
+            margin-bottom: 4px;
+            text-align: center;
+        }
+
+        .locked-desc {
+            font-size: 14px;
+            color: var(--text-secondary);
+            text-align: center;
+        }
+
+        /* ─── CTA Banner ─── */
+        .cta-banner {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            padding: 48px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .cta-banner::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 600px;
+            height: 400px;
+            background: radial-gradient(circle, #ff3c8e18 0%, transparent 70%);
+            pointer-events: none;
+        }
+
+        .cta-badge {
+            display: inline-block;
+            font-size: 11px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: var(--accent-pink);
+            background: var(--accent-pink-dim);
+            border: 1px solid #ff3c8e44;
+            padding: 5px 16px;
+            border-radius: 100px;
+            margin-bottom: 20px;
+            position: relative;
+        }
+
+        .cta-title {
+            font-size: 32px;
+            font-weight: 900;
+            letter-spacing: -0.5px;
+            margin-bottom: 12px;
+            position: relative;
+        }
+
+        .cta-desc {
+            font-size: 16px;
+            color: var(--text-secondary);
+            max-width: 600px;
+            margin: 0 auto 28px;
+            line-height: 1.7;
+            position: relative;
+        }
+
+        .cta-includes {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+            gap: 10px;
+            max-width: 600px;
+            margin: 0 auto 32px;
+            text-align: left;
+            position: relative;
+        }
+
+        .cta-include-item {
+            font-size: 14px;
+            color: var(--text-secondary);
+            padding: 8px 0;
+        }
+
+        .cta-button {
+            display: inline-block;
+            padding: 16px 40px;
+            background: var(--gradient-1);
+            color: white;
+            font-size: 16px;
+            font-weight: 700;
+            border-radius: 12px;
+            text-decoration: none;
+            transition: all 0.3s;
+            position: relative;
+        }
+
+        .cta-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 30px #ff3c8e40;
+        }
+    </style>
+</head>
+<body>
+
+<!-- Mobile Toggle -->
+<button class="mobile-toggle" onclick="toggleSidebar()" aria-label="Toggle menu">&#9776;</button>
+<div class="sidebar-overlay" onclick="toggleSidebar()"></div>
+
+<!-- Sidebar -->
+<nav class="sidebar" id="sidebar">
+    <div class="sidebar-header">
+        <div class="sidebar-brand">Strategy Preview</div>
+        <div class="sidebar-title">@kirahri.cos</div>
+    </div>
+    <div class="nav-section">
+        <div class="nav-section-title">Overview</div>
+        <a href="#hero" class="nav-item active" data-section="hero">
+            <div class="nav-dot" style="background: var(--accent-pink)"></div>
+            Cheat Sheet
+        </a>
+        <a href="#analysis" class="nav-item" data-section="analysis">
+            <div class="nav-dot" style="background: var(--accent-purple)"></div>
+            In-Depth Analysis
+        </a>
+
+        <div class="nav-section-title" style="margin-top: 8px;">Strategy</div>
+        <a href="#guidance" class="nav-item" data-section="guidance">
+            <div class="nav-dot" style="background: var(--accent-green)"></div>
+            Strategic Guidance
+        </a>
+        <a href="#competitors" class="nav-item" data-section="competitors">
+            <div class="nav-dot" style="background: var(--accent-cyan)"></div>
+            Competitive Scan
+        </a>
+        <a href="#moat" class="nav-item" data-section="moat">
+            <div class="nav-dot" style="background: var(--accent-amber)"></div>
+            Your Moat
+        </a>
+
+        <div class="nav-section-title" style="margin-top: 8px;">Content</div>
+        <a href="#reels" class="nav-item" data-section="reels">
+            <div class="nav-dot" style="background: var(--accent-pink)"></div>
+            Reel Concepts &#128274;
+        </a>
+        <a href="#shots" class="nav-item" data-section="shots">
+            <div class="nav-dot" style="background: var(--accent-blue)"></div>
+            Shot List + Filming &#128274;
+        </a>
+        <a href="#calendar" class="nav-item" data-section="calendar">
+            <div class="nav-dot" style="background: var(--accent-purple)"></div>
+            Content Calendar
+        </a>
+        <a href="#hooks" class="nav-item" data-section="hooks">
+            <div class="nav-dot" style="background: var(--accent-amber)"></div>
+            Hook Library &#128274;
+        </a>
+
+        <div class="nav-section-title" style="margin-top: 8px;">Reference</div>
+        <a href="#casestudy" class="nav-item" data-section="casestudy">
+            <div class="nav-dot" style="background: var(--accent-red)"></div>
+            Case Study
+        </a>
+        <a href="#audio" class="nav-item" data-section="audio">
+            <div class="nav-dot" style="background: var(--accent-cyan)"></div>
+            Audio Strategy
+        </a>
+        <a href="#swipefile" class="nav-item" data-section="swipefile">
+            <div class="nav-dot" style="background: var(--accent-amber)"></div>
+            Swipe File (38 Reels) &#128274;
+        </a>
+        <a href="#bottomline" class="nav-item" data-section="bottomline">
+            <div class="nav-dot" style="background: var(--accent-green)"></div>
+            The Bottom Line
+        </a>
+    </div>
+</nav>
+
+<!-- Main Content -->
+<main class="main">
+
+    <!-- HERO -->
+    <section class="hero" id="hero">
+        <div class="hero-content fade-in">
+            <div class="hero-tag">
+                <div class="hero-tag-dot"></div>
+                FULL STRATEGY PACKAGE
+            </div>
+            <h1>Your viral formula,<br><span>decoded.</span></h1>
+            <p class="hero-sub">12 documents. 50 reels analyzed. 6 competitors scanned. 65 hooks ready to film. Everything you need to turn convention chaos into consistent growth.</p>
+        </div>
+    </section>
+
+    <!-- STATS BAR -->
+    <div class="stats-bar fade-in">
+        <div class="stat-card">
+            <div class="stat-label">Total Plays</div>
+            <div class="stat-value pink" data-count="6800000">0</div>
+            <div class="stat-sub">Across 50 reels</div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-label">Top 4 Reels Share</div>
+            <div class="stat-value purple">92%</div>
+            <div class="stat-sub">Of all total plays</div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-label">Engagement Rate</div>
+            <div class="stat-value cyan">11.4%</div>
+            <div class="stat-sub">BTS content avg (highest pillar)</div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-label">Comment Ratio</div>
+            <div class="stat-value green">5.04%</div>
+            <div class="stat-sub">7x higher than competitors</div>
+        </div>
+    </div>
+
+    <!-- IN-DEPTH ANALYSIS -->
+    <section class="section" id="analysis">
+        <div class="section-header fade-in">
+            <div class="section-icon" style="background: var(--accent-purple-dim);">
+                <span style="color: var(--accent-purple);">&#9783;</span>
+            </div>
+            <div>
+                <div class="section-number">01</div>
+                <div class="section-title">In-Depth Analysis</div>
+                <div class="section-desc">Full data breakdown of 50 reels</div>
+            </div>
+        </div>
+        <div class="cards-grid fade-in">
+            <div class="card">
+                <div class="card-title">
+                    <span class="card-stat">6.8M</span> Total Plays
+                </div>
+                <div class="card-text">Across 50 reels analyzed in the dataset, with massive concentration at the top.</div>
+            </div>
+            <div class="card">
+                <div class="card-title">
+                    <span class="card-stat">92%</span> Top 4 Concentration
+                </div>
+                <div class="card-text">4 reels account for 92% of all plays. Your bottom 10 average under 1,500 each. The difference is narrative.</div>
+            </div>
+            <div class="card">
+                <div class="card-title">
+                    <span class="card-stat">11.4%</span> BTS Engagement
+                </div>
+                <div class="card-text">Behind-the-scenes content is your highest-performing pillar. Convention content follows at 9% avg ER.</div>
+            </div>
+            <div class="card">
+                <div class="card-title">
+                    <span class="card-stat">200K</span> vs 13K
+                </div>
+                <div class="card-text">20-30s reels average 200K plays. 5-10s reels average just 13K. Longer storytelling wins.</div>
+            </div>
+            <div class="card">
+                <div class="card-title">
+                    <span class="card-stat">5.04%</span> Comment Ratio
+                </div>
+                <div class="card-text">Comments-to-likes ratio is 5.04% — 7x higher than competitors. Your audience talks back.</div>
+            </div>
+            <div class="card">
+                <div class="card-title">
+                    <span class="card-stat">5.4x</span> Original Audio
+                </div>
+                <div class="card-text">Original audio gets 5.4x more plays than licensed. Your voice is the asset.</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- STRATEGIC GUIDANCE -->
+    <section class="section" id="guidance">
+        <div class="section-header fade-in">
+            <div class="section-icon" style="background: #10b98120;">
+                <span style="color: var(--accent-green);">&#10003;</span>
+            </div>
+            <div>
+                <div class="section-number">02</div>
+                <div class="section-title">Strategic Guidance</div>
+                <div class="section-desc">What to repeat, what to drop, what to film next</div>
+            </div>
+        </div>
+        <div class="do-dont-grid fade-in">
+            <div class="do-list">
+                <div class="list-header green">&#10003; Repeat These</div>
+                <div class="list-item">
+                    <span class="list-bullet" style="color: var(--accent-green);">&#9679;</span>
+                    <span>Convention chaos reels — your top 4 are all con-adjacent</span>
+                </div>
+                <div class="list-item">
+                    <span class="list-bullet" style="color: var(--accent-green);">&#9679;</span>
+                    <span>Authentic personal moments — trans journey content = 564K plays, 4.2% ER</span>
+                </div>
+                <div class="list-item">
+                    <span class="list-bullet" style="color: var(--accent-green);">&#9679;</span>
+                    <span>DM/comment reaction reels — 50K plays, 13.3% ER</span>
+                </div>
+                <div class="list-item">
+                    <span class="list-bullet" style="color: var(--accent-green);">&#9679;</span>
+                    <span>Behind-the-scenes process content</span>
+                </div>
+            </div>
+            <div class="dont-list">
+                <div class="list-header red">&#10007; Stop These</div>
+                <div class="list-item">
+                    <span class="list-bullet" style="color: var(--accent-red);">&#10005;</span>
+                    <span>Vague one-word captions — "Hmmmm" = 889 plays</span>
+                </div>
+                <div class="list-item">
+                    <span class="list-bullet" style="color: var(--accent-red);">&#10005;</span>
+                    <span>Motivational/advice content — "Be weird and cringy!" = 1,644 plays</span>
+                </div>
+                <div class="list-item">
+                    <span class="list-bullet" style="color: var(--accent-red);">&#10005;</span>
+                    <span>"Trial" or hesitant content — "Scared to try the trend" = 1,465 plays</span>
+                </div>
+                <div class="list-item">
+                    <span class="list-bullet" style="color: var(--accent-red);">&#10005;</span>
+                    <span>Pure promo without a hook</span>
+                </div>
+            </div>
+        </div>
+
+        <div style="margin-top: 32px;" class="fade-in">
+            <h3 style="font-size: 18px; font-weight: 700; margin-bottom: 6px;">Content Mix Target</h3>
+            <p style="font-size: 14px; color: var(--text-muted); margin-bottom: 20px;">4-6 reels/week: 2 Tier 1 + 2 Tier 2 + 1 Tier 3 max</p>
+            <div class="pillar-bars">
+                <div class="pillar-bar-row">
+                    <div class="pillar-bar-label">Convention/Event</div>
+                    <div class="pillar-bar-track">
+                        <div class="pillar-bar-fill" style="width: 0%; background: var(--accent-pink);" data-target="25">25%</div>
+                    </div>
+                </div>
+                <div class="pillar-bar-row">
+                    <div class="pillar-bar-label">Relatable Humor</div>
+                    <div class="pillar-bar-track">
+                        <div class="pillar-bar-fill" style="width: 0%; background: var(--accent-amber);" data-target="25">25%</div>
+                    </div>
+                </div>
+                <div class="pillar-bar-row">
+                    <div class="pillar-bar-label">Behind the Scenes</div>
+                    <div class="pillar-bar-track">
+                        <div class="pillar-bar-fill" style="width: 0%; background: var(--accent-purple);" data-target="20">20%</div>
+                    </div>
+                </div>
+                <div class="pillar-bar-row">
+                    <div class="pillar-bar-label">Personal/Authentic</div>
+                    <div class="pillar-bar-track">
+                        <div class="pillar-bar-fill" style="width: 0%; background: var(--accent-cyan);" data-target="10">10%</div>
+                    </div>
+                </div>
+                <div class="pillar-bar-row">
+                    <div class="pillar-bar-label">Community/Social</div>
+                    <div class="pillar-bar-track">
+                        <div class="pillar-bar-fill" style="width: 0%; background: var(--accent-green);" data-target="10">10%</div>
+                    </div>
+                </div>
+                <div class="pillar-bar-row">
+                    <div class="pillar-bar-label">Cosplay Showcase</div>
+                    <div class="pillar-bar-track">
+                        <div class="pillar-bar-fill" style="width: 0%; background: var(--accent-red);" data-target="8">8%</div>
+                    </div>
+                </div>
+                <div class="pillar-bar-row">
+                    <div class="pillar-bar-label">Trend</div>
+                    <div class="pillar-bar-track">
+                        <div class="pillar-bar-fill" style="width: 0%; background: var(--accent-blue);" data-target="2">2%</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- COMPETITIVE SCAN -->
+    <section class="section" id="competitors">
+        <div class="section-header fade-in">
+            <div class="section-icon" style="background: #06b6d420;">
+                <span style="color: var(--accent-cyan);">&#9878;</span>
+            </div>
+            <div>
+                <div class="section-number">03</div>
+                <div class="section-title">Competitive Scan</div>
+                <div class="section-desc">6 competitor accounts + 200 niche posts analyzed</div>
+            </div>
+        </div>
+        <div class="cards-grid fade-in" style="grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));">
+            <div class="competitor-card">
+                <div class="competitor-avatar" style="background: #f59e0b20; color: var(--accent-amber);">N</div>
+                <div class="competitor-info">
+                    <h4>@nikkiwoodss</h4>
+                    <div class="competitor-followers">415K followers</div>
+                    <div class="competitor-desc">At-home humor, no con required. Proves you can film year-round.</div>
+                </div>
+            </div>
+            <div class="competitor-card">
+                <div class="competitor-avatar" style="background: #a855f720; color: var(--accent-purple);">D</div>
+                <div class="competitor-info">
+                    <h4>@danielledenicola</h4>
+                    <div class="competitor-followers">627K followers</div>
+                    <div class="competitor-desc">Vulnerability content that drives deep connection and saves.</div>
+                </div>
+            </div>
+            <div class="competitor-card">
+                <div class="competitor-avatar" style="background: #ff3c8e20; color: var(--accent-pink);">S</div>
+                <div class="competitor-info">
+                    <h4>@sakuraflorr</h4>
+                    <div class="competitor-followers">150K IG / 1.2M TikTok</div>
+                    <div class="competitor-desc">BookTok crossover strategy. Taps multiple audiences simultaneously.</div>
+                </div>
+            </div>
+            <div class="competitor-card">
+                <div class="competitor-avatar" style="background: #10b98120; color: var(--accent-green);">Y</div>
+                <div class="competitor-info">
+                    <h4>@yayahan</h4>
+                    <div class="competitor-followers">594K followers</div>
+                    <div class="competitor-desc">Crafting expert lane. Authority positioning through skill.</div>
+                </div>
+            </div>
+        </div>
+
+        <div style="margin-top: 32px;" id="moat">
+            <h3 style="font-size: 18px; font-weight: 700; margin-bottom: 6px;" class="fade-in">Your Competitive Moat</h3>
+            <p style="font-size: 14px; color: var(--text-muted); margin-bottom: 20px;" class="fade-in">Things no competitor can copy</p>
+            <div class="moat-grid fade-in">
+                <div class="moat-card">
+                    <h4>Convention Chaos Monopoly</h4>
+                    <p>No one else owns the con-floor humor niche the way you do. This is uncontested territory.</p>
+                </div>
+                <div class="moat-card">
+                    <h4>Comment Engagement</h4>
+                    <p><span class="moat-stat" style="color: var(--accent-purple);">5.04%</span> comments-to-likes ratio. That's 7x higher than @nikkiwoodss.</p>
+                </div>
+                <div class="moat-card">
+                    <h4>Original Audio Personality</h4>
+                    <p><span class="moat-stat" style="color: var(--accent-cyan);">5.4x</span> play multiplier when you use your own voice. The algorithm favors you.</p>
+                </div>
+                <div class="moat-card">
+                    <h4>Replay Ratio</h4>
+                    <p><span class="moat-stat" style="color: var(--accent-green);">4.77x</span> replay ratio on top content. People watch your reels multiple times.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- REEL CONCEPTS (LOCKED) -->
+    <section class="section" id="reels">
+        <div class="section-header fade-in">
+            <div class="section-icon" style="background: var(--accent-pink-dim);">
+                <span style="color: var(--accent-pink);">&#9654;</span>
+            </div>
+            <div>
+                <div class="section-number">04</div>
+                <div class="section-title">Three Reel Concepts</div>
+                <div class="section-desc">Ready-to-film ideas with full shot breakdowns</div>
+            </div>
+        </div>
+        <div class="locked-preview fade-in">
+            <div class="locked-tease">
+                <div class="locked-tease-items">
+                    <div class="locked-tease-chip">&#9654; Reel 1 — Sequel to your 1.9M viral reel</div>
+                    <div class="locked-tease-chip">&#9654; Reel 2 — Comparison format (play both roles)</div>
+                    <div class="locked-tease-chip">&#9654; Reel 3 — Save magnet designed to be bookmarked</div>
+                </div>
+                <p class="locked-tease-detail">Each concept includes the exact hook, shot-by-shot breakdown, target duration, and audio recommendation.</p>
+            </div>
+            <div class="locked-overlay">
+                <div class="locked-icon">&#128274;</div>
+                <div class="locked-title">3 Ready-to-Film Reel Concepts</div>
+                <div class="locked-desc">With shot-by-shot breakdowns, hooks, and audio picks</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SHOT LIST (LOCKED) -->
+    <section class="section" id="shots">
+        <div class="section-header fade-in">
+            <div class="section-icon" style="background: #3b82f620;">
+                <span style="color: var(--accent-blue);">&#9881;</span>
+            </div>
+            <div>
+                <div class="section-number">05</div>
+                <div class="section-title">Shot List + Filming Guide</div>
+                <div class="section-desc">What to film at conventions and at home</div>
+            </div>
+        </div>
+        <div class="locked-preview fade-in">
+            <div class="locked-tease">
+                <div class="locked-tease-items">
+                    <div class="locked-tease-chip">&#127909; 5 must-capture convention moments</div>
+                    <div class="locked-tease-chip">&#127968; Weekly at-home batch filming plan</div>
+                    <div class="locked-tease-chip">&#9201; The 3-Second Rule framework</div>
+                </div>
+                <p class="locked-tease-detail">Never wonder what to film. Every shot is mapped to a content pillar with a target duration.</p>
+            </div>
+            <div class="locked-overlay">
+                <div class="locked-icon">&#128274;</div>
+                <div class="locked-title">Complete Filming Guide</div>
+                <div class="locked-desc">Convention + at-home shot lists with the 3-Second Rule</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CONTENT CALENDAR -->
+    <section class="section" id="calendar">
+        <div class="section-header fade-in">
+            <div class="section-icon" style="background: var(--accent-purple-dim);">
+                <span style="color: var(--accent-purple);">&#9776;</span>
+            </div>
+            <div>
+                <div class="section-number">06</div>
+                <div class="section-title">Content Calendar</div>
+                <div class="section-desc">8-week posting schedule mapped to pillars</div>
+            </div>
+        </div>
+        <div class="calendar-grid fade-in">
+            <div class="calendar-day">
+                <div class="calendar-day-name" style="color: var(--accent-amber);">Monday</div>
+                <div class="calendar-pillar">Relatable Humor</div>
+                <span class="pillar-tag pillar-hum">HUM</span>
+            </div>
+            <div class="calendar-day" style="border-color: var(--accent-pink);">
+                <div class="calendar-day-name" style="color: var(--accent-pink);">Wednesday &#9733;</div>
+                <div class="calendar-pillar">Convention / BTS (Tier 1)</div>
+                <span class="pillar-tag pillar-con">CON</span>
+                <span class="pillar-tag pillar-bts">BTS</span>
+                <div style="font-size: 11px; color: var(--accent-pink); margin-top: 8px; font-weight: 600;">Best posting day</div>
+            </div>
+            <div class="calendar-day">
+                <div class="calendar-day-name" style="color: var(--accent-purple);">Thursday</div>
+                <div class="calendar-pillar">BTS or Showcase</div>
+                <span class="pillar-tag pillar-bts">BTS</span>
+                <span class="pillar-tag pillar-shw">SHW</span>
+            </div>
+            <div class="calendar-day">
+                <div class="calendar-day-name" style="color: var(--accent-green);">Saturday</div>
+                <div class="calendar-pillar">Community / Trend</div>
+                <span class="pillar-tag pillar-soc">SOC</span>
+                <span class="pillar-tag pillar-trn">TRN</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- CASE STUDY -->
+    <section class="section" id="casestudy">
+        <div class="section-header fade-in">
+            <div class="section-icon" style="background: #ef444420;">
+                <span style="color: var(--accent-red);">&#9733;</span>
+            </div>
+            <div>
+                <div class="section-number">07</div>
+                <div class="section-title">Case Study: Two Videos</div>
+                <div class="section-desc">Why one reel got 1.9M plays and another got 889</div>
+            </div>
+        </div>
+
+        <!-- 5-Point Viral Checklist — hero element -->
+        <div class="fade-in" style="margin-bottom: 32px;">
+            <div class="viral-checklist-hero">
+                <div class="vcl-header">
+                    <div class="vcl-badge">THE PATTERN</div>
+                    <h3 class="vcl-title">The 5-Point Viral Checklist</h3>
+                    <p class="vcl-subtitle">Every reel that broke out passes all 5. Every underperformer misses most of them.</p>
+                </div>
+                <div class="vcl-items" id="vclItems">
+                    <div class="vcl-item">
+                        <div class="vcl-num">1</div>
+                        <div class="vcl-content">
+                            <div class="vcl-item-title">Specific Hook</div>
+                            <div class="vcl-item-desc">Numbers, names, or a concrete setup — not vibes. The viewer knows what this reel is about in under 2 seconds.</div>
+                        </div>
+                    </div>
+                    <div class="vcl-item">
+                        <div class="vcl-num">2</div>
+                        <div class="vcl-content">
+                            <div class="vcl-item-title">Something HAPPENS</div>
+                            <div class="vcl-item-desc">A story arc with a beginning, middle, and end. Tension, surprise, or payoff. Not just a mood — an event.</div>
+                        </div>
+                    </div>
+                    <div class="vcl-item">
+                        <div class="vcl-num">3</div>
+                        <div class="vcl-content">
+                            <div class="vcl-item-title">Original Audio</div>
+                            <div class="vcl-item-desc">Your voice, your narration, your personality. 5.4x play multiplier over licensed tracks. The algorithm rewards creators, not curators.</div>
+                        </div>
+                    </div>
+                    <div class="vcl-item">
+                        <div class="vcl-num">4</div>
+                        <div class="vcl-content">
+                            <div class="vcl-item-title">Specific Caption with Numbers</div>
+                            <div class="vcl-item-desc">"$187" not "a lot." "4 times" not "so many." Specificity triggers curiosity and makes the reel feel like a real story, not a thesis statement.</div>
+                        </div>
+                    </div>
+                    <div class="vcl-item">
+                        <div class="vcl-num">5</div>
+                        <div class="vcl-content">
+                            <div class="vcl-item-title">10-20 Second Sweet Spot</div>
+                            <div class="vcl-item-desc">Long enough to tell a story, short enough to replay. 20-30s reels avg 200K plays. Under 10s avg 13K. Brevity with substance wins.</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <style>
+            .viral-checklist-hero {
+                background: var(--bg-card);
+                border: 1px solid var(--border);
+                border-radius: 20px;
+                overflow: hidden;
+            }
+
+            .vcl-header {
+                padding: 32px 32px 24px;
+                border-bottom: 1px solid var(--border);
+            }
+
+            .vcl-badge {
+                display: inline-block;
+                font-size: 11px;
+                font-weight: 700;
+                text-transform: uppercase;
+                letter-spacing: 2px;
+                color: var(--accent-amber);
+                background: #f59e0b15;
+                border: 1px solid #f59e0b30;
+                padding: 5px 14px;
+                border-radius: 100px;
+                margin-bottom: 14px;
+            }
+
+            .vcl-title {
+                font-size: 24px;
+                font-weight: 800;
+                letter-spacing: -0.5px;
+                margin-bottom: 6px;
+            }
+
+            .vcl-subtitle {
+                font-size: 14px;
+                color: var(--text-secondary);
+                line-height: 1.6;
+            }
+
+            .vcl-items {
+                display: flex;
+                flex-direction: column;
+            }
+
+            .vcl-item {
+                display: flex;
+                align-items: flex-start;
+                gap: 20px;
+                padding: 22px 32px;
+                border-bottom: 1px solid #ffffff06;
+                transition: background 0.2s;
+            }
+
+            .vcl-item:last-child { border-bottom: none; }
+
+            .vcl-item:hover {
+                background: #ffffff04;
+            }
+
+            .vcl-num {
+                width: 40px;
+                height: 40px;
+                border-radius: 12px;
+                background: var(--gradient-1);
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                font-weight: 800;
+                font-size: 16px;
+                flex-shrink: 0;
+                color: white;
+            }
+
+            .vcl-content {
+                flex: 1;
+            }
+
+            .vcl-item-title {
+                font-size: 16px;
+                font-weight: 700;
+                margin-bottom: 4px;
+            }
+
+            .vcl-item-desc {
+                font-size: 13px;
+                color: var(--text-secondary);
+                line-height: 1.6;
+            }
+
+            @media (max-width: 600px) {
+                .vcl-header, .vcl-item { padding-left: 20px; padding-right: 20px; }
+            }
+
+            /* ─── Comparison Cards ─── */
+            .comparison-label {
+                font-size: 11px;
+                font-weight: 700;
+                text-transform: uppercase;
+                letter-spacing: 1.5px;
+                margin-bottom: 16px;
+                text-align: center;
+                color: var(--text-muted);
+            }
+
+            .checklist-compare {
+                display: flex;
+                flex-direction: column;
+                gap: 0;
+                margin-top: 16px;
+            }
+
+            .cc-row {
+                display: flex;
+                align-items: center;
+                gap: 12px;
+                padding: 11px 0;
+                border-bottom: 1px solid #ffffff06;
+                font-size: 14px;
+            }
+
+            .cc-row:last-child { border-bottom: none; }
+
+            .cc-icon {
+                width: 24px;
+                height: 24px;
+                border-radius: 6px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                font-size: 13px;
+                font-weight: 700;
+                flex-shrink: 0;
+            }
+
+            .cc-icon.pass {
+                background: #10b98120;
+                color: var(--accent-green);
+            }
+
+            .cc-icon.fail {
+                background: #ef444420;
+                color: var(--accent-red);
+            }
+
+            .cc-label {
+                color: var(--text-secondary);
+                flex: 1;
+            }
+
+            .cc-detail {
+                font-family: 'JetBrains Mono', monospace;
+                font-size: 12px;
+                font-weight: 600;
+                text-align: right;
+            }
+
+            .case-score {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                gap: 4px;
+                margin-top: 20px;
+                padding: 14px;
+                border-radius: 12px;
+                font-size: 20px;
+                font-weight: 800;
+                font-family: 'JetBrains Mono', monospace;
+            }
+
+            .case-score.win {
+                background: #10b98112;
+                color: var(--accent-green);
+                border: 1px solid #10b98130;
+            }
+
+            .case-score.lose {
+                background: #ef444412;
+                color: var(--accent-red);
+                border: 1px solid #ef444430;
+            }
+
+            .case-score-label {
+                font-size: 12px;
+                font-weight: 600;
+                font-family: 'Inter', sans-serif;
+                text-transform: uppercase;
+                letter-spacing: 1px;
+                opacity: 0.7;
+                margin-right: 8px;
+            }
+
+            .case-plays-big {
+                font-family: 'JetBrains Mono', monospace;
+                font-size: 36px;
+                font-weight: 800;
+                letter-spacing: -1px;
+                margin-bottom: 4px;
+            }
+
+            .case-er-big {
+                font-family: 'JetBrains Mono', monospace;
+                font-size: 14px;
+                font-weight: 600;
+                opacity: 0.7;
+            }
+        </style>
+
+        <!-- Side-by-side comparison against the checklist -->
+        <div class="case-grid fade-in">
+            <div class="case-card" style="border-top: 3px solid var(--accent-green);">
+                <div class="case-card-header">
+                    <span style="color: var(--accent-green);">&#9650; WINNER</span>
+                </div>
+                <div class="case-card-body">
+                    <div class="case-title">"I uhhh went over budget"</div>
+                    <div style="display: flex; align-items: baseline; gap: 16px; margin-bottom: 4px;">
+                        <div class="case-plays-big" style="color: var(--accent-green);">1.9M</div>
+                        <div class="case-er-big" style="color: var(--accent-green);">20.2% ER &middot; 4.77x replay</div>
+                    </div>
+
+                    <div class="checklist-compare">
+                        <div class="cc-row">
+                            <div class="cc-icon pass">&#10003;</div>
+                            <span class="cc-label">Specific Hook</span>
+                            <span class="cc-detail" style="color: var(--accent-green);">"went over budget"</span>
+                        </div>
+                        <div class="cc-row">
+                            <div class="cc-icon pass">&#10003;</div>
+                            <span class="cc-label">Something Happens</span>
+                            <span class="cc-detail" style="color: var(--accent-green);">Full story arc</span>
+                        </div>
+                        <div class="cc-row">
+                            <div class="cc-icon pass">&#10003;</div>
+                            <span class="cc-label">Original Audio</span>
+                            <span class="cc-detail" style="color: var(--accent-green);">Her voice</span>
+                        </div>
+                        <div class="cc-row">
+                            <div class="cc-icon pass">&#10003;</div>
+                            <span class="cc-label">Caption with Numbers</span>
+                            <span class="cc-detail" style="color: var(--accent-green);">Budget = specificity</span>
+                        </div>
+                        <div class="cc-row">
+                            <div class="cc-icon pass">&#10003;</div>
+                            <span class="cc-label">10-20s Duration</span>
+                            <span class="cc-detail" style="color: var(--accent-green);">Sweet spot</span>
+                        </div>
+                    </div>
+
+                    <div class="case-score win">
+                        <span class="case-score-label">Score</span>
+                        5 / 5
+                    </div>
+                </div>
+            </div>
+
+            <div class="case-card" style="border-top: 3px solid var(--accent-red);">
+                <div class="case-card-header">
+                    <span style="color: var(--accent-red);">&#9660; UNDERPERFORMER</span>
+                </div>
+                <div class="case-card-body">
+                    <div class="case-title">"Hmmmm"</div>
+                    <div style="display: flex; align-items: baseline; gap: 16px; margin-bottom: 4px;">
+                        <div class="case-plays-big" style="color: var(--accent-red);">889</div>
+                        <div class="case-er-big" style="color: var(--accent-red);">3.5% ER</div>
+                    </div>
+
+                    <div class="checklist-compare">
+                        <div class="cc-row">
+                            <div class="cc-icon fail">&#10007;</div>
+                            <span class="cc-label">Specific Hook</span>
+                            <span class="cc-detail" style="color: var(--accent-red);">Vague, no setup</span>
+                        </div>
+                        <div class="cc-row">
+                            <div class="cc-icon fail">&#10007;</div>
+                            <span class="cc-label">Something Happens</span>
+                            <span class="cc-detail" style="color: var(--accent-red);">No narrative</span>
+                        </div>
+                        <div class="cc-row">
+                            <div class="cc-icon fail">&#10007;</div>
+                            <span class="cc-label">Original Audio</span>
+                            <span class="cc-detail" style="color: var(--accent-red);">Licensed, added nothing</span>
+                        </div>
+                        <div class="cc-row">
+                            <div class="cc-icon fail">&#10007;</div>
+                            <span class="cc-label">Caption with Numbers</span>
+                            <span class="cc-detail" style="color: var(--accent-red);">One word: "Hmmmm"</span>
+                        </div>
+                        <div class="cc-row">
+                            <div class="cc-icon fail">&#10007;</div>
+                            <span class="cc-label">10-20s Duration</span>
+                            <span class="cc-detail" style="color: var(--accent-red);">Outside sweet spot</span>
+                        </div>
+                    </div>
+
+                    <div class="case-score lose">
+                        <span class="case-score-label">Score</span>
+                        0 / 5
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- The takeaway -->
+        <div class="fade-in" style="margin-top: 24px; background: var(--bg-card); border: 1px solid var(--border); border-radius: 12px; padding: 24px; border-left: 3px solid var(--accent-amber);">
+            <h4 style="font-size: 15px; font-weight: 700; color: var(--accent-amber); margin-bottom: 6px;">The Takeaway</h4>
+            <p style="font-size: 14px; color: var(--text-secondary); line-height: 1.7;">Reel A passes all 5 checkpoints. Reel B passes zero. The difference between 1.9M plays and 889 plays isn't luck, production value, or timing — it's whether the reel tells a specific story. Run every reel through this checklist before you post.</p>
+        </div>
+    </section>
+
+    <!-- HOOKS (LOCKED) -->
+    <section class="section" id="hooks">
+        <div class="section-header fade-in">
+            <div class="section-icon" style="background: #f59e0b20;">
+                <span style="color: var(--accent-amber);">&#9889;</span>
+            </div>
+            <div>
+                <div class="section-number">08</div>
+                <div class="section-title">Hook Library</div>
+                <div class="section-desc">65 ready-to-use hooks organized by location</div>
+            </div>
+        </div>
+        <div class="locked-preview fade-in">
+            <div class="locked-tease">
+                <div class="locked-tease-items">
+                    <div class="locked-tease-chip">&#127976; Hotel Room — getting ready + end of day</div>
+                    <div class="locked-tease-chip">&#127914; Convention Floor — artist alley, walking, eating, social</div>
+                    <div class="locked-tease-chip">&#127968; At Home — process, humor, personal</div>
+                    <div class="locked-tease-chip">&#128663; Car / Parking Lot</div>
+                    <div class="locked-tease-chip">&#127757; In Public — reactions and encounters</div>
+                </div>
+                <p class="locked-tease-detail">Every hook comes with the visual (what to film), the caption (already written), the content pillar, and target duration.</p>
+            </div>
+            <div class="locked-overlay">
+                <div class="locked-icon">&#128274;</div>
+                <div class="locked-title">65 Ready-to-Use Hooks</div>
+                <div class="locked-desc">Organized by location with captions pre-written</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- AUDIO STRATEGY -->
+    <section class="section" id="audio">
+        <div class="section-header fade-in">
+            <div class="section-icon" style="background: #06b6d420;">
+                <span style="color: var(--accent-cyan);">&#9835;</span>
+            </div>
+            <div>
+                <div class="section-number">09</div>
+                <div class="section-title">Audio Strategy</div>
+                <div class="section-desc">When to use original audio vs. licensed, and which songs work</div>
+            </div>
+        </div>
+
+        <div class="fade-in" style="background: var(--bg-card); border: 1px solid var(--border); border-radius: 16px; padding: 28px; margin-bottom: 24px; border-left: 3px solid var(--accent-cyan);">
+            <h4 style="font-size: 16px; font-weight: 700; margin-bottom: 8px;">The Rule</h4>
+            <p style="font-size: 15px; color: var(--text-secondary);">Original audio = <span style="color: var(--accent-cyan); font-weight: 700; font-family: 'JetBrains Mono';">5.4x</span> more plays. Default to your voice.</p>
+        </div>
+
+        <div class="fade-in" style="margin-bottom: 24px;">
+            <h4 style="font-size: 15px; font-weight: 600; margin-bottom: 12px;">When Licensed Audio Works</h4>
+            <div class="checklist">
+                <div class="checklist-item">
+                    <span class="check-icon" style="color: var(--accent-green);">&#10003;</span>
+                    The song title IS the joke (e.g. "Just A Girl" while cosplaying)
+                </div>
+                <div class="checklist-item">
+                    <span class="check-icon" style="color: var(--accent-green);">&#10003;</span>
+                    It's a franchise OST matching your character
+                </div>
+                <div class="checklist-item">
+                    <span class="check-icon" style="color: var(--accent-green);">&#10003;</span>
+                    It's currently trending AND fits the content
+                </div>
+            </div>
+        </div>
+
+        <div class="fade-in" style="overflow-x: auto;">
+            <table class="audio-table">
+                <thead>
+                    <tr>
+                        <th>Song</th>
+                        <th>Artist</th>
+                        <th>Result</th>
+                        <th>Verdict</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>"Just A Girl"</td>
+                        <td style="color: var(--text-muted);">No Doubt</td>
+                        <td><span class="audio-result good">69K plays</span></td>
+                        <td style="color: var(--accent-green);">Song title = the joke</td>
+                    </tr>
+                    <tr>
+                        <td>"NOT CUTE ANYMORE"</td>
+                        <td style="color: var(--text-muted);">ILLIT</td>
+                        <td><span class="audio-result good">63K plays</span></td>
+                        <td style="color: var(--accent-green);">Matched the vibe</td>
+                    </tr>
+                    <tr>
+                        <td>"Living in the Dark"</td>
+                        <td style="color: var(--text-muted);">Myuu</td>
+                        <td><span class="audio-result good">26K plays</span></td>
+                        <td style="color: var(--accent-green);">Atmospheric fit</td>
+                    </tr>
+                    <tr>
+                        <td>"Golden Brown"</td>
+                        <td style="color: var(--text-muted);">The Stranglers</td>
+                        <td><span class="audio-result bad">1.8K plays</span></td>
+                        <td style="color: var(--accent-red);">Added nothing</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </section>
+
+    <!-- NEW COMPETITOR ANALYSIS -->
+    <section class="section" id="newcomp">
+        <div class="section-header fade-in">
+            <div class="section-icon" style="background: #3b82f620;">
+                <span style="color: var(--accent-blue);">&#9775;</span>
+            </div>
+            <div>
+                <div class="section-number">11</div>
+                <div class="section-title">Viral Reel Patterns</div>
+                <div class="section-desc">Findings from 38 viral reels + 3 new competitors</div>
+            </div>
+        </div>
+        <div class="cards-grid fade-in">
+            <div class="card">
+                <div class="card-title">
+                    <span class="card-stat">723K</span> Cosplay in Public
+                </div>
+                <div class="card-text">Average plays for "cosplay in public" content. 10.2% engagement rate. This format is proven.</div>
+            </div>
+            <div class="card">
+                <div class="card-title">
+                    <span class="card-stat">2.1M</span> 10-20s Reels
+                </div>
+                <div class="card-text">Average plays for 10-20 second reels vs 1.0M for under 10s. Sweet spot confirmed.</div>
+            </div>
+            <div class="card">
+                <div class="card-title">
+                    <span class="card-stat">828K</span> Self-Deprecating
+                </div>
+                <div class="card-text">Self-deprecating captions average 828K plays. The audience rewards vulnerability.</div>
+            </div>
+            <div class="card">
+                <div class="card-title">
+                    <span class="card-stat">885K</span> Question Hooks
+                </div>
+                <div class="card-text">Question hooks average 885K plays. They drive comments which drive the algorithm.</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SWIPE FILE (LOCKED) -->
+    <section class="section" id="swipefile">
+        <div class="section-header fade-in">
+            <div class="section-icon" style="background: #f59e0b20;">
+                <span style="color: var(--accent-amber);">&#128293;</span>
+            </div>
+            <div>
+                <div class="section-number">12</div>
+                <div class="section-title">Swipe File — 38 Viral Reels</div>
+                <div class="section-desc">Proven reels to reference when you're stuck. Study the hooks, steal the formats.</div>
+            </div>
+        </div>
+        <div class="locked-preview fade-in">
+            <div class="locked-tease">
+                <div class="locked-tease-items">
+                    <div class="locked-tease-chip">&#9733; 16 reels with 500K+ plays analyzed</div>
+                    <div class="locked-tease-chip">&#9650; 10 reels in the 200K-500K range</div>
+                    <div class="locked-tease-chip">&#9679; 12 solid performers (50K-200K)</div>
+                </div>
+                <p class="locked-tease-detail">Each reel includes the exact caption, why it worked, audio type, engagement rate, and a direct link to watch. Plus caption formulas and highest-ER format patterns.</p>
+            </div>
+            <div class="locked-overlay">
+                <div class="locked-icon">&#128274;</div>
+                <div class="locked-title">38 Viral Reels Analyzed</div>
+                <div class="locked-desc">With hooks, ER%, audio breakdowns, and patterns to steal</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- BOTTOM LINE -->
+    <section class="section" id="bottomline">
+        <div class="bottom-line fade-in">
+            <div style="text-align: center; margin-bottom: 32px;">
+                <div class="hero-tag" style="margin-bottom: 16px;">
+                    <div class="hero-tag-dot"></div>
+                    THE FORMULA
+                </div>
+                <h2 style="font-size: 32px; font-weight: 900; letter-spacing: -0.5px;">Your Viral Formula, Proven</h2>
+                <p style="color: var(--text-secondary); margin-top: 8px; font-size: 15px;">Every document in this package supports this formula.</p>
+            </div>
+            <div class="formula-grid">
+                <div class="formula-item">
+                    <div class="formula-num">1</div>
+                    <div class="formula-text">Convention context</div>
+                </div>
+                <div class="formula-item">
+                    <div class="formula-num">2</div>
+                    <div class="formula-text">Something HAPPENS</div>
+                </div>
+                <div class="formula-item">
+                    <div class="formula-num">3</div>
+                    <div class="formula-text">Specific caption with numbers</div>
+                </div>
+                <div class="formula-item">
+                    <div class="formula-num">4</div>
+                    <div class="formula-text">Original audio (your voice)</div>
+                </div>
+                <div class="formula-item">
+                    <div class="formula-num">5</div>
+                    <div class="formula-text">10-20 seconds</div>
+                </div>
+                <div class="formula-item">
+                    <div class="formula-num">6</div>
+                    <div class="formula-text">Self-deprecating energy</div>
+                </div>
+            </div>
+
+            <hr class="divider-rule" style="margin: 32px 0;">
+
+            <h3 style="font-size: 18px; font-weight: 700; margin-bottom: 4px;">Quick Start Guide</h3>
+            <p style="font-size: 13px; color: var(--text-muted); margin-bottom: 0;">What to read based on what you need</p>
+            <div class="quickstart-grid">
+                <div class="qs-card">
+                    <div class="qs-time">5 minutes</div>
+                    <div class="qs-action">Read the cheat sheet</div>
+                    <div class="qs-doc">00_CHEAT_SHEET</div>
+                </div>
+                <div class="qs-card">
+                    <div class="qs-time">About to film</div>
+                    <div class="qs-action">Pull up the hook list</div>
+                    <div class="qs-doc">08_HOOK_LIST_BY_LOCATION</div>
+                </div>
+                <div class="qs-card">
+                    <div class="qs-time">Planning the week</div>
+                    <div class="qs-action">Check the calendar</div>
+                    <div class="qs-doc">06_CONTENT_CALENDAR</div>
+                </div>
+                <div class="qs-card">
+                    <div class="qs-time">Need audio</div>
+                    <div class="qs-action">Reference audio strategy</div>
+                    <div class="qs-doc">09_AUDIO_STRATEGY</div>
+                </div>
+                <div class="qs-card">
+                    <div class="qs-time">Need inspiration</div>
+                    <div class="qs-action">Look at reel concepts</div>
+                    <div class="qs-doc">04_THREE_REEL_CONCEPTS</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA -->
+    <section class="section" id="cta">
+        <div class="cta-banner fade-in">
+            <div class="cta-badge">FULL STRATEGY PACKAGE</div>
+            <h2 class="cta-title">Ready to unlock the full playbook?</h2>
+            <p class="cta-desc">Get 3 ready-to-film reel concepts, 65 pre-written hooks, 38 analyzed viral reels, complete shot lists, and everything else in this strategy package.</p>
+            <div class="cta-includes">
+                <div class="cta-include-item">&#10003; 3 reel concepts with shot breakdowns</div>
+                <div class="cta-include-item">&#10003; 65 hooks with captions written</div>
+                <div class="cta-include-item">&#10003; 38 viral reels analyzed with links</div>
+                <div class="cta-include-item">&#10003; Complete filming guide + shot list</div>
+                <div class="cta-include-item">&#10003; Interactive dashboard access</div>
+                <div class="cta-include-item">&#10003; Everything you see here, unlocked</div>
+            </div>
+            <a href="#" class="cta-button">Get the Full Package &#8594;</a>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer style="text-align: center; padding: 40px 60px; border-top: 1px solid var(--border);">
+        <p style="font-size: 13px; color: var(--text-muted);">
+            Strategy Preview for <span style="color: var(--accent-pink); font-weight: 600;">@kirahri.cos</span> — Full package available
+        </p>
+        <p style="font-size: 12px; color: var(--text-muted); margin-top: 4px;">
+            The cosplay is the costume. The content is the story. Tell the story.
+        </p>
+    </footer>
+
+</main>
+
+<script>
+    // ─── Mobile sidebar toggle ───
+    function toggleSidebar() {
+        document.getElementById('sidebar').classList.toggle('open');
+        document.querySelector('.sidebar-overlay').classList.toggle('active');
+    }
+
+    // Close sidebar on nav click (mobile)
+    document.querySelectorAll('.nav-item').forEach(item => {
+        item.addEventListener('click', () => {
+            if (window.innerWidth <= 1024) {
+                toggleSidebar();
+            }
+        });
+    });
+
+    // ─── Active nav on scroll ───
+    const sections = document.querySelectorAll('.section, .hero');
+    const navItems = document.querySelectorAll('.nav-item');
+
+    const observerOptions = {
+        rootMargin: '-20% 0px -60% 0px'
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                const id = entry.target.id;
+                navItems.forEach(item => {
+                    item.classList.toggle('active', item.getAttribute('href') === '#' + id);
+                });
+            }
+        });
+    }, observerOptions);
+
+    sections.forEach(section => {
+        if (section.id) observer.observe(section);
+    });
+
+    // ─── Fade in on scroll ───
+    const fadeElements = document.querySelectorAll('.fade-in');
+    const fadeObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('visible');
+            }
+        });
+    }, { threshold: 0.1 });
+
+    fadeElements.forEach(el => fadeObserver.observe(el));
+
+    // ─── Animate pillar bars ───
+    const barFills = document.querySelectorAll('.pillar-bar-fill');
+    const barObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                const target = entry.target.getAttribute('data-target');
+                entry.target.style.width = target + '%';
+            }
+        });
+    }, { threshold: 0.1 });
+
+    barFills.forEach(bar => barObserver.observe(bar));
+
+    // ─── Animate stat counter ───
+    function animateCount(el, target) {
+        const duration = 1500;
+        const start = performance.now();
+        const format = (n) => {
+            if (n >= 1000000) return (n / 1000000).toFixed(1) + 'M';
+            if (n >= 1000) return (n / 1000).toFixed(0) + 'K';
+            return n.toString();
+        };
+
+        function tick(now) {
+            const elapsed = now - start;
+            const progress = Math.min(elapsed / duration, 1);
+            const eased = 1 - Math.pow(1 - progress, 3);
+            const current = Math.round(eased * target);
+            el.textContent = format(current);
+            if (progress < 1) requestAnimationFrame(tick);
+        }
+        requestAnimationFrame(tick);
+    }
+
+    const statValues = document.querySelectorAll('[data-count]');
+    const statObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                const target = parseInt(entry.target.getAttribute('data-count'));
+                animateCount(entry.target, target);
+                statObserver.unobserve(entry.target);
+            }
+        });
+    }, { threshold: 0.3 });
+
+    statValues.forEach(el => statObserver.observe(el));
+</script>
+
+</body>
+</html>
