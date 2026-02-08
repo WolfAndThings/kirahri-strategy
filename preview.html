@@ -1119,7 +1119,21 @@
             Visual Assets
         </a>
 
-        <div class="nav-section-title" style="margin-top: 8px;">Reference</div>
+        <div class="nav-section-title" style="margin-top: 8px;">Validation</div>
+        <a href="#proof" class="nav-item" data-section="proof">
+            <div class="nav-dot" style="background: var(--accent-green)"></div>
+            Your Proof
+        </a>
+        <a href="#testing" class="nav-item" data-section="testing">
+            <div class="nav-dot" style="background: var(--accent-purple)"></div>
+            Testing Framework
+        </a>
+        <a href="#quickref" class="nav-item" data-section="quickref">
+            <div class="nav-dot" style="background: var(--accent-cyan)"></div>
+            Quick Reference
+        </a>
+
+        <div class="nav-section-title" style="margin-top: 8px;">Deep Dive</div>
         <a href="#casestudy" class="nav-item" data-section="casestudy">
             <div class="nav-dot" style="background: var(--accent-red)"></div>
             Case Study
@@ -2647,76 +2661,622 @@
                 READY TO FILM
             </div>
             <h2>14 Word-for-Word Scripts</h2>
-            <p class="section-sub">Just hit record. The scripts are written.</p>
+            <p class="section-sub">Click any script to see full details. Just hit record.</p>
         </div>
 
+        <!-- NO COSTUME SCRIPTS -->
         <div class="fade-in" style="margin-top: 32px;">
-            <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px;">
-                <div style="background: var(--bg-card); border: 1px solid var(--border); border-radius: 12px; padding: 20px;">
-                    <h4 style="font-size: 14px; font-weight: 700; margin-bottom: 12px;">No Costume Needed</h4>
-                    <div style="font-size: 13px; color: var(--text-secondary); line-height: 1.8;">
-                        <div style="display: flex; justify-content: space-between; padding: 4px 0; border-bottom: 1px solid var(--border);">
-                            <span>Script 1: DM Reactions</span>
-                            <span style="color: var(--text-muted);">8-12s</span>
+            <h3 style="font-size: 16px; font-weight: 700; margin-bottom: 16px; color: var(--accent-green);">No Costume Needed (5 Scripts)</h3>
+            <div style="display: grid; gap: 12px;">
+
+                <!-- Script 1 -->
+                <div class="script-card" onclick="toggleScript(this)" style="background: var(--bg-card); border: 1px solid var(--border); border-radius: 12px; cursor: pointer; transition: all 0.3s;">
+                    <div style="padding: 16px 20px; display: flex; justify-content: space-between; align-items: center;">
+                        <div style="display: flex; align-items: center; gap: 12px;">
+                            <div style="width: 32px; height: 32px; background: var(--accent-pink); border-radius: 8px; display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 14px;">1</div>
+                            <div>
+                                <div style="font-weight: 700;">DM Reactions</div>
+                                <div style="font-size: 12px; color: var(--text-muted);">8-12 seconds • Humor</div>
+                            </div>
                         </div>
-                        <div style="display: flex; justify-content: space-between; padding: 4px 0; border-bottom: 1px solid var(--border);">
-                            <span>Script 2: Things People Say</span>
-                            <span style="color: var(--text-muted);">10-15s</span>
-                        </div>
-                        <div style="display: flex; justify-content: space-between; padding: 4px 0; border-bottom: 1px solid var(--border);">
-                            <span>Script 3: Camera Roll Rating</span>
-                            <span style="color: var(--text-muted);">15-20s</span>
-                        </div>
-                        <div style="display: flex; justify-content: space-between; padding: 4px 0; border-bottom: 1px solid var(--border);">
-                            <span>Script 8: Closet Tour</span>
-                            <span style="color: var(--text-muted);">12-18s</span>
-                        </div>
-                        <div style="display: flex; justify-content: space-between; padding: 4px 0;">
-                            <span>Script 9: Amazon Haul</span>
-                            <span style="color: var(--text-muted);">10-15s</span>
+                        <div style="color: var(--text-muted); transition: transform 0.3s;" class="script-arrow">▼</div>
+                    </div>
+                    <div class="script-content" style="display: none; padding: 0 20px 20px; border-top: 1px solid var(--border);">
+                        <div style="padding-top: 16px;">
+                            <div style="font-size: 12px; font-weight: 600; color: var(--accent-cyan); margin-bottom: 8px;">SETUP</div>
+                            <p style="font-size: 13px; color: var(--text-secondary); margin-bottom: 16px;">Screen record 3-4 interesting/weird/funny DMs you've received. Film yourself reacting to each.</p>
+
+                            <div style="font-size: 12px; font-weight: 600; color: var(--accent-pink); margin-bottom: 8px;">SCRIPT</div>
+                            <div style="font-family: 'JetBrains Mono', monospace; font-size: 12px; background: var(--bg-secondary); padding: 16px; border-radius: 8px; color: var(--text-secondary); line-height: 1.8; margin-bottom: 16px;">
+                                [Looking at phone, reading first DM]<br>
+                                "Okay so... let me show you what my DMs look like"<br><br>
+                                [Show DM #1 on screen]<br>
+                                [Your reaction — confusion, laughter, shock]<br><br>
+                                [Show DM #2 on screen]<br>
+                                "Wait... what does that even mean?"<br><br>
+                                [Show DM #3 on screen - biggest reaction]<br>
+                                "Y'all are unhinged. Never change."
+                            </div>
+
+                            <div style="font-size: 12px; font-weight: 600; color: var(--accent-amber); margin-bottom: 8px;">CAPTION (Copy This)</div>
+                            <div style="font-size: 13px; background: var(--bg-secondary); padding: 12px; border-radius: 8px; color: var(--text-secondary);">
+                                My DMs are a strange place<br><br>
+                                What's the weirdest DM you've ever gotten?<br><br>
+                                #cosplay #cosplayer #cosplaygirl #cosplayhumor
+                            </div>
                         </div>
                     </div>
                 </div>
-                <div style="background: var(--bg-card); border: 1px solid var(--border); border-radius: 12px; padding: 20px;">
-                    <h4 style="font-size: 14px; font-weight: 700; margin-bottom: 12px;">In Costume</h4>
-                    <div style="font-size: 13px; color: var(--text-secondary); line-height: 1.8;">
-                        <div style="display: flex; justify-content: space-between; padding: 4px 0; border-bottom: 1px solid var(--border);">
-                            <span>Script 4: Cost Breakdown</span>
-                            <span style="color: var(--text-muted);">17-22s</span>
+
+                <!-- Script 2 -->
+                <div class="script-card" onclick="toggleScript(this)" style="background: var(--bg-card); border: 1px solid var(--border); border-radius: 12px; cursor: pointer; transition: all 0.3s;">
+                    <div style="padding: 16px 20px; display: flex; justify-content: space-between; align-items: center;">
+                        <div style="display: flex; align-items: center; gap: 12px;">
+                            <div style="width: 32px; height: 32px; background: var(--accent-purple); border-radius: 8px; display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 14px;">2</div>
+                            <div>
+                                <div style="font-weight: 700;">Things People Say</div>
+                                <div style="font-size: 12px; color: var(--text-muted);">10-15 seconds • Humor</div>
+                            </div>
                         </div>
-                        <div style="display: flex; justify-content: space-between; padding: 4px 0; border-bottom: 1px solid var(--border);">
-                            <span>Script 5: Transformation</span>
-                            <span style="color: var(--text-muted);">12-18s</span>
-                        </div>
-                        <div style="display: flex; justify-content: space-between; padding: 4px 0; border-bottom: 1px solid var(--border);">
-                            <span>Script 6: Character Showcase</span>
-                            <span style="color: var(--text-muted);">8-12s</span>
-                        </div>
-                        <div style="display: flex; justify-content: space-between; padding: 4px 0; border-bottom: 1px solid var(--border);">
-                            <span>Script 10: Pinterest vs Reality</span>
-                            <span style="color: var(--text-muted);">10-15s</span>
-                        </div>
-                        <div style="display: flex; justify-content: space-between; padding: 4px 0;">
-                            <span>Script 11: Evolution</span>
-                            <span style="color: var(--text-muted);">10-15s</span>
+                        <div style="color: var(--text-muted); transition: transform 0.3s;" class="script-arrow">▼</div>
+                    </div>
+                    <div class="script-content" style="display: none; padding: 0 20px 20px; border-top: 1px solid var(--border);">
+                        <div style="padding-top: 16px;">
+                            <div style="font-size: 12px; font-weight: 600; color: var(--accent-cyan); margin-bottom: 8px;">SETUP</div>
+                            <p style="font-size: 13px; color: var(--text-secondary); margin-bottom: 16px;">React to common things non-cosplayers say. Film multiple reaction shots.</p>
+
+                            <div style="font-size: 12px; font-weight: 600; color: var(--accent-pink); margin-bottom: 8px;">SCRIPT</div>
+                            <div style="font-family: 'JetBrains Mono', monospace; font-size: 12px; background: var(--bg-secondary); padding: 16px; border-radius: 8px; color: var(--text-secondary); line-height: 1.8; margin-bottom: 16px;">
+                                [Text overlay: "So you just... dress up? Like for fun?"]<br>
+                                [Your face: the look, the pause, slight nod]<br>
+                                "Yep."<br><br>
+                                [Text: "That must be expensive"]<br>
+                                [Your face: pain, dead inside]<br>
+                                "We don't talk about that."<br><br>
+                                [Text: "Is that from Fortnite?"]<br>
+                                [Your face: frustration dissolving into acceptance]<br>
+                                "Sure. Yeah. It's from Fortnite."
+                            </div>
+
+                            <div style="font-size: 12px; font-weight: 600; color: var(--accent-amber); margin-bottom: 8px;">CAPTION (Copy This)</div>
+                            <div style="font-size: 13px; background: var(--bg-secondary); padding: 12px; border-radius: 8px; color: var(--text-secondary);">
+                                Things non-cosplayers say to me<br><br>
+                                The Fortnite one haunts me<br><br>
+                                #cosplay #cosplayer #cosplaymeme #cosplayhumor #relatable
+                            </div>
                         </div>
                     </div>
                 </div>
+
+                <!-- Script 3 -->
+                <div class="script-card" onclick="toggleScript(this)" style="background: var(--bg-card); border: 1px solid var(--border); border-radius: 12px; cursor: pointer; transition: all 0.3s;">
+                    <div style="padding: 16px 20px; display: flex; justify-content: space-between; align-items: center;">
+                        <div style="display: flex; align-items: center; gap: 12px;">
+                            <div style="width: 32px; height: 32px; background: var(--accent-cyan); border-radius: 8px; display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 14px;">3</div>
+                            <div>
+                                <div style="font-weight: 700;">Camera Roll Rating</div>
+                                <div style="font-size: 12px; color: var(--text-muted);">15-20 seconds • Humor/Personal</div>
+                            </div>
+                        </div>
+                        <div style="color: var(--text-muted); transition: transform 0.3s;" class="script-arrow">▼</div>
+                    </div>
+                    <div class="script-content" style="display: none; padding: 0 20px 20px; border-top: 1px solid var(--border);">
+                        <div style="padding-top: 16px;">
+                            <div style="font-size: 12px; font-weight: 600; color: var(--accent-cyan); margin-bottom: 8px;">SETUP</div>
+                            <p style="font-size: 13px; color: var(--text-secondary); margin-bottom: 16px;">Screen record scrolling through your camera roll of old cosplays. Film your face reacting.</p>
+
+                            <div style="font-size: 12px; font-weight: 600; color: var(--accent-pink); margin-bottom: 8px;">SCRIPT</div>
+                            <div style="font-family: 'JetBrains Mono', monospace; font-size: 12px; background: var(--bg-secondary); padding: 16px; border-radius: 8px; color: var(--text-secondary); line-height: 1.8; margin-bottom: 16px;">
+                                [Scrolling camera roll, stop on old cosplay]<br>
+                                "Okay so this was... 2019? 2020?"<br>
+                                [Pause, looking at it]<br>
+                                "I thought this was IT. I really did."<br><br>
+                                [Scroll to another one]<br>
+                                "Oh no. Oh NO. We're skipping that one."<br><br>
+                                [Scroll to a better one]<br>
+                                "Okay this one aged better. This one we keep."<br><br>
+                                [End on oldest/worst one]<br>
+                                "And this... this is why I have trust issues with my past self."
+                            </div>
+
+                            <div style="font-size: 12px; font-weight: 600; color: var(--accent-amber); margin-bottom: 8px;">CAPTION (Copy This)</div>
+                            <div style="font-size: 13px; background: var(--bg-secondary); padding: 12px; border-radius: 8px; color: var(--text-secondary);">
+                                Going through my camera roll so you don't have to<br><br>
+                                Growth is real. Cringe is forever.<br><br>
+                                #cosplay #cosplayer #throwback #cosplayglow
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Script 8 -->
+                <div class="script-card" onclick="toggleScript(this)" style="background: var(--bg-card); border: 1px solid var(--border); border-radius: 12px; cursor: pointer; transition: all 0.3s;">
+                    <div style="padding: 16px 20px; display: flex; justify-content: space-between; align-items: center;">
+                        <div style="display: flex; align-items: center; gap: 12px;">
+                            <div style="width: 32px; height: 32px; background: var(--accent-amber); border-radius: 8px; display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 14px;">8</div>
+                            <div>
+                                <div style="font-weight: 700;">Closet Tour</div>
+                                <div style="font-size: 12px; color: var(--text-muted);">12-18 seconds • Humor/BTS</div>
+                            </div>
+                        </div>
+                        <div style="color: var(--text-muted); transition: transform 0.3s;" class="script-arrow">▼</div>
+                    </div>
+                    <div class="script-content" style="display: none; padding: 0 20px 20px; border-top: 1px solid var(--border);">
+                        <div style="padding-top: 16px;">
+                            <div style="font-size: 12px; font-weight: 600; color: var(--accent-cyan); margin-bottom: 8px;">SETUP</div>
+                            <p style="font-size: 13px; color: var(--text-secondary); margin-bottom: 16px;">Show your cosplay storage — wigs, costumes, props. React to the chaos.</p>
+
+                            <div style="font-size: 12px; font-weight: 600; color: var(--accent-pink); margin-bottom: 8px;">SCRIPT</div>
+                            <div style="font-family: 'JetBrains Mono', monospace; font-size: 12px; background: var(--bg-secondary); padding: 16px; border-radius: 8px; color: var(--text-secondary); line-height: 1.8; margin-bottom: 16px;">
+                                [Pan across closet/storage]<br>
+                                "So people ask where I keep all my cosplays"<br><br>
+                                [Show wig heads or wig pile]<br>
+                                "14 wigs. I need exactly zero of them. Will I buy more? Absolutely."<br><br>
+                                [Show props/weapons]<br>
+                                "These? No one ask about these."<br><br>
+                                [Show the chaos]<br>
+                                "And this... this is organized. To me."<br><br>
+                                [Back to your face]<br>
+                                "Anyway that's the tour"
+                            </div>
+
+                            <div style="font-size: 12px; font-weight: 600; color: var(--accent-amber); margin-bottom: 8px;">CAPTION (Copy This)</div>
+                            <div style="font-size: 13px; background: var(--bg-secondary); padding: 12px; border-radius: 8px; color: var(--text-secondary);">
+                                The wig collection is getting out of control<br><br>
+                                I have a problem and I'm not fixing it<br><br>
+                                #cosplay #cosplayer #cosplaycloset #wigstorage
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Script 9 -->
+                <div class="script-card" onclick="toggleScript(this)" style="background: var(--bg-card); border: 1px solid var(--border); border-radius: 12px; cursor: pointer; transition: all 0.3s;">
+                    <div style="padding: 16px 20px; display: flex; justify-content: space-between; align-items: center;">
+                        <div style="display: flex; align-items: center; gap: 12px;">
+                            <div style="width: 32px; height: 32px; background: var(--accent-green); border-radius: 8px; display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 14px;">9</div>
+                            <div>
+                                <div style="font-weight: 700;">Amazon Haul</div>
+                                <div style="font-size: 12px; color: var(--text-muted);">10-15 seconds • BTS/Humor</div>
+                            </div>
+                        </div>
+                        <div style="color: var(--text-muted); transition: transform 0.3s;" class="script-arrow">▼</div>
+                    </div>
+                    <div class="script-content" style="display: none; padding: 0 20px 20px; border-top: 1px solid var(--border);">
+                        <div style="padding-top: 16px;">
+                            <div style="font-size: 12px; font-weight: 600; color: var(--accent-cyan); margin-bottom: 8px;">SETUP</div>
+                            <p style="font-size: 13px; color: var(--text-secondary); margin-bottom: 16px;">Open Amazon packages with cosplay supplies. React to each item.</p>
+
+                            <div style="font-size: 12px; font-weight: 600; color: var(--accent-pink); margin-bottom: 8px;">SCRIPT</div>
+                            <div style="font-family: 'JetBrains Mono', monospace; font-size: 12px; background: var(--bg-secondary); padding: 16px; border-radius: 8px; color: var(--text-secondary); line-height: 1.8; margin-bottom: 16px;">
+                                [Holding packages]<br>
+                                "The Amazon driver definitely knows me by name at this point"<br><br>
+                                [Open package 1 — wig]<br>
+                                "Wig for [character]. This better not be crusty."<br>
+                                [React to quality]<br><br>
+                                [Open package 2 — accessories]<br>
+                                "Okay these actually look good"<br><br>
+                                [Open package 3]<br>
+                                "And this was... an impulse buy. We're not talking about it."<br><br>
+                                [Spread everything out]<br>
+                                "Next con is going to be expensive. I can feel it."
+                            </div>
+
+                            <div style="font-size: 12px; font-weight: 600; color: var(--accent-amber); margin-bottom: 8px;">CAPTION (Copy This)</div>
+                            <div style="font-size: 13px; background: var(--bg-secondary); padding: 12px; border-radius: 8px; color: var(--text-secondary);">
+                                Amazon cosplay haul<br><br>
+                                The damage report is pending<br><br>
+                                #cosplay #cosplayer #amazonfinds #cosplayhaul
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
             </div>
         </div>
 
-        <div class="fade-in" style="margin-top: 24px; background: var(--bg-card); border: 1px solid var(--accent-pink); border-radius: 12px; padding: 24px;">
-            <h4 style="font-size: 16px; font-weight: 700; margin-bottom: 12px;">Example Script: Cost Breakdown</h4>
-            <div style="font-family: 'JetBrains Mono', monospace; font-size: 12px; background: var(--bg-secondary); padding: 16px; border-radius: 8px; color: var(--text-secondary); line-height: 1.8;">
-                [Full cosplay shot]<br>
-                TEXT: "What people think this cost: $500"<br><br>
-                [Cut to pieces laid out]<br><br>
-                "Wig: $25 on Amazon"<br>
-                "The top: $15, thrift store"<br>
-                "Props: $12 in foam and paint"<br><br>
-                [Total reveal]<br>
-                TEXT: "TOTAL: $72"<br><br>
-                "Looking expensive on a budget"
+        <!-- IN COSTUME SCRIPTS -->
+        <div class="fade-in" style="margin-top: 32px;">
+            <h3 style="font-size: 16px; font-weight: 700; margin-bottom: 16px; color: var(--accent-pink);">In Costume (9 Scripts)</h3>
+            <div style="display: grid; gap: 12px;">
+
+                <!-- Script 4 -->
+                <div class="script-card" onclick="toggleScript(this)" style="background: var(--bg-card); border: 1px solid var(--border); border-radius: 12px; cursor: pointer; transition: all 0.3s;">
+                    <div style="padding: 16px 20px; display: flex; justify-content: space-between; align-items: center;">
+                        <div style="display: flex; align-items: center; gap: 12px;">
+                            <div style="width: 32px; height: 32px; background: var(--accent-pink); border-radius: 8px; display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 14px;">4</div>
+                            <div>
+                                <div style="font-weight: 700;">Cost Breakdown</div>
+                                <div style="font-size: 12px; color: var(--text-muted);">17-22 seconds • BTS • HIGH PERFORMER</div>
+                            </div>
+                        </div>
+                        <div style="color: var(--text-muted); transition: transform 0.3s;" class="script-arrow">▼</div>
+                    </div>
+                    <div class="script-content" style="display: none; padding: 0 20px 20px; border-top: 1px solid var(--border);">
+                        <div style="padding-top: 16px;">
+                            <div style="font-size: 12px; font-weight: 600; color: var(--accent-cyan); margin-bottom: 8px;">SETUP</div>
+                            <p style="font-size: 13px; color: var(--text-secondary); margin-bottom: 16px;">Lay out every piece of one cosplay on a bed/table. Have price amounts ready. Film each piece, then the total reveal.</p>
+
+                            <div style="font-size: 12px; font-weight: 600; color: var(--accent-pink); margin-bottom: 8px;">SHOT ORDER + SCRIPT</div>
+                            <div style="font-family: 'JetBrains Mono', monospace; font-size: 12px; background: var(--bg-secondary); padding: 16px; border-radius: 8px; color: var(--text-secondary); line-height: 1.8; margin-bottom: 16px;">
+                                SHOT 1: You in the finished cosplay, looking good<br>
+                                [Text: "What people think this cost: $500"]<br><br>
+                                SHOT 2: Transition to reality — pieces laid out<br><br>
+                                SHOT 3: The wig<br>
+                                [Say: "Wig: $25 on Amazon"]<br>
+                                [Text: "Wig: $25"]<br><br>
+                                SHOT 4: The main outfit piece<br>
+                                [Say: "The [top/dress/etc]: $15, thrift store"]<br>
+                                [Text: "Top: $15"]<br><br>
+                                SHOT 5: Props/accessories<br>
+                                [Say: "Props: I made these. $12 in foam and paint"]<br>
+                                [Text: "Props: $12"]<br><br>
+                                SHOT 6: Contacts/makeup<br>
+                                [Say: "Contacts were like $20, makeup I already had"]<br>
+                                [Text: "Contacts: $20"]<br><br>
+                                SHOT 7: Running total appears<br>
+                                [Text: "TOTAL: $72"]<br><br>
+                                SHOT 8: Back to you in the full cosplay<br>
+                                [Say: "Looking expensive on a budget"]
+                            </div>
+
+                            <div style="font-size: 12px; font-weight: 600; color: var(--accent-amber); margin-bottom: 8px;">CAPTION (Copy This)</div>
+                            <div style="font-size: 13px; background: var(--bg-secondary); padding: 12px; border-radius: 8px; color: var(--text-secondary);">
+                                What this cosplay actually cost<br><br>
+                                The secret is I'm just broke with good taste<br><br>
+                                Want to see more of these?<br><br>
+                                #cosplay #cosplayer #cosplaytips #cosplaybudget #cosplaygirl
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Script 5 -->
+                <div class="script-card" onclick="toggleScript(this)" style="background: var(--bg-card); border: 1px solid var(--border); border-radius: 12px; cursor: pointer; transition: all 0.3s;">
+                    <div style="padding: 16px 20px; display: flex; justify-content: space-between; align-items: center;">
+                        <div style="display: flex; align-items: center; gap: 12px;">
+                            <div style="width: 32px; height: 32px; background: var(--accent-purple); border-radius: 8px; display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 14px;">5</div>
+                            <div>
+                                <div style="font-weight: 700;">Transformation</div>
+                                <div style="font-size: 12px; color: var(--text-muted);">12-18 seconds • BTS</div>
+                            </div>
+                        </div>
+                        <div style="color: var(--text-muted); transition: transform 0.3s;" class="script-arrow">▼</div>
+                    </div>
+                    <div class="script-content" style="display: none; padding: 0 20px 20px; border-top: 1px solid var(--border);">
+                        <div style="padding-top: 16px;">
+                            <div style="font-size: 12px; font-weight: 600; color: var(--accent-cyan); margin-bottom: 8px;">SETUP</div>
+                            <p style="font-size: 13px; color: var(--text-secondary); margin-bottom: 16px;">Film yourself going from casual clothes to full cosplay. Can be time-lapse or quick cuts.</p>
+
+                            <div style="font-size: 12px; font-weight: 600; color: var(--accent-pink); margin-bottom: 8px;">SHOT ORDER</div>
+                            <div style="font-family: 'JetBrains Mono', monospace; font-size: 12px; background: var(--bg-secondary); padding: 16px; border-radius: 8px; color: var(--text-secondary); line-height: 1.8; margin-bottom: 16px;">
+                                SHOT 1: You in casual clothes, tired face, no makeup<br>
+                                [Text: "8am"]<br><br>
+                                SHOT 2-5: Quick cuts or time-lapse of:<br>
+                                  - Makeup going on<br>
+                                  - Wig going on (struggle is content)<br>
+                                  - Outfit going on<br>
+                                  - Final touches<br><br>
+                                SHOT 6: The reveal — spin or pose<br>
+                                [Text: "3 hours later"]<br><br>
+                                SHOT 7: Confident pose or walk toward camera
+                            </div>
+
+                            <div style="font-size: 12px; font-weight: 600; color: var(--accent-amber); margin-bottom: 8px;">VOICEOVER OPTIONS</div>
+                            <div style="font-size: 13px; background: var(--bg-secondary); padding: 12px; border-radius: 8px; color: var(--text-secondary); margin-bottom: 16px;">
+                                "3 hours compressed into 15 seconds"<br>
+                                OR "The transformation takes longer than the event"<br>
+                                OR just use trending audio
+                            </div>
+
+                            <div style="font-size: 12px; font-weight: 600; color: var(--accent-amber); margin-bottom: 8px;">CAPTION (Copy This)</div>
+                            <div style="font-size: 13px; background: var(--bg-secondary); padding: 12px; border-radius: 8px; color: var(--text-secondary);">
+                                3 hours. 47 products. 1 crisis about the wig.<br><br>
+                                But we got there.<br><br>
+                                #cosplay #cosplayer #transformation #getreadywithme #cosplaygirl
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Script 6 -->
+                <div class="script-card" onclick="toggleScript(this)" style="background: var(--bg-card); border: 1px solid var(--border); border-radius: 12px; cursor: pointer; transition: all 0.3s;">
+                    <div style="padding: 16px 20px; display: flex; justify-content: space-between; align-items: center;">
+                        <div style="display: flex; align-items: center; gap: 12px;">
+                            <div style="width: 32px; height: 32px; background: var(--accent-cyan); border-radius: 8px; display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 14px;">6</div>
+                            <div>
+                                <div style="font-weight: 700;">Character Showcase</div>
+                                <div style="font-size: 12px; color: var(--text-muted);">8-12 seconds • Showcase</div>
+                            </div>
+                        </div>
+                        <div style="color: var(--text-muted); transition: transform 0.3s;" class="script-arrow">▼</div>
+                    </div>
+                    <div class="script-content" style="display: none; padding: 0 20px 20px; border-top: 1px solid var(--border);">
+                        <div style="padding-top: 16px;">
+                            <div style="font-size: 12px; font-weight: 600; color: var(--accent-cyan); margin-bottom: 8px;">SETUP</div>
+                            <p style="font-size: 13px; color: var(--text-secondary); margin-bottom: 16px;">Show off the cosplay with personality. Quick cuts, trending audio.</p>
+
+                            <div style="font-size: 12px; font-weight: 600; color: var(--accent-pink); margin-bottom: 8px;">SHOT ORDER</div>
+                            <div style="font-family: 'JetBrains Mono', monospace; font-size: 12px; background: var(--bg-secondary); padding: 16px; border-radius: 8px; color: var(--text-secondary); line-height: 1.8; margin-bottom: 16px;">
+                                SHOT 1: Close-up of face, in character<br>
+                                SHOT 2: Full body pose<br>
+                                SHOT 3: Detail shot (prop, accessory, makeup)<br>
+                                SHOT 4: Movement or character moment<br>
+                                SHOT 5: Final pose — the screenshot moment
+                            </div>
+
+                            <div style="font-size: 12px; font-weight: 600; color: var(--accent-amber); margin-bottom: 8px;">TEXT OVERLAY OPTIONS</div>
+                            <div style="font-size: 13px; background: var(--bg-secondary); padding: 12px; border-radius: 8px; color: var(--text-secondary); margin-bottom: 16px;">
+                                Option A: Character name + series<br>
+                                Option B: "[Character name] has entered the chat"<br>
+                                Option C: Just let the cosplay speak
+                            </div>
+
+                            <div style="font-size: 12px; font-weight: 600; color: var(--accent-amber); margin-bottom: 8px;">CAPTION (Copy This)</div>
+                            <div style="font-size: 13px; background: var(--bg-secondary); padding: 12px; border-radius: 8px; color: var(--text-secondary);">
+                                [Character name] from [Series name]<br><br>
+                                This one took [X hours/weeks] but I'm obsessed<br><br>
+                                #[charactername]cosplay #cosplay #cosplayer #[seriesname]
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Script 7 -->
+                <div class="script-card" onclick="toggleScript(this)" style="background: var(--bg-card); border: 1px solid var(--border); border-radius: 12px; cursor: pointer; transition: all 0.3s;">
+                    <div style="padding: 16px 20px; display: flex; justify-content: space-between; align-items: center;">
+                        <div style="display: flex; align-items: center; gap: 12px;">
+                            <div style="width: 32px; height: 32px; background: var(--accent-amber); border-radius: 8px; display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 14px;">7</div>
+                            <div>
+                                <div style="font-weight: 700;">Trend Audio</div>
+                                <div style="font-size: 12px; color: var(--text-muted);">5-10 seconds • Trend</div>
+                            </div>
+                        </div>
+                        <div style="color: var(--text-muted); transition: transform 0.3s;" class="script-arrow">▼</div>
+                    </div>
+                    <div class="script-content" style="display: none; padding: 0 20px 20px; border-top: 1px solid var(--border);">
+                        <div style="padding-top: 16px;">
+                            <div style="font-size: 12px; font-weight: 600; color: var(--accent-cyan); margin-bottom: 8px;">HOW TO FIND TRENDING AUDIO</div>
+                            <div style="font-size: 13px; background: var(--bg-secondary); padding: 12px; border-radius: 8px; color: var(--text-secondary); margin-bottom: 16px;">
+                                1. Go to Reels, scroll for 5 minutes<br>
+                                2. Note any audio you see 3+ times<br>
+                                3. Check if it fits cosplay context<br>
+                                4. Save it for later
+                            </div>
+
+                            <div style="font-size: 12px; font-weight: 600; color: var(--accent-pink); margin-bottom: 8px;">GENERAL FORMULA</div>
+                            <div style="font-family: 'JetBrains Mono', monospace; font-size: 12px; background: var(--bg-secondary); padding: 16px; border-radius: 8px; color: var(--text-secondary); line-height: 1.8; margin-bottom: 16px;">
+                                [Trending audio plays]<br>
+                                [You doing the trend BUT in cosplay]<br>
+                                [Add physical comedy or unexpected twist]
+                            </div>
+
+                            <div style="font-size: 12px; font-weight: 600; color: var(--accent-amber); margin-bottom: 8px;">CAPTION (Copy This)</div>
+                            <div style="font-size: 13px; background: var(--bg-secondary); padding: 12px; border-radius: 8px; color: var(--text-secondary);">
+                                Had to do it<br><br>
+                                #cosplay #[charactername] #[trendname] #cosplayer
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Script 10 -->
+                <div class="script-card" onclick="toggleScript(this)" style="background: var(--bg-card); border: 1px solid var(--border); border-radius: 12px; cursor: pointer; transition: all 0.3s;">
+                    <div style="padding: 16px 20px; display: flex; justify-content: space-between; align-items: center;">
+                        <div style="display: flex; align-items: center; gap: 12px;">
+                            <div style="width: 32px; height: 32px; background: var(--accent-green); border-radius: 8px; display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 12px;">10</div>
+                            <div>
+                                <div style="font-weight: 700;">Pinterest vs Reality</div>
+                                <div style="font-size: 12px; color: var(--text-muted);">10-15 seconds • Humor</div>
+                            </div>
+                        </div>
+                        <div style="color: var(--text-muted); transition: transform 0.3s;" class="script-arrow">▼</div>
+                    </div>
+                    <div class="script-content" style="display: none; padding: 0 20px 20px; border-top: 1px solid var(--border);">
+                        <div style="padding-top: 16px;">
+                            <div style="font-size: 12px; font-weight: 600; color: var(--accent-cyan); margin-bottom: 8px;">SETUP</div>
+                            <p style="font-size: 13px; color: var(--text-secondary); margin-bottom: 16px;">Show the reference image, then show your attempt. React honestly.</p>
+
+                            <div style="font-size: 12px; font-weight: 600; color: var(--accent-pink); margin-bottom: 8px;">SCRIPT</div>
+                            <div style="font-family: 'JetBrains Mono', monospace; font-size: 12px; background: var(--bg-secondary); padding: 16px; border-radius: 8px; color: var(--text-secondary); line-height: 1.8; margin-bottom: 16px;">
+                                SHOT 1: Show Pinterest/reference image<br>
+                                [Text: "Pinterest said"]<br><br>
+                                SHOT 2: Your version<br>
+                                [Text: "I said"]<br><br>
+                                SHOT 3: Your reaction<br>
+                                [Shrug, nod, or proud face depending on outcome]<br><br>
+                                [Showing reference]<br>
+                                "So Pinterest said this"<br><br>
+                                [Cut to you]<br>
+                                "And I said..."<br><br>
+                                [Pose]<br>
+                                "Close enough." OR "Nailed it." OR "We're working on it."
+                            </div>
+
+                            <div style="font-size: 12px; font-weight: 600; color: var(--accent-amber); margin-bottom: 8px;">CAPTION (Copy This)</div>
+                            <div style="font-size: 13px; background: var(--bg-secondary); padding: 12px; border-radius: 8px; color: var(--text-secondary);">
+                                Pinterest vs my attempt<br><br>
+                                Am I wrong though?<br><br>
+                                #cosplay #cosplayer #pinterestinspired #cosplayattempt
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Script 11 -->
+                <div class="script-card" onclick="toggleScript(this)" style="background: var(--bg-card); border: 1px solid var(--border); border-radius: 12px; cursor: pointer; transition: all 0.3s;">
+                    <div style="padding: 16px 20px; display: flex; justify-content: space-between; align-items: center;">
+                        <div style="display: flex; align-items: center; gap: 12px;">
+                            <div style="width: 32px; height: 32px; background: var(--accent-pink); border-radius: 8px; display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 12px;">11</div>
+                            <div>
+                                <div style="font-weight: 700;">Evolution (Old vs New)</div>
+                                <div style="font-size: 12px; color: var(--text-muted);">10-15 seconds • Personal</div>
+                            </div>
+                        </div>
+                        <div style="color: var(--text-muted); transition: transform 0.3s;" class="script-arrow">▼</div>
+                    </div>
+                    <div class="script-content" style="display: none; padding: 0 20px 20px; border-top: 1px solid var(--border);">
+                        <div style="padding-top: 16px;">
+                            <div style="font-size: 12px; font-weight: 600; color: var(--accent-cyan); margin-bottom: 8px;">SETUP</div>
+                            <p style="font-size: 13px; color: var(--text-secondary); margin-bottom: 16px;">Side-by-side or before/after of the same character — first attempt vs now.</p>
+
+                            <div style="font-size: 12px; font-weight: 600; color: var(--accent-pink); margin-bottom: 8px;">SCRIPT</div>
+                            <div style="font-family: 'JetBrains Mono', monospace; font-size: 12px; background: var(--bg-secondary); padding: 16px; border-radius: 8px; color: var(--text-secondary); line-height: 1.8; margin-bottom: 16px;">
+                                SHOT 1: Old photo/video of early cosplay<br>
+                                [Text: "[Year] — First attempt"]<br><br>
+                                SHOT 2: You now in the upgraded version<br>
+                                [Text: "Now"]<br><br>
+                                SHOT 3: Side-by-side comparison<br><br>
+                                "My first [character] cosplay vs now"<br><br>
+                                [Show old version]<br>
+                                "We don't talk about her"<br><br>
+                                [Show new version]<br>
+                                "She evolved"
+                            </div>
+
+                            <div style="font-size: 12px; font-weight: 600; color: var(--accent-amber); margin-bottom: 8px;">CAPTION (Copy This)</div>
+                            <div style="font-size: 13px; background: var(--bg-secondary); padding: 12px; border-radius: 8px; color: var(--text-secondary);">
+                                First attempt vs now<br><br>
+                                Growth is real. Cringe is temporary.<br><br>
+                                #cosplay #cosplayer #cosplayprogress #beforeandafter
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Script 12 -->
+                <div class="script-card" onclick="toggleScript(this)" style="background: var(--bg-card); border: 1px solid var(--border); border-radius: 12px; cursor: pointer; transition: all 0.3s;">
+                    <div style="padding: 16px 20px; display: flex; justify-content: space-between; align-items: center;">
+                        <div style="display: flex; align-items: center; gap: 12px;">
+                            <div style="width: 32px; height: 32px; background: var(--accent-purple); border-radius: 8px; display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 12px;">12</div>
+                            <div>
+                                <div style="font-weight: 700;">Process Speed-Run</div>
+                                <div style="font-size: 12px; color: var(--text-muted);">15-20 seconds • BTS</div>
+                            </div>
+                        </div>
+                        <div style="color: var(--text-muted); transition: transform 0.3s;" class="script-arrow">▼</div>
+                    </div>
+                    <div class="script-content" style="display: none; padding: 0 20px 20px; border-top: 1px solid var(--border);">
+                        <div style="padding-top: 16px;">
+                            <div style="font-size: 12px; font-weight: 600; color: var(--accent-cyan); margin-bottom: 8px;">SETUP</div>
+                            <p style="font-size: 13px; color: var(--text-secondary); margin-bottom: 16px;">Film quick clips of making/crafting any part of a cosplay. Speed them up in editing.</p>
+
+                            <div style="font-size: 12px; font-weight: 600; color: var(--accent-pink); margin-bottom: 8px;">SHOT ORDER</div>
+                            <div style="font-family: 'JetBrains Mono', monospace; font-size: 12px; background: var(--bg-secondary); padding: 16px; border-radius: 8px; color: var(--text-secondary); line-height: 1.8; margin-bottom: 16px;">
+                                SHOT 1: Raw materials<br>
+                                [Text: "Let's make [prop/piece]"]<br><br>
+                                SHOT 2-6: Quick cuts of process<br>
+                                  - Cutting<br>
+                                  - Gluing<br>
+                                  - Painting<br>
+                                  - Assembling<br>
+                                  - Detailing<br><br>
+                                SHOT 7: Finished piece<br>
+                                [Text: "[X] hours later"]<br><br>
+                                SHOT 8: Piece on you / in context
+                            </div>
+
+                            <div style="font-size: 12px; font-weight: 600; color: var(--accent-amber); margin-bottom: 8px;">CAPTION (Copy This)</div>
+                            <div style="font-size: 13px; background: var(--bg-secondary); padding: 12px; border-radius: 8px; color: var(--text-secondary);">
+                                Making [prop name] in [X] seconds<br><br>
+                                The actual process took [X] hours and my sanity<br><br>
+                                #cosplay #cosplayprogress #cosplaywip #cosplaybuild
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Script 13 -->
+                <div class="script-card" onclick="toggleScript(this)" style="background: var(--bg-card); border: 1px solid var(--border); border-radius: 12px; cursor: pointer; transition: all 0.3s;">
+                    <div style="padding: 16px 20px; display: flex; justify-content: space-between; align-items: center;">
+                        <div style="display: flex; align-items: center; gap: 12px;">
+                            <div style="width: 32px; height: 32px; background: var(--accent-cyan); border-radius: 8px; display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 12px;">13</div>
+                            <div>
+                                <div style="font-weight: 700;">Types of Cosplayers</div>
+                                <div style="font-size: 12px; color: var(--text-muted);">12-18 seconds • Humor</div>
+                            </div>
+                        </div>
+                        <div style="color: var(--text-muted); transition: transform 0.3s;" class="script-arrow">▼</div>
+                    </div>
+                    <div class="script-content" style="display: none; padding: 0 20px 20px; border-top: 1px solid var(--border);">
+                        <div style="padding-top: 16px;">
+                            <div style="font-size: 12px; font-weight: 600; color: var(--accent-cyan); margin-bottom: 8px;">SETUP</div>
+                            <p style="font-size: 13px; color: var(--text-secondary); margin-bottom: 16px;">Play different "types" of cosplayers. Quick cuts between personas. Pick 3-4.</p>
+
+                            <div style="font-size: 12px; font-weight: 600; color: var(--accent-pink); margin-bottom: 8px;">THE TYPES</div>
+                            <div style="font-family: 'JetBrains Mono', monospace; font-size: 12px; background: var(--bg-secondary); padding: 16px; border-radius: 8px; color: var(--text-secondary); line-height: 1.8; margin-bottom: 16px;">
+                                THE PLANNER<br>
+                                [Text: "The Planner"]<br>
+                                [You with binder, color-coded schedule, stressed]<br>
+                                "Okay so day 1 is [character] but if it rains we pivot to—"<br><br>
+                                THE CHAOTIC<br>
+                                [Text: "The Chaotic"]<br>
+                                [You throwing things in a bag]<br>
+                                "It'll be fine. We figure it out at the con."<br><br>
+                                THE BUDGET COSPLAYER<br>
+                                [Text: "Budget Cosplayer"]<br>
+                                [You holding tape and cardboard]<br>
+                                "Amazon wig, thrift store shirt, and ✨creativity✨"<br><br>
+                                THE PERFECTIONIST<br>
+                                [Text: "The Perfectionist"]<br>
+                                [You staring at a tiny detail]<br>
+                                "No one will notice this seam. But I'll know."
+                            </div>
+
+                            <div style="font-size: 12px; font-weight: 600; color: var(--accent-amber); margin-bottom: 8px;">CAPTION (Copy This)</div>
+                            <div style="font-size: 13px; background: var(--bg-secondary); padding: 12px; border-radius: 8px; color: var(--text-secondary);">
+                                Which type are you?<br><br>
+                                I'm personally the chaotic budget cosplayer hybrid<br><br>
+                                #cosplay #cosplayer #cosplayhumor #animeconvention
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Script 14 -->
+                <div class="script-card" onclick="toggleScript(this)" style="background: var(--bg-card); border: 1px solid var(--border); border-radius: 12px; cursor: pointer; transition: all 0.3s;">
+                    <div style="padding: 16px 20px; display: flex; justify-content: space-between; align-items: center;">
+                        <div style="display: flex; align-items: center; gap: 12px;">
+                            <div style="width: 32px; height: 32px; background: var(--accent-amber); border-radius: 8px; display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 12px;">14</div>
+                            <div>
+                                <div style="font-weight: 700;">Real Talk</div>
+                                <div style="font-size: 12px; color: var(--text-muted);">10-15 seconds • Personal</div>
+                            </div>
+                        </div>
+                        <div style="color: var(--text-muted); transition: transform 0.3s;" class="script-arrow">▼</div>
+                    </div>
+                    <div class="script-content" style="display: none; padding: 0 20px 20px; border-top: 1px solid var(--border);">
+                        <div style="padding-top: 16px;">
+                            <div style="font-size: 12px; font-weight: 600; color: var(--accent-cyan); margin-bottom: 8px;">SETUP</div>
+                            <p style="font-size: 13px; color: var(--text-secondary); margin-bottom: 16px;">Front camera. Natural lighting. Just you being honest. Costume optional.</p>
+
+                            <div style="font-size: 12px; font-weight: 600; color: var(--accent-pink); margin-bottom: 8px;">CHOOSE YOUR TOPIC</div>
+                            <div style="font-family: 'JetBrains Mono', monospace; font-size: 12px; background: var(--bg-secondary); padding: 16px; border-radius: 8px; color: var(--text-secondary); line-height: 1.8; margin-bottom: 16px;">
+                                OPTION A — Why you cosplay:<br>
+                                "People ask why I put all this effort into dressing up for a weekend.<br>
+                                And honestly? It's the one place where being extra is the point.<br>
+                                Where everyone gets it. Where you can just... be."<br><br>
+                                OPTION B — What it means to you:<br>
+                                "This started as a fun thing.<br>
+                                Now it's... the thing that got me through [hard time].<br>
+                                The community that showed up for me.<br>
+                                So yeah. It's more than costumes."<br><br>
+                                OPTION C — Confidence journey:<br>
+                                "First time I wore a cosplay in public I was terrified.<br>
+                                Now? I don't care who stares.<br>
+                                This is me. Take it or leave it."
+                            </div>
+
+                            <div style="font-size: 12px; font-weight: 600; color: var(--accent-amber); margin-bottom: 8px;">CAPTION (Copy This)</div>
+                            <div style="font-size: 13px; background: var(--bg-secondary); padding: 12px; border-radius: 8px; color: var(--text-secondary);">
+                                Just some thoughts<br><br>
+                                Thank you for being here<br><br>
+                                #cosplay #cosplayer #cosplaycommunity #realtalk
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
             </div>
         </div>
     </section>
@@ -2997,6 +3557,35 @@
             }
         });
     });
+
+    // ─── Toggle expandable script cards ───
+    function toggleScript(card) {
+        const content = card.querySelector('.script-content');
+        const arrow = card.querySelector('.script-arrow');
+        const isOpen = content.style.display === 'block';
+
+        // Close all other open scripts
+        document.querySelectorAll('.script-card').forEach(otherCard => {
+            if (otherCard !== card) {
+                const otherContent = otherCard.querySelector('.script-content');
+                const otherArrow = otherCard.querySelector('.script-arrow');
+                if (otherContent) otherContent.style.display = 'none';
+                if (otherArrow) otherArrow.style.transform = 'rotate(0deg)';
+                otherCard.style.borderColor = 'var(--border)';
+            }
+        });
+
+        // Toggle this script
+        if (isOpen) {
+            content.style.display = 'none';
+            arrow.style.transform = 'rotate(0deg)';
+            card.style.borderColor = 'var(--border)';
+        } else {
+            content.style.display = 'block';
+            arrow.style.transform = 'rotate(180deg)';
+            card.style.borderColor = 'var(--accent-pink)';
+        }
+    }
 
     // ─── Active nav on scroll ───
     const sections = document.querySelectorAll('.section, .hero');
