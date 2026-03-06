@@ -1,0 +1,1064 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>@kirahri.cos — Follow-Up</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  :root {
+    --bg: #f5f0e8;
+    --surface: #ffffff;
+    --surface2: #ebe6dc;
+    --surface3: #e0dbd1;
+    --border: #d5cfc4;
+    --text: #2c2a26;
+    --text-dim: #6b6760;
+    --text-muted: #9e998f;
+    --accent: #6b5ce7;
+    --accent-glow: rgba(107,92,231,0.08);
+    --green: #2d8a4e;
+    --green-dim: rgba(45,138,78,0.1);
+    --red: #c53030;
+    --red-dim: rgba(197,48,48,0.08);
+    --yellow: #b7791f;
+    --yellow-dim: rgba(183,121,31,0.08);
+    --blue: #2b6cb0;
+    --blue-dim: rgba(43,108,176,0.08);
+    --pink: #b83280;
+    --pink-dim: rgba(184,50,128,0.08);
+  }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Inter', -apple-system, sans-serif;
+    line-height: 1.7;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 40px 24px 100px;
+  }
+
+  /* HEADER */
+  .header {
+    text-align: center;
+    padding: 60px 0 50px;
+    border-bottom: 1px solid var(--border);
+    margin-bottom: 50px;
+  }
+  .header h1 {
+    font-size: 2.2rem;
+    font-weight: 800;
+    letter-spacing: -0.03em;
+    margin-bottom: 8px;
+    color: var(--accent);
+  }
+  .header .sub {
+    color: var(--text-dim);
+    font-size: 0.95rem;
+    font-weight: 400;
+  }
+
+  /* SECTIONS */
+  .section {
+    margin-bottom: 56px;
+  }
+  .section-label {
+    display: inline-block;
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--accent);
+    background: var(--accent-glow);
+    padding: 4px 10px;
+    border-radius: 4px;
+    margin-bottom: 12px;
+  }
+  .section h2 {
+    font-size: 1.45rem;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    margin-bottom: 8px;
+  }
+  .section .lead {
+    color: var(--text-dim);
+    font-size: 0.95rem;
+    margin-bottom: 24px;
+    max-width: 640px;
+  }
+
+  h3 {
+    font-size: 1.1rem;
+    font-weight: 600;
+    margin: 28px 0 12px;
+    color: var(--text);
+  }
+
+  p { margin-bottom: 14px; color: var(--text); font-size: 0.92rem; }
+  strong { color: #1a1917; font-weight: 600; }
+
+  /* CARDS */
+  .card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 24px;
+    margin-bottom: 16px;
+  }
+  .card.highlight {
+    border-color: var(--accent);
+    background: linear-gradient(135deg, var(--accent-glow), transparent);
+  }
+  .card h4 {
+    font-size: 0.95rem;
+    font-weight: 600;
+    margin-bottom: 10px;
+  }
+  .card p { margin-bottom: 8px; }
+  .card p:last-child { margin-bottom: 0; }
+
+  /* STAT BLOCKS */
+  .stats {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+    gap: 12px;
+    margin: 20px 0;
+  }
+  .stat {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 18px 16px;
+    text-align: center;
+  }
+  .stat .num {
+    font-size: 1.6rem;
+    font-weight: 800;
+    letter-spacing: -0.03em;
+    color: var(--text);
+  }
+  .stat .label {
+    font-size: 0.72rem;
+    font-weight: 500;
+    color: var(--text-dim);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    margin-top: 4px;
+  }
+  .stat.green .num { color: var(--green); }
+  .stat.blue .num { color: var(--blue); }
+  .stat.yellow .num { color: var(--yellow); }
+  .stat.pink .num { color: var(--pink); }
+  .stat.accent .num { color: var(--accent); }
+
+  /* TABLES */
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 16px 0;
+    font-size: 0.85rem;
+  }
+  thead th {
+    text-align: left;
+    padding: 10px 12px;
+    font-size: 0.7rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--text-dim);
+    border-bottom: 1px solid var(--border);
+  }
+  tbody td {
+    padding: 10px 12px;
+    border-bottom: 1px solid var(--border);
+    color: var(--text);
+  }
+  tbody tr:last-child td { border-bottom: none; }
+  tbody tr:hover { background: var(--surface2); }
+
+  /* TAGS */
+  .tag {
+    display: inline-block;
+    font-size: 0.68rem;
+    font-weight: 600;
+    padding: 2px 8px;
+    border-radius: 4px;
+    letter-spacing: 0.02em;
+  }
+  .tag.green { background: var(--green-dim); color: var(--green); }
+  .tag.red { background: var(--red-dim); color: var(--red); }
+  .tag.yellow { background: var(--yellow-dim); color: var(--yellow); }
+  .tag.blue { background: var(--blue-dim); color: var(--blue); }
+  .tag.pink { background: var(--pink-dim); color: var(--pink); }
+
+  /* COMPARISON BLOCKS */
+  .vs {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    margin: 16px 0;
+  }
+  .vs .side {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 18px;
+  }
+  .vs .side.win { border-color: var(--green); }
+  .vs .side.lose { border-color: var(--red); opacity: 0.75; }
+  .vs .side h5 {
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    margin-bottom: 10px;
+  }
+  .vs .side.win h5 { color: var(--green); }
+  .vs .side.lose h5 { color: var(--red); }
+  .vs .side ul {
+    list-style: none;
+    font-size: 0.84rem;
+  }
+  .vs .side ul li {
+    padding: 3px 0;
+    color: var(--text-dim);
+  }
+
+  /* CALLOUT */
+  .callout {
+    background: var(--surface2);
+    border-left: 3px solid var(--accent);
+    border-radius: 0 8px 8px 0;
+    padding: 16px 20px;
+    margin: 20px 0;
+    font-size: 0.9rem;
+  }
+  .callout.green { border-left-color: var(--green); }
+  .callout.yellow { border-left-color: var(--yellow); }
+  .callout.pink { border-left-color: var(--pink); }
+
+  /* EXAMPLE BLOCKS (replaces monospace formula blocks) */
+  .example-block {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 20px 24px;
+    margin: 16px 0;
+    font-size: 0.88rem;
+    line-height: 1.9;
+    color: var(--text-dim);
+  }
+  .example-block .do { color: var(--green); font-weight: 600; }
+  .example-block .dont { color: var(--red); font-weight: 600; }
+  .example-block .example { color: var(--text); display: block; padding-left: 16px; margin-bottom: 8px; }
+  .example-block .rule { color: var(--text); font-weight: 600; }
+
+  /* CHECKLIST */
+  .checklist {
+    list-style: none;
+    margin: 16px 0;
+  }
+  .checklist li {
+    padding: 10px 0;
+    border-bottom: 1px solid var(--border);
+    font-size: 0.9rem;
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+  }
+  .checklist li:last-child { border-bottom: none; }
+  .check {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 20px;
+    height: 20px;
+    border-radius: 5px;
+    font-size: 0.7rem;
+    flex-shrink: 0;
+    margin-top: 1px;
+  }
+  .check.done { background: var(--green-dim); color: var(--green); }
+  .check.open { background: var(--surface3); color: var(--text-muted); }
+
+  /* DIVIDER */
+  .divider {
+    height: 1px;
+    background: var(--border);
+    margin: 50px 0;
+  }
+
+  /* NUMBERED LIST */
+  .numbered {
+    counter-reset: item;
+    list-style: none;
+    margin: 16px 0;
+  }
+  .numbered li {
+    counter-increment: item;
+    padding: 12px 0 12px 40px;
+    border-bottom: 1px solid var(--border);
+    font-size: 0.88rem;
+    position: relative;
+  }
+  .numbered li:last-child { border-bottom: none; }
+  .numbered li::before {
+    content: counter(item);
+    position: absolute;
+    left: 0;
+    width: 26px;
+    height: 26px;
+    border-radius: 6px;
+    background: var(--surface3);
+    color: var(--text-dim);
+    font-size: 0.72rem;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  /* SHOT CARDS (pillar breakdowns) */
+  .shot-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 24px;
+    margin-bottom: 16px;
+  }
+  .shot-card .shot-title {
+    font-size: 1rem;
+    font-weight: 700;
+    margin-bottom: 4px;
+  }
+  .shot-card .shot-title.green { color: var(--green); }
+  .shot-card .shot-title.blue { color: var(--blue); }
+  .shot-card .shot-title.dim { color: var(--text-dim); }
+  .shot-card .shot-subtitle {
+    font-size: 0.82rem;
+    color: var(--text-dim);
+    margin-bottom: 16px;
+  }
+  .shot-card .shot-idea {
+    display: flex;
+    gap: 12px;
+    padding: 10px 0;
+    border-bottom: 1px solid var(--border);
+    font-size: 0.88rem;
+  }
+  .shot-card .shot-idea:last-of-type { border-bottom: none; }
+  .shot-card .shot-idea .idea-name {
+    color: var(--text);
+    font-weight: 600;
+    min-width: 0;
+    flex-shrink: 0;
+  }
+  .shot-card .shot-idea .idea-desc {
+    color: var(--text-dim);
+  }
+  .shot-card .shot-note {
+    color: var(--text-muted);
+    font-size: 0.8rem;
+    margin-top: 14px;
+    padding-top: 10px;
+    border-top: 1px solid var(--border);
+  }
+
+  /* WEEK GRID */
+  .week-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 6px;
+    margin: 16px 0;
+  }
+  .week-row {
+    display: grid;
+    grid-template-columns: 60px 1fr;
+    gap: 12px;
+    padding: 10px 14px;
+    border-radius: 8px;
+    font-size: 0.88rem;
+    align-items: center;
+  }
+  .week-row .day-name {
+    font-weight: 700;
+    font-size: 0.78rem;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+  }
+  .week-row .day-plan { color: var(--text-dim); }
+  .week-row.active { background: var(--surface); }
+  .week-row.rest { opacity: 0.45; }
+  .week-row.best .day-name { color: var(--green); }
+
+  /* FOOTER */
+  .footer {
+    text-align: center;
+    padding: 40px 0 20px;
+    color: var(--text-muted);
+    font-size: 0.75rem;
+  }
+
+  @media (max-width: 600px) {
+    .vs { grid-template-columns: 1fr; }
+    .stats { grid-template-columns: 1fr 1fr; }
+    .header h1 { font-size: 1.6rem; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+
+<!-- HEADER -->
+<div class="header">
+  <h1>@kirahri.cos</h1>
+  <div class="sub">Everything from the call + everything you sent after &middot; March 2026</div>
+</div>
+
+<!-- ===== SECTION 1: DATA FIX ===== -->
+<div class="section">
+  <div class="section-label">Updated</div>
+  <h2>Your Real Benchmarks &mdash; Without the Viral Noise</h2>
+  <p class="lead">You flagged something important: when your 4 biggest hits (2.8M, 1.9M, 960K, 564K) are included in the averages, they make up 91% of total plays and pull every number way up. That makes regular strong posts look weak by comparison. So we rebuilt the benchmarks with those removed to give you a cleaner picture of how your content actually performs day-to-day.</p>
+
+  <p>Here's how to read your numbers now:</p>
+
+  <div class="stats">
+    <div class="stat green">
+      <div class="num">16K+</div>
+      <div class="label">That's a win</div>
+    </div>
+    <div class="stat blue">
+      <div class="num">7K+</div>
+      <div class="label">Solid post</div>
+    </div>
+    <div class="stat yellow">
+      <div class="num">5-7K</div>
+      <div class="label">Normal</div>
+    </div>
+    <div class="stat pink">
+      <div class="num">&lt;5K</div>
+      <div class="label">Underperformed</div>
+    </div>
+  </div>
+
+  <p><strong>What this means:</strong> A 208K reel is exceptional. A 20K reel is a clear success. With the viral posts separated out, these benchmarks show what your content earns on its own &mdash; and it's strong.</p>
+
+  <h3>Your January Numbers (Regular Posts Only)</h3>
+  <p>This is what your content actually earns on a normal day in January, with no viral boosts and no breakout spikes. 36 regular posts:</p>
+
+  <div class="stats">
+    <div class="stat accent">
+      <div class="num">10,261</div>
+      <div class="label">Average Post</div>
+    </div>
+    <div class="stat accent">
+      <div class="num">6,616</div>
+      <div class="label">Typical Post</div>
+    </div>
+  </div>
+  <p>If a post gets 10K+ on a normal day, it's doing well. If it gets 16K+, it's a hit. This is the baseline we're working from going forward.</p>
+</div>
+
+<div class="divider"></div>
+
+<!-- ===== SECTION 2: WEDNESDAY ===== -->
+<div class="section">
+  <div class="section-label">Updated</div>
+  <h2>Best Posting Day &mdash; Refined</h2>
+  <p class="lead">The initial analysis showed Wednesday as your top day (71K average), but two of your viral posts happened to land on Wednesdays. Once we isolate those, Wednesday drops to 18K and <strong>Sunday comes out as your strongest day.</strong></p>
+
+  <table>
+    <thead><tr><th>Day</th><th>How Many Posts</th><th>Average Plays</th><th></th></tr></thead>
+    <tbody>
+      <tr><td><strong>Sunday</strong></td><td>5</td><td><strong>32,954</strong></td><td><span class="tag green">Best</span></td></tr>
+      <tr><td><strong>Wednesday</strong></td><td>3</td><td><strong>18,575</strong></td><td><span class="tag blue">Good</span></td></tr>
+      <tr><td>Tuesday</td><td>6</td><td>15,882</td><td><span class="tag blue">Good</span></td></tr>
+      <tr><td>Friday</td><td>9</td><td>9,945</td><td></td></tr>
+      <tr><td>Saturday</td><td>5</td><td>9,465</td><td></td></tr>
+      <tr><td>Monday</td><td>12</td><td>8,723</td><td></td></tr>
+      <tr><td>Thursday</td><td>6</td><td>6,798</td><td><span class="tag red">Weakest</span></td></tr>
+    </tbody>
+  </table>
+
+  <div class="callout yellow">
+    <strong>Being honest:</strong> These numbers are based on only 3-12 posts per day, so none of this is a hard rule. What you post matters way more than when you post it. But if you have a really strong reel, Sunday or Wednesday gives it the best shot.
+  </div>
+</div>
+
+<div class="divider"></div>
+
+<!-- ===== SECTION 3: DURATION ===== -->
+<div class="section">
+  <div class="section-label">Updated</div>
+  <h2>Video Length &mdash; Closer Look</h2>
+  <p class="lead">You raised a good point on the call: "I understand shorter performs better but that's also because most of my content is short." When we dig deeper, the initial 20-30s advantage was driven by two viral posts in that time range. Isolating those gives a clearer picture:</p>
+
+  <table>
+    <thead><tr><th>Length</th><th>Posts</th><th>Average Plays</th><th>What It Means</th></tr></thead>
+    <tbody>
+      <tr><td>5-8 seconds</td><td>16</td><td>10,686</td><td>Your comfort zone &mdash; works fine</td></tr>
+      <tr><td>8-10 seconds</td><td>11</td><td>9,982</td><td>Basically the same</td></tr>
+      <tr><td>10-13 seconds</td><td>5</td><td>12,455</td><td>Slightly better</td></tr>
+      <tr><td>13-20 seconds</td><td>3</td><td>6,787</td><td>Too few posts to know</td></tr>
+    </tbody>
+  </table>
+
+  <p><strong>Bottom line:</strong> Anything 5-13 seconds performs about the same. Your long staff compilations (20+ seconds) work because things keep happening &mdash; not because longer is inherently better. Like you said on the call: "the magic needs to be different for longer form." Exactly.</p>
+</div>
+
+<div class="divider"></div>
+
+<!-- ===== SECTION 4: STAFF SERIES ===== -->
+<div class="section">
+  <div class="section-label">From Our Call</div>
+  <h2>The Staff Series &mdash; What Makes It Work vs. Tank</h2>
+  <p class="lead">You've been tracking this yourself &mdash; here's everything we identified together about why some staff videos hit 900K and others die the same day.</p>
+
+  <div class="vs">
+    <div class="side win">
+      <h5>What Makes It Hit</h5>
+      <ul>
+        <li><strong>Hand it off in the first 2.5 seconds</strong> &mdash; don't wait</li>
+        <li>You can <strong>see the drop or the struggle</strong> &mdash; the staff hits the ground or they visibly can't hold it</li>
+        <li><strong>Other people are watching</strong> around them &mdash; crowd energy</li>
+        <li><strong>Convention floor or bright location</strong> &mdash; good lighting, hard floor</li>
+        <li>Audio that <strong>crosses into other communities</strong> &mdash; the Anatoly audio pulled gym people in</li>
+        <li><strong>Guys reacting</strong> &mdash; the physics are more dramatic with the 35lb weight</li>
+      </ul>
+    </div>
+    <div class="side lose">
+      <h5>What Kills It</h5>
+      <ul>
+        <li><strong>3.25 seconds before anything happens</strong> &mdash; 30% of viewers are already gone</li>
+        <li>No visible drop or struggle &mdash; they just hold it and nothing happens</li>
+        <li>Just one person reacting alone &mdash; no crowd watching</li>
+        <li><strong>Dark rooms, carpet</strong> &mdash; kills both the sound of the drop AND the visual</li>
+        <li>Close-up reactions &mdash; less "you are there" feeling, counterintuitively worse</li>
+        <li>Too many words / two-joke setup &mdash; "why weren't you answering texts" lost 80% by the end</li>
+      </ul>
+    </div>
+  </div>
+
+  <h3>Why It Went Viral (Your Own Insight)</h3>
+  <p>You said it on the call: <em>"The reason it left the community is because I had a similar mimic to a large creator in a different space."</em> The Anatoly audio pulled in gym/fitness people (25M+ follower creator). Gym people arguing about the weight, regular people amazed by the build, cosplayers recognizing the character &mdash; <strong>three different audiences watching for three different reasons.</strong> That mix is what breaks the ceiling. The staff didn't go viral because of cosplay. It went viral because it looked like gym/strength content featuring a cosplayer.</p>
+
+  <h3>The Format Rotates &mdash; It's Not Dead When It Dies</h3>
+  <p>You noticed this: the format works for about 5 days, dies, then comes back 3 days later when you try a different spin. "Dark Magician Girl stronger than Sun Jin-woo" worked. "Weaker than Dark Magician Girl" with the same exact concept tanked. Then a totally different angle hit again.</p>
+
+  <div class="callout">
+    <strong>What to do with this:</strong> Don't post staff content daily &mdash; it burns through the audience the algorithm is showing it to. Space staff posts <strong>3-4 days apart</strong>. Fill the gaps with other content (behind-the-scenes, DM reactions, opinion posts). When the format feels dead, wait 3 days and try a different character, audio, or angle.
+  </div>
+
+  <h3>The 2.5-Second Rule (For Everything You Post)</h3>
+  <p>From your own analytics: the difference between 2.5 seconds and 3.25 seconds to first action was the difference between a hit and a flop. <strong>Less than one second.</strong></p>
+
+  <div class="example-block">
+    <span class="rule">Something has to HAPPEN in the first 2.5 seconds.</span><br>
+    Not text appearing. Not a setup. Something visual &mdash; a handoff, a drop, a reaction, movement.<br><br>
+    <span class="dont">If nothing happens until 2.5s</span> &rarr; you lose 30% of viewers immediately<br>
+    <span class="dont">If nothing happens until 4s</span> &rarr; 80% are gone
+  </div>
+</div>
+
+<div class="divider"></div>
+
+<!-- ===== SECTION 5: SPENDING COMPARISON ===== -->
+<div class="section">
+  <div class="section-label">From Our Call</div>
+  <h2>The Spending Video &mdash; Why the First One Worked</h2>
+  <p class="lead">Your pinned spending video hit ~700K on repost. The follow-up with axe throwing tanked. Here's the side-by-side:</p>
+
+  <div class="vs">
+    <div class="side win">
+      <h5>The One That Worked (~700K)</h5>
+      <ul>
+        <li>In a car, outside &mdash; <strong>relatable setting</strong></li>
+        <li>Showed a <strong>pile of everything</strong> you bought</li>
+        <li><strong>Specific dollar amount</strong> visible on screen</li>
+        <li>Angry at yourself &mdash; <strong>self-deprecating energy</strong></li>
+        <li>People could <strong>comment on specific items + the money</strong></li>
+        <li><strong>Subtitles on screen</strong></li>
+      </ul>
+    </div>
+    <div class="side lose">
+      <h5>The One That Tanked</h5>
+      <ul>
+        <li>Axe throwing &mdash; random activity, disconnected</li>
+        <li>No visual proof of spending</li>
+        <li>No dollar amount anywhere</li>
+        <li>No clear emotion &mdash; no payoff</li>
+        <li>Nothing specific for people to comment on</li>
+        <li>No subtitles</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="callout green">
+    <strong>For spending content to work, you need three things:</strong> a specific dollar amount, a visible pile of what you bought, and your genuine reaction to the damage. Without those, there's nothing for people to argue about in the comments.
+  </div>
+</div>
+
+<div class="divider"></div>
+
+<!-- ===== SECTION 6: PUBLIC COSPLAY ===== -->
+<div class="section">
+  <div class="section-label">Your Question</div>
+  <h2>"I've done vids in Wawa, getting food, random places &mdash; they don't hit"</h2>
+  <p class="lead">You said on the call and in your notes: you feel the story isn't there. You're right. But first &mdash; your public cosplay content isn't actually failing:</p>
+
+  <table>
+    <thead><tr><th>Post</th><th>Plays</th><th></th></tr></thead>
+    <tbody>
+      <tr><td>"Great use of free will / going places in cosplay"</td><td>18,929</td><td><span class="tag green">Hit</span></td></tr>
+      <tr><td>"Love cosplaying everywhere"</td><td>7,747</td><td><span class="tag blue">Solid</span></td></tr>
+      <tr><td>"Love to just cosplay everywhere"</td><td>7,123</td><td><span class="tag blue">Solid</span></td></tr>
+      <tr><td>"Cosplay in snow"</td><td>5,333</td><td><span class="tag yellow">Normal</span></td></tr>
+    </tbody>
+  </table>
+  <p>These are all at or above your typical post. They only look bad compared to staff series numbers.</p>
+
+  <h3>But You're Right &mdash; They Could Hit Way Harder</h3>
+  <p>@baninabear's public cosplay reels average 89K plays. Here's the difference between her approach and yours:</p>
+
+  <div class="vs">
+    <div class="side win">
+      <h5>What @baninabear Does</h5>
+      <ul>
+        <li>The location IS the joke (horse girl anime &rarr; real racetrack)</li>
+        <li>"I rode Metro to Anime LA" &mdash; it's a <strong>story with a journey</strong></li>
+        <li>Other people's reactions are in the video</li>
+        <li>There's a beginning, middle, end: left house &rarr; traveled &rarr; people reacted</li>
+      </ul>
+    </div>
+    <div class="side lose">
+      <h5>What You're Doing Now</h5>
+      <ul>
+        <li>Random locations (Wawa, anywhere)</li>
+        <li>"Love cosplaying everywhere" &mdash; that's a <strong>vibe, not a story</strong></li>
+        <li>Other people aren't featured</li>
+        <li>No arc: just "I was here and it was fun"</li>
+      </ul>
+    </div>
+  </div>
+
+  <h3>The Fix Is Specific</h3>
+
+  <div class="example-block">
+    <span class="dont">Instead of:</span> <span class="example">"I went to Wawa in cosplay" (that's a vibe)</span>
+    <span class="do">Try:</span> <span class="example">"The Wawa cashier asked if I was lost" (that's a story)</span>
+
+    <span class="dont">Instead of:</span> <span class="example">"Cosplay in public is fun" (statement)</span>
+    <span class="do">Try:</span> <span class="example">"3 people asked for photos. 1 asked if I was okay." (specific moment)</span>
+
+    <span class="dont">Instead of:</span> <span class="example">"Getting food in cosplay" (activity)</span>
+    <span class="do">Try:</span> <span class="example">"Ordered a hoagie as Miku. He didn't flinch." (punchline)</span>
+  </div>
+
+  <p>The pattern: pick a <strong>specific interaction</strong>, include <strong>other people's reactions</strong>, make the location matter (why THIS place + THIS cosplay), and end with something people can react to.</p>
+</div>
+
+<div class="divider"></div>
+
+<!-- ===== SECTION 7: PROJECTMOSHII ===== -->
+<div class="section">
+  <div class="section-label">Your Question</div>
+  <h2>How @projectmoshii Gets 157K Per Post</h2>
+  <p class="lead">You asked us to break down what makes her format work. Here are the 5 things she does &mdash; and what you already do (and don't do) for each one.</p>
+
+  <div class="card">
+    <h4>1. She talks like she's in a group chat, not making content</h4>
+    <p>"What's the anime with the most drip?" &mdash; that's group chat energy, not influencer energy. She sounds like a friend, not a creator.</p>
+    <p><strong>You already do this</strong> in captions ("It be like this" with the crying emoji). The gap is doing it on camera consistently. When you do (like the 50K DM reel), it works. When you don't, it flatlines.</p>
+  </div>
+
+  <div class="card">
+    <h4>2. Every reel is a question or a hot take &mdash; never just a statement</h4>
+    <p>"What's the anime with the most drip?" = debate. "Sango walked so Tanjiro could run" = debate. "Polar opposite best friends" = people tag their friends. Everything she posts is designed to make people type a comment.</p>
+    <p><strong>Your version that worked:</strong> "Team Emilia or Team Rem?" (11.7K). But most of your reels are <strong>statements</strong> ("Love cosplaying everywhere") not questions or opinions. Statements don't start arguments. Questions do.</p>
+  </div>
+
+  <div class="card">
+    <h4>3. She picks ONE mood and goes all in</h4>
+    <p>"TURNING MY TRASH INTO MY TREASURES" (1.4M) &mdash; pure hype. "MY TYPEEEEEEE" (296K) &mdash; pure excitement. She never hedges, never apologizes, never says "this is a trial reel."</p>
+    <p><strong>Your version that worked:</strong> "I uhhh went over budget" = fully committed to the bit. <strong>Your version that didn't:</strong> "Scared to try the trend, so this is a trial reel" = the hedging killed it before it started.</p>
+  </div>
+
+  <div class="card">
+    <h4>4. The visuals are dead simple &mdash; her personality is the production value</h4>
+    <p>Most of her reels are just her face + text, or her face + images. No fancy editing. No transitions. The personality IS the content.</p>
+    <p><strong>This is already you.</strong> Your best reels are handheld convention footage. Don't overthink the visual. The personality carries it.</p>
+  </div>
+
+  <div class="card">
+    <h4>5. She tags specific fandoms, not "cosplay" in general</h4>
+    <p>JJK brainrot, Genshin, specific character opinions. Franchise-specific hashtags push the algorithm to FANDOM audiences, not just "cosplay" audiences. Fandom audiences are bigger and more engaged.</p>
+    <p><strong>What you do now:</strong> #cosplay, #cosplayer, #cosplaygirl on almost everything. When you used #rezerocosplay or #onepiece, it helped. <strong>Use more franchise-specific tags.</strong></p>
+  </div>
+</div>
+
+<div class="divider"></div>
+
+<!-- ===== SECTION 8: AUDIO ===== -->
+<div class="section">
+  <div class="section-label">Your Question</div>
+  <h2>"How do I find audios without scrolling forever?"</h2>
+  <p class="lead">You said on the call your best ideas come from hearing an audio first &mdash; "I always wanted a brother" triggered the "when a guy you met in cosplay is acting weird" reel. You need spoken-word audios that make you instantly picture a cosplay situation. Here's how to find them without wasting hours:</p>
+
+  <ol class="numbered">
+    <li><strong>When a reel makes you laugh, save it immediately.</strong> Tap the audio name. If 3+ other reels using that audio are also doing well, it's trending. Save it to a collection called "audios to use."</li>
+    <li><strong>Follow audio curation accounts.</strong> Search "trending audios March 2026" on IG or TikTok. Accounts exist that post compilations of trending sounds every week.</li>
+    <li><strong>Train the algorithm.</strong> Watch 20-30 reels in your niche. When you hear dialogue that fits a cosplay situation, save it. The algorithm will start showing you MORE of that audio type.</li>
+    <li><strong>Mine your competitors.</strong> Go to @projectmoshii and @baninabear's profiles. Check their top reels. Tap the audio. If it has 10K+ reels using it, it's still active. Save the ones that trigger an idea.</li>
+    <li><strong>Block 10 minutes once a week.</strong> Scroll Reels for 5 minutes. Save every audio that catches your ear. Pick 2-3 for the week. Before filming, play the audio and ask yourself: "What cosplay situation does this remind me of?"</li>
+  </ol>
+
+  <div class="callout pink">
+    <strong>Quick test:</strong> If you hear an audio and can't picture a specific reel in your head within 10 seconds, skip it. Good audio should instantly trigger the idea.
+  </div>
+</div>
+
+<div class="divider"></div>
+
+<!-- ===== SECTION 9: CAPTION PATTERNS ===== -->
+<div class="section">
+  <div class="section-label">From Your Data</div>
+  <h2>Captions: What Actually Gets More Views</h2>
+  <p class="lead">This is from your January posts with all the viral spikes removed &mdash; just regular content. Two patterns are really clear:</p>
+
+  <table>
+    <thead><tr><th>What You Did</th><th>Posts</th><th>Avg Plays</th><th></th></tr></thead>
+    <tbody>
+      <tr><td>Used a reaction emoji (like crying face, skull, etc)</td><td>13</td><td><strong>13,323</strong></td><td><span class="tag green">56% more views</span></td></tr>
+      <tr><td>No reaction emoji</td><td>23</td><td>8,531</td><td></td></tr>
+      <tr><td>Wrote a specific, longer caption</td><td>19</td><td><strong>11,746</strong></td><td><span class="tag green">37% more views</span></td></tr>
+      <tr><td>Short/vague caption</td><td>17</td><td>8,602</td><td><span class="tag red">Below average</span></td></tr>
+    </tbody>
+  </table>
+
+  <p><strong>The takeaway:</strong> Specific captions with personality get 37% more views than vague ones. That's a real pattern, not a fluke.</p>
+
+  <h3>Caption Templates That Work For You</h3>
+  <div class="example-block">
+    <span class="rule">"[Number] [things]. [Punchline]."</span>
+    <span class="example">"12,847 steps. 4 blisters. 0 regrets."</span>
+
+    <span class="rule">"I [did something]. [Consequence]."</span>
+    <span class="example">"I said $50 max. The receipt says $187."</span>
+
+    <span class="rule">"The [thing] vs the [other thing]"</span>
+    <span class="example">"Saturday at the con vs Monday at my desk"</span>
+
+    <span class="rule">"[Question]?"</span>
+    <span class="example">"Best convention food? Wrong answers only."</span>
+
+    <span class="rule">"[Specific moment]. [Reaction]."</span>
+    <span class="example">"A kid called me their favorite character. I'm not recovered."</span>
+  </div>
+
+  <p>We also made a full list of <strong>155 caption ideas</strong> organized by category (convention chaos, public cosplay, DMs, relatable life, opinion bait, personal, BTS). That's a separate doc you can scroll through whenever you need a spark.</p>
+</div>
+
+<div class="divider"></div>
+
+<!-- ===== SECTION 10: BTS FOOTAGE ===== -->
+<div class="section">
+  <div class="section-label">From Our Call</div>
+  <h2>Your BTS Clips &mdash; Here's What To Do With Them</h2>
+  <p class="lead">You said you have tons of footage and don't know how to use it: friends making faces, drunk walking back to the room, duct-taping cosplay mid-con, reloading the staff, random Katsu chaos. Here are 4 ready-to-post ideas:</p>
+
+  <div class="card">
+    <h4>"This is why the con repair guy knows me by name"</h4>
+    <p>You came up with this caption live on the call. It's perfect. Use the duct tape footage. Under 10 seconds. Done.</p>
+  </div>
+
+  <div class="card">
+    <h4>"What Katsu actually looked like"</h4>
+    <p>A montage of all the chaotic clips &mdash; friends making faces, walking back to the room using the staff as a cane, random con chaos. No editing, no polish. Raw phone footage IS the point. Alt caption: "The content I don't post vs the content I do post"</p>
+  </div>
+
+  <div class="card">
+    <h4>"The liquor store run in cosplay"</h4>
+    <p>Buying supplies for the staff prop in full cosplay. The cashier's reaction IS the hook. This doubles as public-cosplay content with a built-in story.</p>
+  </div>
+
+  <div class="card">
+    <h4>"How the staff actually works"</h4>
+    <p>Behind-the-scenes of reloading or maintaining the prop. Your staff-series audience is curious about this. "How it started vs how it's made" energy.</p>
+  </div>
+
+  <div class="callout">
+    <strong>BTS rules:</strong> Keep them under 12 seconds. Raw phone footage beats polished edits. The whole appeal is seeing the reality behind the content &mdash; if you make it look produced, it defeats the purpose.
+  </div>
+</div>
+
+<div class="divider"></div>
+
+<!-- ===== SECTION 11: GAG IDEAS ===== -->
+<div class="section">
+  <div class="section-label">New Ideas</div>
+  <h2>Gag Prop Ideas Beyond the Staff</h2>
+  <p class="lead">You said on the call: "I can make some ridiculous props. Once I come up with ideas." Here are 7 that follow the same logic as the staff &mdash; physical comedy that non-cosplayers also care about.</p>
+
+  <ol class="numbered">
+    <li><strong>The "impossibly light" prop</strong> &mdash; the opposite of the heavy staff. LOOKS massive, weighs nothing. People try to pick it up expecting 35lbs and accidentally launch it across the room. Same physics/comedy audience, inverted.</li>
+    <li><strong>The "functioning" prop</strong> &mdash; a cosplay weapon that does something unexpected. Lights up, plays sounds, shoots sparks, sprays water. People's genuine surprise IS the content.</li>
+    <li><strong>The "hidden drink" prop</strong> &mdash; your staff secretly holds a beverage inside. Pull a flask out mid-convention. "This is why I always carry my weapon." Crosses into party/drinking content.</li>
+    <li><strong>The "it keeps getting bigger" series</strong> &mdash; each convention, the prop gets more absurd. "She made it bigger. Again." People come back to see what's next = return viewers.</li>
+    <li><strong>The "let them try it on" series</strong> &mdash; not just holding the staff. Full heavy/uncomfortable cosplay pieces on random people. "Want to try my armor?" The discomfort is the comedy.</li>
+    <li><strong>The "30-second challenge"</strong> &mdash; "Hold my staff for 30 seconds and I'll [prize]." Turns it into a game. People watch to see if they succeed + argue in comments about whether they could do it.</li>
+    <li><strong>The "too real" prop</strong> &mdash; a prop so realistic that people double-take in public. Prop sword at a restaurant. Shield on the subway. Normal people's confusion is the content.</li>
+  </ol>
+
+  <p>We also made a full guide of gag formats stolen from food, fitness, comedy, fashion, and gaming creators &mdash; each adapted for cosplay. That's a separate doc.</p>
+</div>
+
+<div class="divider"></div>
+
+<!-- ===== SECTION 12: CALENDAR ===== -->
+<div class="section">
+  <div class="section-label">Updated</div>
+  <h2>Your Week &mdash; What To Post and When</h2>
+  <p class="lead">You asked for all 7 days shown with rest days included. Here's the full week with exactly what kind of content goes where.</p>
+
+  <div class="week-grid">
+    <div class="week-row active best">
+      <span class="day-name">Sun</span>
+      <span class="day-plan"><strong>Your best content goes here</strong> &mdash; convention clip, staff series, or BTS highlight</span>
+    </div>
+    <div class="week-row active">
+      <span class="day-name">Mon</span>
+      <span class="day-plan">Funny / relatable &mdash; DM reactions, opinion post, "cosplayer vs normal person"</span>
+    </div>
+    <div class="week-row active">
+      <span class="day-name">Tue</span>
+      <span class="day-plan">Another funny one, or skip if you only have 4-5 strong posts this week</span>
+    </div>
+    <div class="week-row active best">
+      <span class="day-name">Wed</span>
+      <span class="day-plan"><strong>Second-best content</strong> &mdash; convention clip, BTS, cost breakdown, staff series</span>
+    </div>
+    <div class="week-row rest">
+      <span class="day-name">Thu</span>
+      <span class="day-plan">Rest &mdash; your weakest day. Don't waste good content here.</span>
+    </div>
+    <div class="week-row active">
+      <span class="day-name">Fri</span>
+      <span class="day-plan">Personal / funny &mdash; or rest if it's a light week</span>
+    </div>
+    <div class="week-row rest">
+      <span class="day-name">Sat</span>
+      <span class="day-plan">Rest &mdash; or a trend post if you have one you're confident about</span>
+    </div>
+  </div>
+
+  <div class="callout">
+    <strong>Target:</strong> 5-6 posts per week if you have strong content. 4 minimum (Sun + Mon + Wed + Fri). <strong>Never post just to fill a slot.</strong> Resting is better than posting something weak.
+  </div>
+
+  <h3>What Each Type of Content Actually Looks Like</h3>
+  <p>The calendar says things like "convention content" or "funny/relatable" &mdash; here's what that means in terms of actual videos you'd film.</p>
+
+  <!-- CON -->
+  <div class="shot-card">
+    <div class="shot-title green">Convention Content</div>
+    <div class="shot-subtitle">Your strongest category. Anything filmed at, about, or related to a convention. Post 1-2x per week on your best days (Sunday, Wednesday).</div>
+    <div class="shot-idea">
+      <span class="idea-name">Staff handoff</span>
+      <span class="idea-desc">&mdash; someone tries to hold the 35lb staff, struggles or drops it, crowd reacts. Your proven format.</span>
+    </div>
+    <div class="shot-idea">
+      <span class="idea-name">Interaction compilation</span>
+      <span class="idea-desc">&mdash; "Things strangers said to me at Katsucon." 3-5 short clips of real moments strung together.</span>
+    </div>
+    <div class="shot-idea">
+      <span class="idea-name">Haul / damage report</span>
+      <span class="idea-desc">&mdash; show everything you bought + the dollar amount. In the car, angry at yourself. The format that already hit 700K.</span>
+    </div>
+    <div class="shot-idea">
+      <span class="idea-name">Best moment</span>
+      <span class="idea-desc">&mdash; the ONE thing that made the trip worth it. A kid recognizing your character. A wild group photo. Someone's insane prop.</span>
+    </div>
+    <div class="shot-idea">
+      <span class="idea-name">Packing montage</span>
+      <span class="idea-desc">&mdash; "Fitting my entire identity into 2 suitcases." Show what you're bringing. Post this 2-3 days before a con.</span>
+    </div>
+    <div class="shot-note">Between conventions: swap these for throwbacks ("already miss it") or hype for the next con ("3 weeks out").</div>
+  </div>
+
+  <!-- BTS -->
+  <div class="shot-card">
+    <div class="shot-title green">Behind the Scenes (BTS)</div>
+    <div class="shot-subtitle">Raw, messy, unpolished &mdash; the reality behind what people see on your page. Post 1-2x per week. Goes well on Sunday or Wednesday.</div>
+    <div class="shot-idea">
+      <span class="idea-name">Build time-lapse</span>
+      <span class="idea-desc">&mdash; painting armor at 2am, wig styling attempt #4, duct-taping something. "40 hours in 15 seconds."</span>
+    </div>
+    <div class="shot-idea">
+      <span class="idea-name">Cost breakdown</span>
+      <span class="idea-desc">&mdash; "What people think this cosplay cost vs what it actually cost." Real numbers on screen.</span>
+    </div>
+    <div class="shot-idea">
+      <span class="idea-name">Raw convention chaos</span>
+      <span class="idea-desc">&mdash; the clips you don't normally post. Friends being dumb, midnight duct tape repairs, singing in the hallway.</span>
+    </div>
+    <div class="shot-idea">
+      <span class="idea-name">How the prop works</span>
+      <span class="idea-desc">&mdash; reloading the staff, maintaining it, what it looks like under the surface. Your audience is curious about this.</span>
+    </div>
+    <div class="shot-idea">
+      <span class="idea-name">Amazon haul</span>
+      <span class="idea-desc">&mdash; wigs, contacts, materials arriving. "The Amazon driver and I are on a first name basis."</span>
+    </div>
+    <div class="shot-note">Keep BTS posts under 12 seconds. Raw phone footage is better than polished edits. The messiness IS the appeal.</div>
+  </div>
+
+  <!-- HUM -->
+  <div class="shot-card">
+    <div class="shot-title blue">Funny / Relatable</div>
+    <div class="shot-subtitle">Your bread and butter between the big posts. Keeps the feed alive and keeps people engaged. Post 2-3x per week on any day.</div>
+    <div class="shot-idea">
+      <span class="idea-name">DM Diaries</span>
+      <span class="idea-desc">&mdash; screenshot the wildest DM, react with your face or with text on screen. "Chapter 5 of the DM chronicles." Your reliable series.</span>
+    </div>
+    <div class="shot-idea">
+      <span class="idea-name">Public cosplay WITH a story</span>
+      <span class="idea-desc">&mdash; "The Wawa cashier asked if I was lost." Not just you in a location &mdash; what HAPPENED when you were in that location.</span>
+    </div>
+    <div class="shot-idea">
+      <span class="idea-name">Before/after comparison</span>
+      <span class="idea-desc">&mdash; "Saturday at Katsucon vs Monday at my desk." Side-by-side or transition cut.</span>
+    </div>
+    <div class="shot-idea">
+      <span class="idea-name">Opinion bait</span>
+      <span class="idea-desc">&mdash; "Unpopular con opinion: [hot take]. Am I wrong?" Designed to make people argue in comments. The @projectmoshii move.</span>
+    </div>
+    <div class="shot-idea">
+      <span class="idea-name">Comment reaction</span>
+      <span class="idea-desc">&mdash; "Reading the comments so you don't have to." Your face on camera + their words on screen.</span>
+    </div>
+    <div class="shot-note">8-12 seconds. These are quick hits. The caption does the heavy lifting &mdash; the video just needs to match the energy.</div>
+  </div>
+
+  <!-- PER -->
+  <div class="shot-card">
+    <div class="shot-title blue">Personal / Authentic</div>
+    <div class="shot-subtitle">1x per week max. Not every reel needs to be funny. These build the loyalty that keeps people following you long-term.</div>
+    <div class="shot-idea">
+      <span class="idea-name">Growth moment</span>
+      <span class="idea-desc">&mdash; first cosplay vs most recent side-by-side. "The glow up is real (or not)."</span>
+    </div>
+    <div class="shot-idea">
+      <span class="idea-name">A DM that meant something</span>
+      <span class="idea-desc">&mdash; "A kid said I was their favorite character. I'm not recovered." Show the genuine moment.</span>
+    </div>
+    <div class="shot-idea">
+      <span class="idea-name">Why you keep doing this</span>
+      <span class="idea-desc">&mdash; one specific moment that made it worth it. NOT generic "I love cosplay." One real thing.</span>
+    </div>
+    <div class="shot-idea">
+      <span class="idea-name">Something honest</span>
+      <span class="idea-desc">&mdash; the burnout, the cost, the exhaustion, the why. "Not every reel needs to be funny. This one is just real."</span>
+    </div>
+    <div class="shot-note">10-15 seconds. Film these when the moment feels right &mdash; don't force them on a schedule.</div>
+  </div>
+
+  <!-- FILLER -->
+  <div class="shot-card">
+    <div class="shot-title dim">Community / Showcase / Trends</div>
+    <div class="shot-subtitle">Lowest priority. 1x per week MAX &mdash; only if you don't have enough of the above. This is filler.</div>
+    <div class="shot-idea">
+      <span class="idea-name">Community</span>
+      <span class="idea-desc">&mdash; tagging friends, resharing fan art, "Met them 3 hours ago and we're already planning next con."</span>
+    </div>
+    <div class="shot-idea">
+      <span class="idea-name">Cosplay showcase</span>
+      <span class="idea-desc">&mdash; clean reveal shot or outfit check. Rarely pops off unless the character is currently trending.</span>
+    </div>
+    <div class="shot-idea">
+      <span class="idea-name">Trend with a twist</span>
+      <span class="idea-desc">&mdash; trending audio + cosplay angle. Commit fully or don't post it. NO "trial reel" energy.</span>
+    </div>
+    <div class="shot-note">If your convention, BTS, and funny content is strong that week, skip this entirely. Resting > posting filler.</div>
+  </div>
+
+  <p>We also made a full <strong>8-week calendar</strong> with specific content ideas for every day through April 2026, plus a convention-week override (8-12 reels when you're actually at a con).</p>
+</div>
+
+<div class="divider"></div>
+
+<!-- ===== SECTION 13: HOOK LIBRARY ===== -->
+<div class="section">
+  <div class="section-label">Clarified</div>
+  <h2>The Hook Library &mdash; What Was Confusing</h2>
+  <p>You said the doc was labeled "hooks organized by location" but you couldn't find any hooks in it. The hooks ARE there (65 of them), but the table has two columns that work together:</p>
+
+  <div class="vs">
+    <div class="side win">
+      <h5>"Hook" Column = What You Film</h5>
+      <ul><li>The visual action &mdash; what's happening on screen</li></ul>
+    </div>
+    <div class="side win">
+      <h5>"Caption" Column = What You Write</h5>
+      <ul><li>The text that stops people scrolling</li></ul>
+    </div>
+  </div>
+  <p>Both together make the complete hook. You need both. If this format is confusing we can restructure the whole thing &mdash; just let us know.</p>
+</div>
+
+<div class="divider"></div>
+
+<!-- ===== SECTION 14: EVERYTHING ADDRESSED ===== -->
+<div class="section">
+  <div class="section-label">Your Notes</div>
+  <h2>Everything You Asked For &mdash; Where It Is</h2>
+  <p class="lead">You sent detailed notes right after the call with everything you didn't get to say. Here's every point and where it's been addressed:</p>
+
+  <ul class="checklist">
+    <li><span class="check done">&#10003;</span><strong>"Can I see the data without viral stuff skewing it?"</strong> &mdash; Done. Corrected numbers are at the top of this page. All viral posts removed from every calculation.</li>
+    <li><span class="check done">&#10003;</span><strong>"It says 'don't do this' for a 208K view reel"</strong> &mdash; Recalibrated. 208K is exceptional. Benchmarks now reflect your real day-to-day performance.</li>
+    <li><span class="check done">&#10003;</span><strong>"Collab videos shouldn't be counted the same"</strong> &mdash; Agreed. Your collab posts average 6,794 plays (below your normal). They've been separated out.</li>
+    <li><span class="check done">&#10003;</span><strong>"What's actually performing in my recent posts?"</strong> &mdash; Full January breakdown with every post ranked and explained. Separate detailed doc.</li>
+    <li><span class="check done">&#10003;</span><strong>"How do I make public cosplay work like baninabear?"</strong> &mdash; Story formula + comparison. Section above.</li>
+    <li><span class="check done">&#10003;</span><strong>"How does projectmoshii's format work?"</strong> &mdash; 5-element breakdown with your equivalents. Section above.</li>
+    <li><span class="check done">&#10003;</span><strong>"How do I find audios without scrolling forever?"</strong> &mdash; 5 practical methods. Section above.</li>
+    <li><span class="check done">&#10003;</span><strong>"A huge list of caption ideas"</strong> &mdash; 155 concepts across 7 categories. Separate doc.</li>
+    <li><span class="check done">&#10003;</span><strong>"Gag ideas from outside the anime space"</strong> &mdash; Formats from food, fitness, comedy, fashion, gaming creators. Separate doc.</li>
+    <li><span class="check done">&#10003;</span><strong>"Calendar shows 4 days not 7"</strong> &mdash; Full 7-day calendar with rest days shown and content explained. Section above.</li>
+    <li><span class="check done">&#10003;</span><strong>"Why does it say Wednesday is best?"</strong> &mdash; Refined. Two viral posts landed on Wednesdays. With those isolated, Sunday is your strongest day.</li>
+    <li><span class="check done">&#10003;</span><strong>"Hook library says hooks by location but I can't find them"</strong> &mdash; Clarified. They're there, the table format was confusing. Section above.</li>
+  </ul>
+</div>
+
+<div class="divider"></div>
+
+<!-- ===== SECTION 15: STILL OPEN ===== -->
+<div class="section">
+  <div class="section-label">Still Open</div>
+  <h2>What We Can Still Do</h2>
+
+  <ul class="checklist">
+    <li><span class="check open">&#9675;</span><strong>Fresh data scrape</strong> &mdash; Your staff-era posts aren't in the original dataset (it was scraped before that series took off). A new scrape would let us analyze the staff series with real numbers.</li>
+    <li><span class="check open">&#9675;</span><strong>The 208K reel</strong> &mdash; If you can tell us which specific reel this was, we'll do a full case study on it.</li>
+    <li><span class="check open">&#9675;</span><strong>BTS footage review</strong> &mdash; Drop your raw clips whenever and we'll try different edits, different audio, different text on them.</li>
+    <li><span class="check open">&#9675;</span><strong>Curated audio list</strong> &mdash; If you want us to build a specific list of spoken-word audios that work for cosplay situations, we can do that.</li>
+    <li><span class="check open">&#9675;</span><strong>Your remaining notes</strong> &mdash; You mentioned at the end of the call you had more. Send whenever.</li>
+  </ul>
+</div>
+
+<!-- FOOTER -->
+<div class="footer">
+  Meeting follow-up &middot; March 2026 &middot; All numbers use corrected data with viral posts removed
+</div>
+
+</div>
+</body>
+</html>
